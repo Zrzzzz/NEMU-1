@@ -73,7 +73,6 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-		do_int3();
 
 
 		if(nemu_state != RUNNING) { return; }
