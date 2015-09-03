@@ -37,10 +37,21 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_n(char *args) {
-	//cpu_exec(atoi(args));
-	cpu_exec(1);
+	if(strcmp(args, "") != 0)cpu_exec(atoi(args));
+	else cpu_exec(1);
 	return 0;
 }
+
+static int cmd_i(char *args) {
+	int i;
+	if(args[0]=='r') {
+		for(i = R_EAX; i <= R_EDI; i ++) {
+			printf("%s = 0x%8x\n", regsl[i], reg_l(i));
+		}
+	}
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -52,6 +63,7 @@ static struct {
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
 	{ "n", "next step", cmd_n },
+	{ "i", "info", cmd_i },
 
 	/* TODO: Add more commands */
 
