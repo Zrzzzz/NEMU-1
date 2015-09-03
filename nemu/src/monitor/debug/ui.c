@@ -54,6 +54,7 @@ static int cmd_i(char *args) {
 static int cmd_x(char *args) {
 	int i;
 	int j = 0, n = 0, m = 0;
+	int *k;
 	while(args[j]!=' ') {
 		j++;
 	}
@@ -70,7 +71,8 @@ static int cmd_x(char *args) {
 	}
 	for(i = 0; i < n; i++) {
 		if((i & 7) == 0) printf("\n0x%08x:", m + i);
-		printf(" 0x%02x", *(int *)(m + i));
+		k=(int *)(m+i);
+		printf(" 0x%02x", *k);
 	}
 	printf("\n");
 	return 0;
