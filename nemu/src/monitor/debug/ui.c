@@ -70,7 +70,7 @@ static int cmd_x(char *args) {
 	}
 	for(i = 0; i < n; i++) {
 		if((i & 7) == 0) printf("\n0x%08x:", m+i);
-		printf(" 0x%08x", (&m)[i]);
+		printf(" 0x%02x", *((&m)+i));
 	}
 	printf("\n");
 	return 0;
