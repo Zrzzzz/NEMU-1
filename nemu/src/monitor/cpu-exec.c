@@ -60,7 +60,7 @@ void cpu_exec(volatile uint32_t n) {
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
-		do_int3();
+
 		cpu.eip += instr_len;
 
 #ifdef DEBUG
@@ -73,6 +73,7 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
+		do_int3();
 
 
 		if(nemu_state != RUNNING) { return; }
