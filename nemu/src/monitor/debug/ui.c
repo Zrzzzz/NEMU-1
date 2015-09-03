@@ -51,6 +51,28 @@ static int cmd_i(char *args) {
 	return 0;
 }
 
+static int cmd_x(char *args) {
+	int i;
+	int j = 0, n = 0, m = 0;
+	while(args[j]!=' ') {
+		j++;
+	}
+	for(i = 0; i<j; i++) {
+		n = n * 10 + args[i] - '0';
+	}
+	while(args[j]!='x') {
+		j++;
+	}
+	while(args[j] <= '9' && args[j] >= '0') {
+		m = m * 16 + args[j] - '0';
+		j++;
+	}
+	for(i = 0; i < n; i++) {
+		if((i & 7) == 0) printf("\n0x%8x:", m+i);
+		printf(" 0x%2x", (&m)[i]);
+	}
+	return 0;
+}
 static int cmd_help(char *args);
 
 static struct {
@@ -61,8 +83,9 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
-	{ "n", "next step", cmd_n },
-	{ "i", "info", cmd_i },
+	{ "n", "Next step", cmd_n },
+	{ "i", "Info", cmd_i },
+	{ "x", "Read memory", cmd_x },
 
 	/* TODO: Add more commands */
 
