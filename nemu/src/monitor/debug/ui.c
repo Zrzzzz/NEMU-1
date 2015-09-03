@@ -72,7 +72,7 @@ static int cmd_x(char *args) {
 	for(i = 0; i < n; i++) {
 		if((i & 7) == 0) printf("\n0x%08x:", m + i);
 		//k=(int *)(m+i);
-		printf(" 0x%02x", hwaddr_read(va_to_hwa(m+i), 1));
+		printf(" 0x%02x", hwaddr_read(m + i, 1));
 	}
 	printf("\n");
 	return 0;
