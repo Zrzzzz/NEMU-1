@@ -37,8 +37,7 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_n(char *args) {
-	if(strlen(args) != 0)cpu_exec(atoi(args));
-	else cpu_exec(1);
+	cpu_exec(1);
 	return 0;
 }
 
