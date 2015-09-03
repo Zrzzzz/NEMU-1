@@ -63,6 +63,7 @@ static int cmd_x(char *args) {
 	while(args[j]!='x') {
 		j++;
 	}
+	j++;
 	while(args[j] <= '9' && args[j] >= '0') {
 		m = m * 16 + args[j] - '0';
 		j++;
