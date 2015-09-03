@@ -78,5 +78,8 @@ void cpu_exec(volatile uint32_t n) {
 		if(nemu_state != RUNNING) { return; }
 	}
 
-	if(nemu_state == RUNNING) { nemu_state = STOP; }
+	if(nemu_state == RUNNING) { 
+		do_int3();
+		nemu_state = STOP; 
+	}
 }
