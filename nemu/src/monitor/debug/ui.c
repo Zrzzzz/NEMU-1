@@ -37,7 +37,7 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_n(char *args) {
-	if(strcmp(args, "") != 0)cpu_exec(atoi(args));
+	if(args[0] != 0)cpu_exec(atoi(args));
 	else cpu_exec(1);
 	return 0;
 }
@@ -46,7 +46,7 @@ static int cmd_i(char *args) {
 	int i;
 	if(args[0]=='r') {
 		for(i = R_EAX; i <= R_EDI; i ++) {
-			printf("%s = 0x%8x\n", regsl[i], reg_l(i));
+			printf("%s = 0x%08x\n", regsl[i], reg_l(i));
 		}
 	}
 	return 0;
