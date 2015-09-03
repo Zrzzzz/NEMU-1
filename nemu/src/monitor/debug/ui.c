@@ -68,9 +68,10 @@ static int cmd_x(char *args) {
 		j++;
 	}
 	for(i = 0; i < n; i++) {
-		if((i & 7) == 0) printf("\n0x%8x:", m+i);
-		printf(" 0x%2x", (&m)[i]);
+		if((i & 7) == 0) printf("\n0x%08x:", m+i);
+		printf(" 0x%08x", (&m)[i]);
 	}
+	printf("\n");
 	return 0;
 }
 static int cmd_help(char *args);
