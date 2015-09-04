@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ
+	NOTYPE = 256, EQ, NUM, HNUM, ONUM
 
 	/* TODO: Add more token types */
 
@@ -23,7 +23,15 @@ static struct rule {
 	 */
 
 	{" +",	NOTYPE},				// spaces
+	{"0x[\\da-f]+", HNUM},			// hex-number
+	{"0[0-7]+", ONUM},				// oct-number
+	{"\\(", '('},					// left
+	{"\\)", ')'},					// right
 	{"\\+", '+'},					// plus
+	{"-", '-'},						// minus
+	{"\\*", '*'},					// multiply
+	{"\\/", '\\'},					// divide	
+	{"\\d+", NUM},					// number
 	{"==", EQ}						// equal
 };
 
@@ -79,7 +87,12 @@ static bool make_token(char *e) {
 				 */
 
 				switch(rules[i].token_type) {
-					default: panic("please implement me");
+					NOTYPE: break;
+					default: 
+						tokens[nr_token].type = rules[i].token_type;
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
+						nr_token++;
+						break;
 				}
 
 				break;
@@ -94,6 +107,31 @@ static bool make_token(char *e) {
 
 	return true; 
 }
+uint32_t eval(uint32_t p, uint32_t q) {
+	if(p > q) {
+		/* Bad expression */
+		printf("p is less then q\n");
+		assert(0);
+	}
+	else if(p == q) { 
+
+	}
+	else if(check_parentheses(p, q) == true) {
+		return eval(p + 1, q - 1); 
+	}
+	else {
+		op = the position of dominant operator in the token expression;
+		val1 = eval(p, op - 1);
+		val2 = eval(op + 1, q);
+		switch(op_type) {
+			case '+': return val1 + val2;
+			case '-': /* ... */
+			case '*': /* ... */
+			case '/': /* ... */
+			default: assert(0);
+		}
+	}
+}
 
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
@@ -102,7 +140,7 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	panic("please implement me");
+	eval(0, nr_token-1);
 	return 0;
 }
 
