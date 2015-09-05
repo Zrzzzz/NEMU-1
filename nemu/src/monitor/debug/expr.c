@@ -29,9 +29,14 @@ static struct rule {
 	{"\\|\\|", OR},					// or
 	{"\\(", '('},					// left
 	{"\\)", ')'},					// right
+	{"&", '&'},						// bit and
+	{"\\|", '|'},					// bit or
+	{"~", '~'},						// bit not
 	{"!=", NOT_EQ},					// not equal
 	{"<=", NOT_LA},					// not large
 	{">=", NOT_LE},					// not less
+	{"<", '<'},						// less
+	{">", '>'},						// large
 	{"\\+", '+'},					// plus
 	{"-", '-'},						// minus
 	{"\\*", '*'},					// multiply
@@ -113,20 +118,50 @@ static bool make_token(char *e) {
 
 	return true; 
 }
+
+bool check_parentheses(uint32_t p, uint32_t q, bool *success) {
+	int i = 0, j = 0;
+	bool flag = true;
+	if(p >= q) {
+		printf("there are something goes wrong\n");
+		assert(0);
+	}
+	if(tokens[p].type != '(' || tokens[q].type != ')')return false;
+	for(i = p + 1; i < q; i++) {
+		if(tokens[i].type == '(') {
+			j++;
+		}
+		else if(tokens[i].type == ')') {
+			j--;
+			if(j < 0) flag = false;
+			if(j < -1) *success = false;
+		}
+	}
+	if(j != 0) {
+		printf("brackets not match!\n");
+		*success = false;
+		return true;
+	}
+	return flag;
+}
+
+uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
+
+}
+
 uint32_t eval(uint32_t p, uint32_t q, bool *success) {
+	uint32_t op, val1, val2;
 	if(p > q) {
 		/* Bad expression */
 		printf("p is less then q\n");
 		*success = false;
 		return 0;
-		//assert(0);
 	}
 	else if(p == q) { 
 		if(tokens[p].type != NUM && tokens[p].type != ONUM && tokens[p].type != HNUM) {
 			printf("not a number!\n");
 			*success = false;
 			return 0;
-			//assert(0);
 		}
 		switch(tokens[p].type) {
 			case NUM: return strtol(tokens[p].str, NULL, 10); 
@@ -136,26 +171,53 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 					   printf("dont have this number!\n");
 					   *success = false;
 					   return 0;
-					   //assert(0);
 		}
 	}
-	else if(check_parentheses(p, q) == true) {
-		return eval(p + 1, q - 1); 
+	else if(check_parentheses(p, q, success) == true) {
+		if(!(*success)) {
+			return 0;
+		}
+		return eval(p + 1, q - 1, success); 
 	}
 	else {
-		op = the position of dominant operator in the token expression;
-		val1 = eval(p, op - 1);
-		val2 = eval(op + 1, q);
-		switch(op_type) {
-			case '+': return val1 + val2;
-			case '-': return val1 - val2;
-			case '*': return val1 * val2;
-			case '/': return val1 / val2;
-			default: 
-					printf("the operator deosn't implemented.\n");
-					*success = false;
-					return 0;
-					//assert(0);
+		op = find_the_last_operator(p, q);
+		if(op != p) {
+			val1 = eval(p, op - 1, success);
+			val2 = eval(op + 1, q, success);
+			if(!(*success)) return 0;
+			switch(tokens[op].type) {
+				case '+': return val1 + val2;
+				case '-': return val1 - val2;
+				case '*': return val1 * val2;
+				case '/': return val1 / val2;
+				case '&': return val1 & val2;
+				case '|': return val1 | val2;
+				case AND: return val1 && val2;
+				case OR: return val1 || val2;
+				case '<': return val1 < val2;
+				case '>': return val1 > val2;
+				case NOT_LE: return val1 >= val2;
+				case NOT_LA: return val1 <= val2;
+				case NOT_EQ: return val1 != val2;
+				case EQ: return val1 == val2;
+				default: 
+						printf("the operator deosn't implemented.\n");
+						*success = false;
+						return 0;
+			}
+		}
+		else {
+			val2 = eval(op + 1, q, success);
+			if(!(*success)) return 0;
+			switch(tokens[op].type) {
+				case '-': return -val2;
+				case '*': return hwaddr_read(val2, 4);
+				case '!': return !val2;
+				case '~': return ~val2;
+				default:
+						printf("the operator deosn't implemented.\n");
+						*success = false;
+						return 0;
 		}
 	}
 }
