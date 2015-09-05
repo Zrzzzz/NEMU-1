@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NUM, HNUM, ONUM
+	NOTYPE = 256, EQ, NUM, HNUM, ONUM, NOT_EQ, NOT_LA, NOT_LE, AND, OR, NOT
 
 	/* TODO: Add more token types */
 
@@ -25,13 +25,19 @@ static struct rule {
 	{" +",	NOTYPE},				// spaces
 	{"0x[\\da-f]+", HNUM},			// hex-number
 	{"0[0-7]+", ONUM},				// oct-number
+	{"&&", AND},					// and
+	{"\\|\\|", OR},					// or
 	{"\\(", '('},					// left
 	{"\\)", ')'},					// right
+	{"!=", NOT_EQ},					// not equal
+	{"<=", NOT_LA},					// not large
+	{">=", NOT_LE},					// not less
 	{"\\+", '+'},					// plus
 	{"-", '-'},						// minus
 	{"\\*", '*'},					// multiply
 	{"\\/", '\\'},					// divide	
 	{"\\d+", NUM},					// number
+	{"!", NOT},						// not
 	{"==", EQ}						// equal
 };
 
@@ -107,14 +113,31 @@ static bool make_token(char *e) {
 
 	return true; 
 }
-uint32_t eval(uint32_t p, uint32_t q) {
+uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 	if(p > q) {
 		/* Bad expression */
 		printf("p is less then q\n");
-		assert(0);
+		*success = false;
+		return 0;
+		//assert(0);
 	}
 	else if(p == q) { 
-
+		if(tokens[p].type != NUM && tokens[p].type != ONUM && tokens[p].type != HNUM) {
+			printf("not a number!\n");
+			*success = false;
+			return 0;
+			//assert(0);
+		}
+		switch(tokens[p].type) {
+			case NUM: return strtol(tokens[p].str, NULL, 10); 
+			case ONUM: return strtol(tokens[p].str, NULL, 8); 
+			case HNUM: return strtol(tokens[p].str, NULL, 16); 
+			default:
+					   printf("dont have this number!\n");
+					   *success = false;
+					   return 0;
+					   //assert(0);
+		}
 	}
 	else if(check_parentheses(p, q) == true) {
 		return eval(p + 1, q - 1); 
@@ -125,10 +148,14 @@ uint32_t eval(uint32_t p, uint32_t q) {
 		val2 = eval(op + 1, q);
 		switch(op_type) {
 			case '+': return val1 + val2;
-			case '-': /* ... */
-			case '*': /* ... */
-			case '/': /* ... */
-			default: assert(0);
+			case '-': return val1 - val2;
+			case '*': return val1 * val2;
+			case '/': return val1 / val2;
+			default: 
+					printf("the operator deosn't implemented.\n");
+					*success = false;
+					return 0;
+					//assert(0);
 		}
 	}
 }
@@ -140,7 +167,7 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	eval(0, nr_token-1);
+	return eval(0, nr_token-1, *success);
 	return 0;
 }
 
