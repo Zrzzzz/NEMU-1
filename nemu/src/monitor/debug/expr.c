@@ -168,8 +168,9 @@ uint32_t relax(uint32_t i, uint32_t v, uint32_t *la, uint32_t *pr) {
 
 uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 	uint32_t i, j = 0, *la = 0, *pr = 0;
-	*la = 0;
-	*pr = 0;
+	uint32_t las = 0, pri = 0;
+	la = &las;
+	pr = &pri;
 	for(i = p; i <= q; i ++) {
 		if(tokens[p].type == '(') j++;
 		else if(tokens[p].type == ')') j--;
