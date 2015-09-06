@@ -167,6 +167,14 @@ uint32_t relax(uint32_t i, uint32_t v, uint32_t *la, uint32_t *pr) {
 	return 0;
 }
 
+uint32_t relax1(uint32_t i, uint32_t v, uint32_t *la, uint32_t *pr) {
+	if(v > *pr) {
+		*la = i;
+		*pr = v;
+	}
+	return 0;
+}
+
 uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 	uint32_t i, j = 0, *la = 0, *pr = 0;
 	uint32_t las = 0, pri = 0;
@@ -221,20 +229,20 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 					break;
 				case '-':
 					if(i != p || !not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
-					else relax(i, 2, la, pr);
+					else relax1(i, 2, la, pr);
 					break;
 				case '/':
 					relax(i, 3, la, pr);
 					break;
 				case '*':
 					if(i != p || !not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
-					else relax(i, 2, la, pr);
+					else relax1(i, 2, la, pr);
 					break;
 				case '!':
-					relax(i, 2, la, pr);
+					relax1(i, 2, la, pr);
 					break;
 				case '~':
-					relax(i, 2, la, pr);
+					relax1(i, 2, la, pr);
 					break;
 				default:
 					break;
