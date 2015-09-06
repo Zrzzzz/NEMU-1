@@ -63,7 +63,7 @@ static int cmd_x(char *args) {
 	int j = 0, n = 0, m = 0;
 	bool *flag = 0;
 	*flag = 1;
-	printf("asd\n");
+	assert(0);
 	while(args[j]!=' ') {
 		j++;
 	}
