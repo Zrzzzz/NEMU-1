@@ -247,7 +247,6 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 	int i;
 	uint32_t op, val1, val2;
-	printf("%d %d\n",p,q);
 	if(p > q) {
 		/* Bad expression */
 		printf("p is less then q\n");
