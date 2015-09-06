@@ -305,7 +305,6 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 	}
 	else {
 		op = find_the_last_operator(p, q);
-		printf("%d\n", op);
 		if(op != p && (!not_a_num(op-1) || tokens[op-1].type == ')')) {
 			val1 = eval(p, op - 1, success);
 			val2 = eval(op + 1, q, success);
