@@ -55,6 +55,9 @@ static int cmd_info(char *args) {
 			printf("%s = 0x%02x\n", regsb[i], reg_b(i));
 		}
 	}
+	else if(args[0]=='w') {
+
+	}
 	return 0;
 }
 
@@ -94,6 +97,28 @@ static int cmd_p(char *args) {
 	return 0;
 }
 
+static int cmd_w(char *args) {
+	static wp_num = 0;
+	WP *wp = new_wp();
+	(*wp).NO = wp_num ++;
+	strcpy((*wp).expr, args);
+	v = expr((*wp).expr);
+	return 0;
+}
+
+static int cmd_d(char *args) {
+	WP *wp = head;
+	int no = atoi(args);
+	while(wp != 0) {
+		if((*wp).NO == no) {
+			free_wp(wp);
+			return 0;
+		}
+	}
+	printf("no this number's point\n");
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -108,6 +133,8 @@ static struct {
 	{ "info", "Info", cmd_info },
 	{ "x", "Read memory", cmd_x },
 	{ "p", "Expression evaluation", cmd_p },
+	{ "w", "Watch points", cmd_w },
+	{ "d", "Delete watch points", cmd_d },
 
 	/* TODO: Add more commands */
 
