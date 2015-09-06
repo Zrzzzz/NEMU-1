@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NUM, HNUM, ONUM, NOT_EQ, NOT_LA, NOT_LE, AND, OR, NOT
+	NOTYPE = 256, EQ, NUM, HNUM, ONUM, NOT_EQ, NOT_LA, NOT_LE, AND, OR, NOT, LS, RS
 
 	/* TODO: Add more token types */
 
@@ -32,6 +32,10 @@ static struct rule {
 	{"&", '&'},						// bit and
 	{"\\|", '|'},					// bit or
 	{"~", '~'},						// bit not
+	{"\\^", '^'},					// bit xor
+	{"<<", LS},						// left shift
+	{">>", RS},						// right shift
+	{"%", '%'},						// mod
 	{"!=", NOT_EQ},					// not equal
 	{"<=", NOT_LA},					// not large
 	{">=", NOT_LE},					// not less
@@ -43,6 +47,7 @@ static struct rule {
 	{"\\/", '\\'},					// divide	
 	{"\\d+", NUM},					// number
 	{"!", NOT},						// not
+	{"\\$\\w+", '$'},				// register
 	{"==", EQ}						// equal
 };
 
@@ -74,6 +79,13 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
+
+bool nan(uint32_t i) {
+		if(tokens[p].type != NUM && tokens[p].type != ONUM && tokens[p].type != HNUM && tokens[p].type != '$') {
+			return true;
+		}
+		else return false;
+}
 
 static bool make_token(char *e) {
 	int position = 0;
@@ -145,11 +157,89 @@ bool check_parentheses(uint32_t p, uint32_t q, bool *success) {
 	return flag;
 }
 
-uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
+uint32_t relax(uint32_t i, uint32_t v, uint32_t &la, uint32_t &pr) {
+	if(v >= pr) {
+		la = i;
+		pr = v;
+	}
+	return 0;
+}
 
+uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
+	uint32_t i, j = 0, la = 0, pr = 0;
+	for(i = p; i <= q; i ++) {
+		if(tokens[p].type == '(') j++;
+		else if(tokens[p].type == ')') j--;
+		else if(j == 0) {
+			switch(tokens[p].type) {
+				case OR: 
+					relax(i, 12, la, pr);
+					break;
+				case AND:
+					relax(i, 11, la, pr);
+					break;
+				case '|':
+					relax(i, 10, la, pr);
+					break;
+				case '^':
+					relax(i, 9, la, pr);
+					break;
+				case '&':
+					relax(i, 8, la, pr);
+					break;
+				case EQ:
+					relax(i, 7, la, pr);
+					break;
+				case NOT_EQ:
+					relax(i, 7, la, pr);
+					break;
+				case '>':
+					relax(i, 6, la, pr);
+					break;
+				case '<':
+					relax(i, 6, la, pr);
+					break;
+				case NOT_LE:
+					relax(i, 6, la, pr);
+					break;
+				case NOT_LA:
+					relax(i, 6, la, pr);
+					break;
+				case LS:
+					relax(i, 5, la, pr);
+					break;
+				case RS:
+					relax(i, 5, la, pr);
+					break;
+				case '+':
+					relax(i, 4, la, pr);
+					break;
+				case '-':
+					if(!nan(i-1) || tokens[p].type == ')') relax(i, 4, la, pr);
+					else relax(i, 2, la pr);
+					break;
+				case '/':
+					relax(i, 3, la, pr);
+					break;
+				case '*':
+					if(!nan(i-1) || tokens[p].type == ')') relax(i, 4, la, pr);
+					else relax(i, 2, la, pr);
+					break;
+				case '!':
+					relax(i, 2, la, pr);
+					break;
+				case '~':
+					relax(i, 2, la, pr);
+					break;
+				default:
+			}
+		}
+	}
+	return la;
 }
 
 uint32_t eval(uint32_t p, uint32_t q, bool *success) {
+	int i;
 	uint32_t op, val1, val2;
 	if(p > q) {
 		/* Bad expression */
@@ -158,7 +248,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 		return 0;
 	}
 	else if(p == q) { 
-		if(tokens[p].type != NUM && tokens[p].type != ONUM && tokens[p].type != HNUM) {
+		if(nan(p)){
 			printf("not a number!\n");
 			*success = false;
 			return 0;
@@ -167,6 +257,25 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 			case NUM: return strtol(tokens[p].str, NULL, 10); 
 			case ONUM: return strtol(tokens[p].str, NULL, 8); 
 			case HNUM: return strtol(tokens[p].str, NULL, 16); 
+			case '$':
+						  for(i = R_EAX; i <= R_EDI; i ++) {
+							  if(strcmp(regsl[i], tokens[op].str+1) == 0) {
+								  return reg_l(i);
+							  }
+						  }
+						  for(i = R_AX; i <= R_DI; i ++) {
+							  if(strcmp(regsw[i], tokens[op].str+1) == 0) {
+								  return reg_w(i);
+							  }
+						  }
+						  for(i = R_AL; i <= R_BH; i ++) {
+							  if(strcmp(regsb[i], tokens[op].str+1) == 0) {
+								  return reg_b(i);
+							  }
+						  }
+						  printf("register name wrong.\n");
+						  *success = false;
+						  return 0;
 			default:
 					   printf("dont have this number!\n");
 					   *success = false;
@@ -194,6 +303,10 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 				case '|': return val1 | val2;
 				case AND: return val1 && val2;
 				case OR: return val1 || val2;
+				case '^': return val1 ^ val2;
+				case LS: return val1 << val2;
+				case RS: return val1 >> val2;
+				case '%': return val1 % val2;
 				case '<': return val1 < val2;
 				case '>': return val1 > val2;
 				case NOT_LE: return val1 >= val2;
