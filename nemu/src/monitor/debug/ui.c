@@ -61,13 +61,14 @@ static int cmd_info(char *args) {
 static int cmd_x(char *args) {
 	int i;
 	int j = 0, n = 0, m = 0;
-	bool flag = true;
+	bool *flag = 0;
+	*flag = 1;
 	while(args[j]!=' ') {
 		j++;
 	}
 	n = atoi(args);
-	m = expr(args[j+1], flag);
-	if(!flag) {
+	m = expr(args + j + 1, flag);
+	if(!*flag) {
 		printf("not a correct expression.\n");
 		return 0;
 	}
@@ -80,13 +81,16 @@ static int cmd_x(char *args) {
 }
 
 static int cmd_p(char *args) {
-	bool flag = true;
+	bool *flag = 0;
+	*flag = true;
 	int n = expr(args, flag);
-	if(flag) return n;
+	if(*flag) return n;
 	else {
 		printf("not a correct expression.\n");
 		return 0;
 	}
+}
+
 static int cmd_help(char *args);
 
 static struct {

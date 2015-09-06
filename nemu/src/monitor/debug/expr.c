@@ -5,6 +5,7 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+#include <stdlib.h>
 
 enum {
 	NOTYPE = 256, EQ, NUM, HNUM, ONUM, NOT_EQ, NOT_LA, NOT_LE, AND, OR, NOT, LS, RS
@@ -80,7 +81,7 @@ typedef struct token {
 Token tokens[32];
 int nr_token;
 
-bool nan(uint32_t i) {
+bool not_a_num(uint32_t p) {
 		if(tokens[p].type != NUM && tokens[p].type != ONUM && tokens[p].type != HNUM && tokens[p].type != '$') {
 			return true;
 		}
@@ -110,7 +111,7 @@ static bool make_token(char *e) {
 				 */
 
 				switch(rules[i].token_type) {
-					NOTYPE: break;
+					case NOTYPE: break;
 					default: 
 						tokens[nr_token].type = rules[i].token_type;
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
@@ -157,16 +158,18 @@ bool check_parentheses(uint32_t p, uint32_t q, bool *success) {
 	return flag;
 }
 
-uint32_t relax(uint32_t i, uint32_t v, uint32_t &la, uint32_t &pr) {
-	if(v >= pr) {
-		la = i;
-		pr = v;
+uint32_t relax(uint32_t i, uint32_t v, uint32_t *la, uint32_t *pr) {
+	if(v >= *pr) {
+		*la = i;
+		*pr = v;
 	}
 	return 0;
 }
 
 uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
-	uint32_t i, j = 0, la = 0, pr = 0;
+	uint32_t i, j = 0, *la = 0, *pr = 0;
+	*la = 0;
+	*pr = 0;
 	for(i = p; i <= q; i ++) {
 		if(tokens[p].type == '(') j++;
 		else if(tokens[p].type == ')') j--;
@@ -215,14 +218,14 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 					relax(i, 4, la, pr);
 					break;
 				case '-':
-					if(!nan(i-1) || tokens[p].type == ')') relax(i, 4, la, pr);
-					else relax(i, 2, la pr);
+					if(!not_a_num(i-1) || tokens[p].type == ')') relax(i, 4, la, pr);
+					else relax(i, 2, la, pr);
 					break;
 				case '/':
 					relax(i, 3, la, pr);
 					break;
 				case '*':
-					if(!nan(i-1) || tokens[p].type == ')') relax(i, 4, la, pr);
+					if(!not_a_num(i-1) || tokens[p].type == ')') relax(i, 4, la, pr);
 					else relax(i, 2, la, pr);
 					break;
 				case '!':
@@ -232,10 +235,11 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 					relax(i, 2, la, pr);
 					break;
 				default:
+					break;
 			}
 		}
 	}
-	return la;
+	return *la;
 }
 
 uint32_t eval(uint32_t p, uint32_t q, bool *success) {
@@ -248,7 +252,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 		return 0;
 	}
 	else if(p == q) { 
-		if(nan(p)){
+		if(not_a_num(p)){
 			printf("not a number!\n");
 			*success = false;
 			return 0;
@@ -259,17 +263,17 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 			case HNUM: return strtol(tokens[p].str, NULL, 16); 
 			case '$':
 						  for(i = R_EAX; i <= R_EDI; i ++) {
-							  if(strcmp(regsl[i], tokens[op].str+1) == 0) {
+							  if(strcmp(regsl[i], tokens[p].str+1) == 0) {
 								  return reg_l(i);
 							  }
 						  }
 						  for(i = R_AX; i <= R_DI; i ++) {
-							  if(strcmp(regsw[i], tokens[op].str+1) == 0) {
+							  if(strcmp(regsw[i], tokens[p].str+1) == 0) {
 								  return reg_w(i);
 							  }
 						  }
 						  for(i = R_AL; i <= R_BH; i ++) {
-							  if(strcmp(regsb[i], tokens[op].str+1) == 0) {
+							  if(strcmp(regsb[i], tokens[p].str+1) == 0) {
 								  return reg_b(i);
 							  }
 						  }
@@ -331,6 +335,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 						printf("the operator deosn't implemented.\n");
 						*success = false;
 						return 0;
+			}
 		}
 	}
 }
@@ -342,7 +347,6 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	return eval(0, nr_token-1, *success);
-	return 0;
+	return eval(0, nr_token-1, success);
 }
 
