@@ -173,10 +173,10 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 	la = &las;
 	pr = &pri;
 	for(i = p; i <= q; i ++) {
-		if(tokens[p].type == '(') j++;
-		else if(tokens[p].type == ')') j--;
+		if(tokens[i].type == '(') j++;
+		else if(tokens[i].type == ')') j--;
 		else if(j == 0) {
-			switch(tokens[p].type) {
+			switch(tokens[i].type) {
 				case OR: 
 					relax(i, 12, la, pr);
 					break;
@@ -220,14 +220,14 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 					relax(i, 4, la, pr);
 					break;
 				case '-':
-					if(!not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
+					if(i != p || !not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
 					else relax(i, 2, la, pr);
 					break;
 				case '/':
 					relax(i, 3, la, pr);
 					break;
 				case '*':
-					if(!not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
+					if(i != p || !not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
 					else relax(i, 2, la, pr);
 					break;
 				case '!':
@@ -298,7 +298,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 	}
 	else {
 		op = find_the_last_operator(p, q);
-		if(!not_a_num(op-1) || tokens[op-1].type == ')') {
+		if(op != p || !not_a_num(op-1) || tokens[op-1].type == ')') {
 			val1 = eval(p, op - 1, success);
 			val2 = eval(op + 1, q, success);
 			if(!(*success)) return 0;
