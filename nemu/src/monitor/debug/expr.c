@@ -278,6 +278,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 								  return reg_b(i);
 							  }
 						  }
+						  if(strcmp("eip", tokens[p].str+1) == 0) return cpu.eip;
 						  printf("register name wrong.\n");
 						  *success = false;
 						  return 0;
