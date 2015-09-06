@@ -228,14 +228,14 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 					relax(i, 4, la, pr);
 					break;
 				case '-':
-					if(i != p || !not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
+					if(i != p && (!not_a_num(i-1) || tokens[i-1].type == ')')) relax(i, 4, la, pr);
 					else relax1(i, 2, la, pr);
 					break;
 				case '/':
 					relax(i, 3, la, pr);
 					break;
 				case '*':
-					if(i != p || !not_a_num(i-1) || tokens[i-1].type == ')') relax(i, 4, la, pr);
+					if(i != p && (!not_a_num(i-1) || tokens[i-1].type == ')')) relax(i, 4, la, pr);
 					else relax1(i, 2, la, pr);
 					break;
 				case '!':
@@ -306,7 +306,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 	else {
 		op = find_the_last_operator(p, q);
 		printf("%d\n", op);
-		if(op != p || !not_a_num(op-1) || tokens[op-1].type == ')') {
+		if(op != p && (!not_a_num(op-1) || tokens[op-1].type == ')')) {
 			val1 = eval(p, op - 1, success);
 			val2 = eval(op + 1, q, success);
 			if(!(*success)) return 0;
