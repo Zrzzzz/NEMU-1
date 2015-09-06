@@ -86,11 +86,12 @@ static int cmd_p(char *args) {
 	bool fl = true;
 	flag = &fl;
 	int n = expr(args, flag);
-	if(*flag) return n;
+	if(*flag) printf("%d\n", n);
 	else {
 		printf("not a correct expression.\n");
 		return 0;
 	}
+	return n;
 }
 
 static int cmd_help(char *args);
