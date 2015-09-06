@@ -83,7 +83,8 @@ static int cmd_x(char *args) {
 
 static int cmd_p(char *args) {
 	bool *flag = 0;
-	*flag = true;
+	bool fl = true;
+	flag = &fl;
 	int n = expr(args, flag);
 	if(*flag) return n;
 	else {
