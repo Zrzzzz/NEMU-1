@@ -62,6 +62,7 @@ static int cmd_x(char *args) {
 	int i;
 	int j = 0, n = 0, m = 0;
 	bool *flag = 0;
+	assert(0);
 	*flag = 1;
 	while(args[j]!=' ') {
 		j++;
@@ -157,7 +158,6 @@ void ui_mainloop() {
 		sdl_clear_event_queue();
 #endif
 
-		assert(0);
 		int i;
 		for(i = 0; i < NR_CMD; i ++) {
 			if(strcmp(cmd, cmd_table[i].name) == 0) {
