@@ -91,7 +91,7 @@ static int cmd_p(char *args) {
 		printf("not a correct expression.\n");
 		return 0;
 	}
-	return n;
+	return 0;
 }
 
 static int cmd_help(char *args);
