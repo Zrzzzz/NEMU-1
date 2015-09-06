@@ -24,7 +24,7 @@ static struct rule {
 	 */
 
 	{" +",	NOTYPE},				// spaces
-	{"0x[\\d|a-f]+", HNUM},			// hex-number
+	{"0x[[\\d]|[a-f]]+", HNUM},			// hex-number
 	{"0[0-7]+", ONUM},				// oct-number
 	{"&&", AND},					// and
 	{"\\|\\|", OR},					// or
@@ -45,7 +45,7 @@ static struct rule {
 	{"\\+", '+'},					// plus
 	{"-", '-'},						// minus
 	{"\\*", '*'},					// multiply
-	{"\\/", '\\'},					// divide	
+	{"\\/", '/'},					// divide	
 	{"\\d+", NUM},					// number
 	{"!", NOT},						// not
 	{"\\$\\w+", '$'},				// register
