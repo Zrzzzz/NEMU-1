@@ -73,7 +73,7 @@ static int cmd_x(char *args) {
 		printf("not a correct expression.\n");
 		return 0;
 	}
-	for(i = 0; i < n; i += 4) {
+	for(i = 0; i < 4 * n; i += 4) {
 		if((i & 15) == 0) printf("\n0x%08x:", m + i);
 		printf(" 0x%08x", hwaddr_read(m + i, 4));
 	}
