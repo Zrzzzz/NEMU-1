@@ -62,7 +62,8 @@ static int cmd_x(char *args) {
 	int i;
 	int j = 0, n = 0, m = 0;
 	bool *flag = 0;
-	*flag = true;
+	bool fl = true;
+	flag = &fl;
 	assert(0);
 	while(args[j]!=' ') {
 		j++;
