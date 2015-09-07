@@ -61,7 +61,7 @@ static int cmd_info(char *args) {
 	}
 	else if(args[0] == 'w') {
 		WP* now = get_head();
-		printf("Num\tValueExpr\t\n");
+		printf("Num\tValue\tExpr\n");
 		while(now != 0) {
 			printf("%d\t%d\t%s\n", (*now).NO, (*now).v, (*now).expr);
 			now = (*now).next;
