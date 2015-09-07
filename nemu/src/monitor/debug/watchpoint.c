@@ -45,6 +45,7 @@ void free_wp(WP *wp) {
 		head = (*head).next;
 		(*wp).next = free_;
 		free_ = wp;
+		return;
 	}
 
 	while((*now).next != 0) {
