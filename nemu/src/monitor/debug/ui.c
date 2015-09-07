@@ -97,17 +97,23 @@ static int cmd_p(char *args) {
 	return 0;
 }
 
+WP* new_wp();
+void free_wp(WP *wp);
+WP* get_head();
+
 static int cmd_w(char *args) {
-	static wp_num = 0;
+	bool fl = true;
+	bool *flag = &fl;
+	static int wp_num = 0;
 	WP *wp = new_wp();
 	(*wp).NO = wp_num ++;
 	strcpy((*wp).expr, args);
-	v = expr((*wp).expr);
+	(*wp).v = expr((*wp).expr, flag);
 	return 0;
 }
 
 static int cmd_d(char *args) {
-	WP *wp = head;
+	WP *wp = get_head();
 	int no = atoi(args);
 	while(wp != 0) {
 		if((*wp).NO == no) {

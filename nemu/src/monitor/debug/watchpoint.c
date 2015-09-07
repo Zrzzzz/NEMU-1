@@ -6,9 +6,6 @@
 static WP wp_list[NR_WP];
 static WP *head, *free_;
 
-WP* new_wp();
-void free_wp(WP *wp);
-
 void init_wp_list() {
 	int i;
 	for(i = 0; i < NR_WP; i ++) {
@@ -62,6 +59,10 @@ void free_wp(WP *wp) {
 		printf("no this point\n");
 		assert(0);
 	}
+}
+
+WP* get_head() {
+	return head;
 }
 
 /* TODO: Implement the functionality of watchpoint */
