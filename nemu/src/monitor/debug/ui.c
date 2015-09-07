@@ -64,6 +64,7 @@ static int cmd_info(char *args) {
 		printf("Num\tExpr\tValue\n");
 		while(now != 0) {
 			printf("%d\t%s\t%d\n", (*now).NO, (*now).expr, (*now).v);
+			now = (*now).next;
 		}
 	}
 	return 0;
