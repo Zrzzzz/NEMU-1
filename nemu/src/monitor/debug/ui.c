@@ -9,6 +9,10 @@
 
 void cpu_exec(uint32_t);
 
+WP* new_wp();
+void free_wp(WP *wp);
+WP* get_head();
+
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -44,7 +48,7 @@ static int cmd_si(char *args) {
 
 static int cmd_info(char *args) {
 	int i;
-	if(args[0]=='r') {
+	if(args[0] == 'r') {
 		for(i = R_EAX; i <= R_EDI; i ++) {
 			printf("%s = 0x%08x\n", regsl[i], reg_l(i));
 		}
@@ -55,8 +59,12 @@ static int cmd_info(char *args) {
 			printf("%s = 0x%02x\n", regsb[i], reg_b(i));
 		}
 	}
-	else if(args[0]=='w') {
-
+	else if(args[0] == 'w') {
+		WP* now = get_head();
+		printf("Num\tExpr\tValue\n");
+		while(now != 0) {
+			printf("%d\t%s\t%d\n", (*now).NO, (*now).expr, (*now).v);
+		}
 	}
 	return 0;
 }
@@ -96,10 +104,6 @@ static int cmd_p(char *args) {
 	}
 	return 0;
 }
-
-WP* new_wp();
-void free_wp(WP *wp);
-WP* get_head();
 
 static int cmd_w(char *args) {
 	bool fl = true;
