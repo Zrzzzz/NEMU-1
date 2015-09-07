@@ -125,6 +125,7 @@ static int cmd_d(char *args) {
 			free_wp(wp);
 			return 0;
 		}
+		wp = (*wp).next;
 	}
 	printf("no this number's point\n");
 	return 0;
