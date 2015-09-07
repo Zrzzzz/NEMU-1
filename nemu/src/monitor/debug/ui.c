@@ -122,7 +122,9 @@ static int cmd_d(char *args) {
 	int no = atoi(args);
 	while(wp != 0) {
 		if((*wp).NO == no) {
+			puts("asd");
 			free_wp(wp);
+			puts("zxc");
 			return 0;
 		}
 		wp = (*wp).next;
