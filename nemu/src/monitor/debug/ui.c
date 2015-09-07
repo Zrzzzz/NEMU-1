@@ -87,7 +87,7 @@ static int cmd_x(char *args) {
 	}
 	for(i = 0; i < 4 * n; i += 4) {
 		if((i & 15) == 0) printf("\n0x%08x:", m + i);
-		printf(" 0x%02x%02x%02x%02x", hwaddr_read(m + i, 1), hwaddr_read(m + i + 1, 1), hwaddr_read(m + i + 2, 1), hwaddr_read(m + i + 3, 1));
+		printf(" 0x%08x", hwaddr_read(m + i, 4));
 	}
 	printf("\n");
 	return 0;
