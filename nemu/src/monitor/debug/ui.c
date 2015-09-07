@@ -61,9 +61,9 @@ static int cmd_info(char *args) {
 	}
 	else if(args[0] == 'w') {
 		WP* now = get_head();
-		printf("Num\tExpr\tValue\n");
+		printf("Num\tValueExpr\t\n");
 		while(now != 0) {
-			printf("%d\t%s\t%d\n", (*now).NO, (*now).expr, (*now).v);
+			printf("%d\t%d\t%s\n", (*now).NO, (*now).v, (*now).expr);
 			now = (*now).next;
 		}
 	}
@@ -122,9 +122,7 @@ static int cmd_d(char *args) {
 	int no = atoi(args);
 	while(wp != 0) {
 		if((*wp).NO == no) {
-			puts("asd");
 			free_wp(wp);
-			puts("zxc");
 			return 0;
 		}
 		wp = (*wp).next;

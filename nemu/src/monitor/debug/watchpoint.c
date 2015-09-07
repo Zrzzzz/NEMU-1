@@ -53,6 +53,7 @@ void free_wp(WP *wp) {
 			(*wp).next = free_;
 			free_ = wp;
 		}
+		now = (*now).next;
 	}
 
 	if((*now).next == 0) {
