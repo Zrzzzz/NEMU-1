@@ -1,4 +1,6 @@
 #include "monitor/monitor.h"
+#include "monitor/watchpoint.h"
+#include "monitor/expr.h"
 #include "cpu/helper.h"
 #include <setjmp.h>
 
@@ -18,6 +20,8 @@ char asm_buf[128];
 
 /* Used with exception handling. */
 jmp_buf jbuf;
+
+WP* get_head();
 
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;
@@ -73,7 +77,19 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-
+		WP *wp = get_head();
+		while(wp != 0) {
+			bool fl = true;
+			bool *flag = &fl;
+			uint32_t t = expr((*wp).expr, flag);
+			if (t != (*wp).v) {
+				do_int3();
+				(*wp).v = t;
+				printf("%d: %s = %d\n", (*wp).NO, (*wp).expr, t);
+				break;
+			}
+			wp = (*wp).next;
+		}
 
 		if(nemu_state != RUNNING) { return; }
 	}
