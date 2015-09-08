@@ -47,7 +47,7 @@ static struct rule {
 	{"\\*", '*'},					// multiply
 	{"\\/", '/'},					// divide	
 	{"[0-9]+", NUM},				// number
-	{"!", NOT},						// not
+	{"!", '!'},						// not
 	{"\\$\\w+", '$'},				// register
 	{"==", EQ}						// equal
 };
