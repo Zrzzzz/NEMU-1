@@ -5,6 +5,7 @@
 
 static WP wp_list[NR_WP];
 static WP *head, *free_;
+static int wp_num = 0;
 
 void init_wp_list() {
 	int i;
@@ -63,8 +64,48 @@ void free_wp(WP *wp) {
 	}
 }
 
-WP* get_head() {
-	return head;
+void print_wp_info() {
+	WP* now = head;
+	printf("Num\tValue\tExpr\n");
+	while(now != 0) {
+		printf("%d\t%d\t%s\n", (*now).NO, (*now).v, (*now).expr);
+		now = (*now).next;
+	}
+}
+
+void add_wp(char *args) {
+	bool flag = true;
+	WP *now = new_wp();
+	(*now).NO = wp_num ++;
+	strcpy((*now).expr, args);
+	(*now).v = expr((*now).expr, &flag);
+}
+
+void delete_wp(int no) {
+	WP *now = head;
+	while(now != 0) {
+		if((*now).NO == no) {
+			free_wp(now);
+			return;
+		}
+		now = (*now).next;
+	}
+	printf("no this number's point\n");
+}
+
+void check_wp(bool *fl) {
+	WP *now = head;
+	while(now != 0) {
+		bool flag =true;
+		uint32_t t = expr((*now).expr, &flag);
+		if(t != (*now).v) {
+			*fl = false;
+			(*now).v = t;
+			printf("%d: %s = %d\n", (*now).NO, (*now).expr, t);
+			break;
+		}
+		now = (*now).next;
+	}
 }
 
 /* TODO: Implement the functionality of watchpoint */

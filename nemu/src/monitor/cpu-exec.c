@@ -13,6 +13,8 @@
 
 int nemu_state = STOP;
 
+void check_wp(bool *fl);
+
 int exec(swaddr_t);
 
 char assembly[80];
@@ -20,8 +22,6 @@ char asm_buf[128];
 
 /* Used with exception handling. */
 jmp_buf jbuf;
-
-WP* get_head();
 
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;
@@ -77,18 +77,11 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-		WP *wp = get_head();
-		while(wp != 0) {
-			bool fl = true;
-			bool *flag = &fl;
-			uint32_t t = expr((*wp).expr, flag);
-			if (t != (*wp).v) {
-				do_int3();
-				(*wp).v = t;
-				printf("%d: %s = %d\n", (*wp).NO, (*wp).expr, t);
-				break;
-			}
-			wp = (*wp).next;
+		bool flag = true;
+		check_wp(&flag);
+		if(!flag) {
+			nemu_state = STOP;
+			printf("\nHit breakpoint at eip = 0x%08x\n", cpu.eip);
 		}
 
 		if(nemu_state != RUNNING) { return; }

@@ -7,11 +7,11 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void cpu_exec(uint32_t);
+void print_wp_info();
+void add_wp(char *args);
+void delete_wp(int no);
 
-WP* new_wp();
-void free_wp(WP *wp);
-WP* get_head();
+void cpu_exec(uint32_t);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -60,12 +60,7 @@ static int cmd_info(char *args) {
 		}
 	}
 	else if(args[0] == 'w') {
-		WP* now = get_head();
-		printf("Num\tValue\tExpr\n");
-		while(now != 0) {
-			printf("%d\t%d\t%s\n", (*now).NO, (*now).v, (*now).expr);
-			now = (*now).next;
-		}
+		print_wp_info();
 	}
 	return 0;
 }
@@ -73,15 +68,13 @@ static int cmd_info(char *args) {
 static int cmd_x(char *args) {
 	int i;
 	int j = 0, n = 0, m = 0;
-	bool *flag = 0;
-	bool fl = true;
-	flag = &fl;
+	bool flag = true;
 	while(args[j]!=' ') {
 		j++;
 	}
 	n = atoi(args);
-	m = expr(args + j + 1, flag);
-	if(!*flag) {
+	m = expr(args + j + 1, &flag);
+	if(!flag) {
 		printf("not a correct expression.\n");
 		return 0;
 	}
@@ -94,11 +87,9 @@ static int cmd_x(char *args) {
 }
 
 static int cmd_p(char *args) {
-	bool *flag = 0;
-	bool fl = true;
-	flag = &fl;
-	int n = expr(args, flag);
-	if(*flag) printf("%d\n", n);
+	bool flag = true;
+	int n = expr(args, &flag);
+	if(flag) printf("%d\n", n);
 	else {
 		printf("not a correct expression.\n");
 		return 0;
@@ -107,27 +98,13 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char *args) {
-	bool fl = true;
-	bool *flag = &fl;
-	static int wp_num = 0;
-	WP *wp = new_wp();
-	(*wp).NO = wp_num ++;
-	strcpy((*wp).expr, args);
-	(*wp).v = expr((*wp).expr, flag);
+	add_wp(args);
 	return 0;
 }
 
 static int cmd_d(char *args) {
-	WP *wp = get_head();
 	int no = atoi(args);
-	while(wp != 0) {
-		if((*wp).NO == no) {
-			free_wp(wp);
-			return 0;
-		}
-		wp = (*wp).next;
-	}
-	printf("no this number's point\n");
+	delete_wp(no);
 	return 0;
 }
 
