@@ -73,13 +73,13 @@ submit: clean
 
 count: 
 	$(call git_commit, "count")
-	FOO=`find nemu/ -name "*.[ch]" |xargs cat|wc -l`
+	FOO=$$((`find nemu/ -name "*.[ch]" |xargs cat|wc -l`))
 	git checkout b7183428
-	BAR=`find nemu/ -name "*.[ch]" |xargs cat|wc -l`
+	BAR=$$((`find nemu/ -name "*.[ch]" |xargs cat|wc -l`))
 	git checkout master
 	@echo "all lines in nemu(.h and .c):"
 	echo $$FOO
 	@echo "all not empty lines in nemu(.h and .c):"
 	@find nemu/ -name "*.[ch]" |xargs cat|grep -v ^$$|wc -l
 	@echo "new lines from the oldest commit:"
-	echo $$FOO-$$BAR
+	echo $$(($$FOO-$$BAR))
