@@ -60,6 +60,8 @@ void free_wp(WP *wp) {
 			(*wp).next = free_;
 	printf("asd\n");
 			free_ = wp;
+	printf("asd\n");
+			return;
 		}
 		now = (*now).next;
 	}
