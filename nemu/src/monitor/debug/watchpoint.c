@@ -54,8 +54,11 @@ void free_wp(WP *wp) {
 
 	while((*now).next != NULL) {
 		if((*now).next == wp) {
+	printf("asd\n");
 			(*now).next = (*wp).next;
+	printf("asd\n");
 			(*wp).next = free_;
+	printf("asd\n");
 			free_ = wp;
 		}
 		now = (*now).next;
