@@ -71,14 +71,15 @@ test: $(nemu_BIN) $(testcase_BIN) entry
 submit: clean
 	cd .. && tar cvj $(shell pwd | grep -o '[^/]*$$') > $(STU_ID).tar.bz2
 
+foo := find nemu/ -name "*.[ch]" |xargs cat|wc -l
+bar = find nemu/ -name "*.[ch]" |xargs cat|wc -l
 count: 
+	$(call git_commit, "count")
 	@echo "all lines in nemu(.h and .c):"
-	foo := find nemu/ -name "*.[ch]" |xargs cat|wc -l
 	echo $(foo)
 	@echo "all not empty lines in nemu(.h and .c):"
 	@find nemu/ -name "*.[ch]" |xargs cat|grep -v ^$$|wc -l
 	@echo "new lines from the oldest commit:"
 	git checkout b7183428
-	bar := find nemu/ -name "*.[ch]" |xargs cat|wc -l
-	git checkout master
 	echo $(foo)-$(bar)
+	git checkout master
