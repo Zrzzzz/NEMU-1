@@ -75,9 +75,9 @@ count:
 	$(call git_commit, "count")
 	FOO=`find nemu/ -name "*.[ch]" |xargs cat|wc -l`
 	echo $$FOO
-	git checkout b7183428
+	@git checkout b7183428
 	BAR=`find nemu/ -name "*.[ch]" |xargs cat|wc -l`
-	git checkout master
+	@git checkout master
 	@echo "all lines in nemu(.h and .c):"
 	echo $$FOO
 	@echo "all not empty lines in nemu(.h and .c):"
