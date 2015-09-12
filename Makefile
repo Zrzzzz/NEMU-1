@@ -73,7 +73,7 @@ submit: clean
 
 count: 
 	@$(call git_commit, "count")
-	FOO=`find nemu/ -name "*.[ch]" |xargs cat|wc -l`;\
+	@FOO=`find nemu/ -name "*.[ch]" |xargs cat|wc -l`;\
 	echo $$FOO;\
 	git checkout b7183428;\
 	BAR=`find nemu/ -name "*.[ch]" |xargs cat|wc -l`;\
