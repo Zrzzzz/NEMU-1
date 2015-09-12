@@ -35,14 +35,12 @@ WP* new_wp() {
 }
 
 void free_wp(WP *wp) {
-	printf("asd\n");
 	if(wp == NULL) {
 		printf("free a null ponit!\n");
 		assert(0);
 	}
 
 	WP *now = head;
-	printf("asd\n");
 
 	if(wp == head) {
 		head = (*head).next;
@@ -50,22 +48,16 @@ void free_wp(WP *wp) {
 		free_ = wp;
 		return;
 	}
-	printf("asd\n");
 
 	while((*now).next != NULL) {
 		if((*now).next == wp) {
-	printf("asd\n");
 			(*now).next = (*wp).next;
-	printf("asd\n");
 			(*wp).next = free_;
-	printf("asd\n");
 			free_ = wp;
-	printf("asd\n");
 			return;
 		}
 		now = (*now).next;
 	}
-	printf("asd\n");
 
 	if((*now).next == NULL) {
 		printf("no this point\n");
