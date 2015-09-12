@@ -35,6 +35,7 @@ WP* new_wp() {
 }
 
 void free_wp(WP *wp) {
+	printf("asd\n");
 	if(wp == NULL) {
 		printf("free a null ponit!\n");
 		assert(0);
