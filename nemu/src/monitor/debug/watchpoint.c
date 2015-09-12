@@ -22,7 +22,7 @@ void init_wp_list() {
 WP* new_wp() {
 	WP *now = free_;
 	
-	if(free_ == 0) {
+	if(free_ == NULL) {
 		printf("no more points!\n");
 		assert(0);	
 	}	
@@ -35,7 +35,7 @@ WP* new_wp() {
 }
 
 void free_wp(WP *wp) {
-	if(wp == 0) {
+	if(wp == NULL) {
 		printf("free a null ponit!\n");
 		assert(0);
 	}
@@ -49,7 +49,7 @@ void free_wp(WP *wp) {
 		return;
 	}
 
-	while((*now).next != 0) {
+	while((*now).next != NULL) {
 		if((*now).next == wp) {
 			(*now).next = (*wp).next;
 			(*wp).next = free_;
@@ -58,7 +58,7 @@ void free_wp(WP *wp) {
 		now = (*now).next;
 	}
 
-	if((*now).next == 0) {
+	if((*now).next == NULL) {
 		printf("no this point\n");
 		assert(0);
 	}
@@ -67,7 +67,7 @@ void free_wp(WP *wp) {
 void print_wp_info() {
 	WP* now = head;
 	printf("Num\tValue\tExpr\n");
-	while(now != 0) {
+	while(now != NULL) {
 		printf("%d\t%d\t%s\n", (*now).NO, (*now).v, (*now).expr);
 		now = (*now).next;
 	}
@@ -83,7 +83,7 @@ void add_wp(char *args) {
 
 void delete_wp(int no) {
 	WP *now = head;
-	while(now != 0) {
+	while(now != NULL) {
 		if((*now).NO == no) {
 			free_wp(now);
 			return;
@@ -95,7 +95,7 @@ void delete_wp(int no) {
 
 void check_wp(bool *fl) {
 	WP *now = head;
-	while(now != 0) {
+	while(now != NULL) {
 		bool flag =true;
 		uint32_t t = expr((*now).expr, &flag);
 		if(t != (*now).v) {
