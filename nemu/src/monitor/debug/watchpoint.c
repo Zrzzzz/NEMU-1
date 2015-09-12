@@ -42,6 +42,7 @@ void free_wp(WP *wp) {
 	}
 
 	WP *now = head;
+	printf("asd\n");
 
 	if(wp == head) {
 		head = (*head).next;
@@ -49,6 +50,7 @@ void free_wp(WP *wp) {
 		free_ = wp;
 		return;
 	}
+	printf("asd\n");
 
 	while((*now).next != NULL) {
 		if((*now).next == wp) {
@@ -58,6 +60,7 @@ void free_wp(WP *wp) {
 		}
 		now = (*now).next;
 	}
+	printf("asd\n");
 
 	if((*now).next == NULL) {
 		printf("no this point\n");
