@@ -5,6 +5,10 @@
 
 #include "data-sub/sub.h"
 
+#include "stack/push.h"
+
+#include "jmp-call/call.h"
+
 #include "arith/dec.h"
 #include "arith/inc.h"
 #include "arith/neg.h"
