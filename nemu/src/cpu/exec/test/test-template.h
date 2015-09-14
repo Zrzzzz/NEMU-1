@@ -12,7 +12,7 @@ static void do_execute() {
 	pf = (pf >> 2) & pf;
 	pf = (pf >> 1) & pf;
 	cpu.PF = pf & 1;
-	print_asm_template3();
+	print_asm_template2();
 }
 
 make_instr_helper(rm2r)

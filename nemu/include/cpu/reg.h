@@ -28,7 +28,10 @@ typedef struct {
 			uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
 		};
 	};
-	swaddr_t eip;
+	union {
+		swaddr_t eip;
+		uint16_t ip;
+	};
 
 	struct {
 		unsigned CF:1;

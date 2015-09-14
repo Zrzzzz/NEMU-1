@@ -3,8 +3,8 @@
 #define instr push
 
 static void do_execute() {
-	cpu.esp = cpu.esp - DATA_BYTE;
-	hwaddr_write(cpu.esp, 4, op_src->val);
+	reg_l(R_ESP) = reg_l(R_ESP) - DATA_BYTE;
+	hwaddr_write(reg_l(R_ESP), DATA_BYTE, op_src->val);
 	print_asm_template1();
 }
 

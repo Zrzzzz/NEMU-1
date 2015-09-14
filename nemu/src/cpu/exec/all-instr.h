@@ -7,9 +7,11 @@
 
 #include "stack/push.h"
 
-#include "jmp-call/call.h"
+#include "call/call.h" 
 
 #include "test/test.h"
+
+#include "jcc/je.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
