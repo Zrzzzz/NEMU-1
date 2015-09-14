@@ -101,6 +101,14 @@ make_helper(concat(decode_i2a_, SUFFIX)) {
 	return decode_i(eip);
 }
 
+/* eXX <- Ib
+ * use for sub
+make_helper(concat(decode_i2rml_, SUFFIX)) {
+	int len = decode_rm_internal(eip, op_dest, op_src2);
+	len += decode_i(eip + len);
+	return len;
+}*/
+
 /* Gv <- EvIb
  * Gv <- EvIv
  * use for imul */
