@@ -9,6 +9,8 @@
 
 #include "call/call.h" 
 
+#include "cmp/cmp.h"
+
 #include "test/test.h"
 
 #include "jcc/je.h"
