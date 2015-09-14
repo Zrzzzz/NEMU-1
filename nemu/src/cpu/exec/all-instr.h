@@ -9,6 +9,8 @@
 
 #include "jmp-call/call.h"
 
+#include "test/test.h"
+
 #include "arith/dec.h"
 #include "arith/inc.h"
 #include "arith/neg.h"
