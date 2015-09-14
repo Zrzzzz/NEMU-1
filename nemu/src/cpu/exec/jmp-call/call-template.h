@@ -3,8 +3,10 @@
 #define instr call
 
 static void do_execute() {
-	OPERAND_W(op_dest, op_dest->val - op_src->val);
-	print_asm_template2();
+	cpu.esp = cpu.esp - DATA_BYTE;
+	hwaddr_write(cpu.esp, 4, op_src->val);
+	cpu.eip = cpu.eip + op_src->val;
+	print_asm_template1();
 }
 
 make_instr_helper(i)
