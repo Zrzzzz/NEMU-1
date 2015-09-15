@@ -31,6 +31,9 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	 * it to op_src->simm.
 	 */
 	op_src->simm = instr_fetch(eip, DATA_BYTE);
+#if DATA_BYTE == 1
+	op_src->simm = op_src->simm << 24 >> 24;
+#endif
 //	panic("please implement me");
 
 	op_src->val = op_src->simm;
