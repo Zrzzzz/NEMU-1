@@ -3,7 +3,7 @@
 #define instr pop
 
 static void do_execute() {
-	hwaddr_write(op_dest->addr, DATA_BYTE, hwaddr_read(reg_l(R_ESP), DATA_BYTE)); 
+	hwaddr_write(op_src->addr, DATA_BYTE, hwaddr_read(reg_l(R_ESP), DATA_BYTE)); 
 	reg_l(R_ESP) = reg_l(R_ESP) + DATA_BYTE;
 	print_asm_template1();
 }
