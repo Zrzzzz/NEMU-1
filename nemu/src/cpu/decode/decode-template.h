@@ -5,6 +5,7 @@
 #define decode_r_internal concat3(decode_r_, SUFFIX, _internal)
 #define decode_rm_internal concat3(decode_rm_, SUFFIX, _internal)
 #define decode_i concat(decode_i_, SUFFIX)
+#define decode_m_internal concat3(decode_m_, SUFFIX, _internal)
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
@@ -80,6 +81,23 @@ static int concat3(decode_rm_, SUFFIX, _internal) (swaddr_t eip, Operand *rm, Op
 	return len;
 }
 
+/* memory */
+make_helper(concat3(decode_m_, SUFFIX, _internal)) {
+	op_src->type = OP_TYPE_MEM;
+	op_src->addr = instr_fetch(eip, DATA_BYTE);
+	op_src->val = hwaddr_read(op_src->addr, DATA_BYTE);
+
+#ifdef DEBUG
+	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->addr);
+#endif
+	return DATA_BYTE;
+}
+
+/* Mb, Mv */
+make_helper(concat(decode_m_, SUFFIX)) {
+	return decode_m_internal(eip);
+}
+
 /* Eb <- Gb
  * Ev <- Gv
  */
@@ -102,14 +120,6 @@ make_helper(concat(decode_i2a_, SUFFIX)) {
 	decode_a(eip, op_dest);
 	return decode_i(eip);
 }
-
-/* eXX <- Ib
- * use for sub
-make_helper(concat(decode_i2rml_, SUFFIX)) {
-	int len = decode_rm_internal(eip, op_dest, op_src2);
-	len += decode_i(eip + len);
-	return len;
-}*/
 
 /* Gv <- EvIb
  * Gv <- EvIv
