@@ -4,6 +4,7 @@
 #include "data-mov/xchg.h"
 #include "data-mov/movsx.h"
 #include "data-mov/movzx.h"
+#include "data-mov/cwdcdq.h"
 
 #include "data-sub/sub.h"
 
