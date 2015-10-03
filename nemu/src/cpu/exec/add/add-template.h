@@ -1,19 +1,18 @@
 #include "cpu/exec/template-start.h"
 
+#if DATA_BYTE == 1
+#define RET_DATA_TYPE int16_t
+#elif DATA_BYTE == 2
+#define RET_DATA_TYPE int32_t
+#elif DATA_BYTE == 4
+#define RET_DATA_TYPE int64_t
+#endif
 #define instr add
 
 static void do_execute() {
-#if DATA_BYTE == 4
-	reg_l(R_ESP) = reg_l(R_ESP) - DATA_BYTE;
-	hwaddr_write(reg_l(R_ESP), DATA_BYTE, cpu.eip);
-	cpu.eip = cpu.eip + op_src->val;
-#elif DATA_BYTE == 2
-	reg_w(R_SP)= reg_w(R_SP)- DATA_BYTE;
-	hwaddr_write(reg_w(R_SP), DATA_BYTE, cpu.ip);
-	cpu.eip = cpu.eip + op_src->val;
-	cpu.eip = cpu.eip & 0xffff;
-#endif
-	print_asm_template1();
+	RET_DATA_TYPE res = op_src->val + op_dest->val;
+	OPERAND_W(op_dest, res);
+	print_asm_template2();
 }
 
 make_instr_helper(i2a)
@@ -23,4 +22,5 @@ make_instr_helper(rm2r)
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 make_instr_helper(si2rm)
 #endif
+#undef RET_DATA_TYPE
 #include "cpu/exec/template-end.h"
