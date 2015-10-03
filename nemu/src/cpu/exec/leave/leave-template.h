@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	reg_l(R_ESP) = reg_l(R_EBP);
-	concat(reg_, SUFFIX)(R_EBP) = hwaddr_read(reg_l(R_ESP), DATA_BYTE);
+	concat(reg_, SUFFIX)(R_EBP) = swaddr_read(reg_l(R_ESP), DATA_BYTE);
 	print_asm_template1();
 }
 
