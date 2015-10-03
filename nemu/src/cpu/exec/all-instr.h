@@ -6,7 +6,7 @@
 #include "data-mov/movzx.h"
 #include "data-mov/cwdcdq.h"
 
-#include "data-sub/sub.h"
+#include "sub/sub.h"
 
 #include "add/add.h"
 #include "adc/adc.h"
