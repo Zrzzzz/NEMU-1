@@ -7,6 +7,7 @@
 #include "data-mov/cwdcdq.h"
 
 #include "sub/sub.h"
+#include "sbb/sbb.h"
 
 #include "add/add.h"
 #include "adc/adc.h"
