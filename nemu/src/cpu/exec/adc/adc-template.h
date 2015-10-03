@@ -7,10 +7,10 @@
 #elif DATA_BYTE == 4
 #define RET_DATA_TYPE int32_t
 #endif
-#define instr add
+#define instr adc
 
 static void do_execute() {
-	RET_DATA_TYPE res = op_src->val + op_dest->val;
+	RET_DATA_TYPE res = op_src->val + op_dest->val + cpu.CF;
 	if(res >> ((DATA_BYTE << 3) - 1)) {
 		cpu.CF = (op_src->val >> ((DATA_BYTE << 3) - 1)) & (op_dest->val >> ((DATA_BYTE << 3) - 1)) & 1;
 	}
