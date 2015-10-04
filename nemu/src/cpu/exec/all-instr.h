@@ -17,6 +17,8 @@
 
 #include "call/call.h" 
 
+#include "setcc/setcc.h"
+
 #include "leave/leave.h"
 
 #include "cmp/cmp.h"
