@@ -1,11 +1,11 @@
 #include "cpu/exec/template-start.h"
 
-#define instr je
+#define instr ja
 
 static void do_execute() {
 	int res = op_src->val;
 	res = res << (32 - (DATA_BYTE << 3)) >> (32 - (DATA_BYTE << 3)); 
-	if(cpu.ZF) {
+	if(!cpu.CF && !cpu.ZF) {
 		cpu.eip = cpu.eip + op_src->val;
 #if DATA_BYTE == 2
 		cpu.eip = cpu.eip & 0xffff;

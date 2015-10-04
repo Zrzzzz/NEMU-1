@@ -25,7 +25,7 @@
 
 #include "test/test.h"
 
-#include "jcc/je.h"
+#include "jcc/jcc.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
