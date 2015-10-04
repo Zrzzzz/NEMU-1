@@ -6,6 +6,9 @@
 #include "setb.h"
 #include "setbe.h"
 #include "sete.h"
+#include "setg.h"
+#include "setge.h"
+#include "setl.h"
 
 
 #endif
