@@ -8,5 +8,7 @@
 #include "jbe.h"
 #include "jcxz.h"
 #include "jg.h"
+#include "jge.h"
+#include "jl.h"
 
 #endif
