@@ -7,5 +7,6 @@
 #include "jb.h"
 #include "jbe.h"
 #include "jcxz.h"
+#include "jg.h"
 
 #endif
