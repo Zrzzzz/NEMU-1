@@ -13,7 +13,7 @@
 #include "adc/adc.h"
 
 #include "stos/stos.h"
-//#include "movs/movs.h"
+#include "movs/movs.h"
 #include "cmps/cmps.h"
 
 #include "stack/push.h"
