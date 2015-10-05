@@ -11,7 +11,7 @@ static void do_execute() {
 	char res;
 #endif
 	res = op_src->val;
-	res = res << (32 - (DATA_BYTE << 3)) >> (32 - (DATA_BYTE << 3));
+	res = res << ((DATA_BYTE << 3) - 8) >> ((DATA_BYTE << 3) - 8);
 	OPERAND_W(op_dest, res);
 	print_asm_template2();
 }
