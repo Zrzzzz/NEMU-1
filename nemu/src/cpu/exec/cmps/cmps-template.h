@@ -13,8 +13,8 @@ make_helper(concat(cmps_, SUFFIX)) {
 	cpu.ZF = (res == 0);
 	cpu.SF = (res >> 31) & 1;
 	cpu.OF = ((REG((R_ESI)) >> 31) ^ (REG((R_EDI)) >> 31)) & ((REG((R_ESI)) >> 31) ^ (res >> 31)) & 1;
-	swaddr_write(concat(reg_, SUFFIX)(R_ESI), DATA_BYTE, (DATA_TYPE) reg_l(R_ESI) - ((cpu.DF << 1) - 1) * DATA_BYTE);
-	swaddr_write(concat(reg_, SUFFIX)(R_EDI), DATA_BYTE, (DATA_TYPE) reg_l(R_EDI) - ((cpu.DF << 1) - 1) * DATA_BYTE);
+	concat(reg_, SUFFIX)(R_ESI) = (DATA_TYPE) reg_l(R_ESI) - ((cpu.DF << 1) - 1) * DATA_BYTE;
+	concat(reg_, SUFFIX)(R_EDI) = (DATA_TYPE) reg_l(R_EDI) - ((cpu.DF << 1) - 1) * DATA_BYTE;
 	print_asm_template1();
 	return 1;
 }
