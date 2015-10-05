@@ -7,7 +7,14 @@ static void do_execute () {
 	OPERAND_W(op_dest, result);
 
 	/* TODO: Update EFLAGS. */
-	panic("please implement me");
+	cpu.CF = cpu.OF = 0;
+	cpu.SF = (op_dest->val >> ((DATA_BYTE << 3) - 1)) & 1;
+	cpu.ZF = !op_dest->val;
+	uint32_t pf = (op_dest->val & 255);
+	pf = (pf >> 4) & pf;
+	pf = (pf >> 2) & pf;
+	pf = (pf >> 1) & pf;
+	cpu.PF = pf & 1;
 
 	print_asm_template2();
 }
