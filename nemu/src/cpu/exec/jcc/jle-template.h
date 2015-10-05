@@ -5,7 +5,7 @@
 static void do_execute() {
 	int res = op_src->val;
 	res = res << (32 - (DATA_BYTE << 3)) >> (32 - (DATA_BYTE << 3)); 
-	if(cpu.OF != cpu.SF && cpu.ZF) {
+	if(cpu.OF != cpu.SF || cpu.ZF) {
 		cpu.eip = cpu.eip + res;
 #if DATA_BYTE == 2
 		cpu.eip = cpu.eip & 0xffff;
