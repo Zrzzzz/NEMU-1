@@ -3,12 +3,14 @@
 /* for instruction encoding overloading */
 
 int cwdcdq_l(uint32_t eip) {
-	reg_l(R_EDX) = reg_l(R_AX) >> 31;
+	int res = reg_l(R_EAX);
+	reg_l(R_EDX) = res >> 31;
 	return 1;
 }
 
 int cwdcdq_w(uint32_t eip) {
-	reg_w(R_DX) = reg_w(R_AX) >> 15;
+	short res = reg_w(R_AX);
+	reg_w(R_DX) = res >> 15;
 	return 1;
 }
 
