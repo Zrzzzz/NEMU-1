@@ -3,7 +3,7 @@
 #define instr setle
 
 static void do_execute() {
-	int8_t res = cpu.ZF && cpu.SF != cpu.OF;
+	int8_t res = cpu.ZF || cpu.SF != cpu.OF;
 	OPERAND_W(op_src, res);
 	print_asm_template1();
 }
