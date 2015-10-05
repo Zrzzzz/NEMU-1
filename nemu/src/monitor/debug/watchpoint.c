@@ -109,6 +109,12 @@ void check_wp(bool *fl) {
 	}
 }
 
+void delete_all_wp() {
+	while(head != NULL) {
+		free_wp(head);
+	}
+}
+
 /* TODO: Implement the functionality of watchpoint */
 
 

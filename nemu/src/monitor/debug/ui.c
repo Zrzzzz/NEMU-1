@@ -10,6 +10,7 @@
 void print_wp_info();
 void add_wp(char *args);
 void delete_wp(int no);
+void delete_all_wp();
 
 void cpu_exec(uint32_t);
 
@@ -52,12 +53,17 @@ static int cmd_info(char *args) {
 		for(i = R_EAX; i <= R_EDI; i ++) {
 			printf("%s = 0x%08x\n", regsl[i], reg_l(i));
 		}
-		for(i = R_AX; i <= R_DI; i ++) {
+	/*	for(i = R_AX; i <= R_DI; i ++) {
 			printf("%s = 0x%04x\n", regsw[i], reg_w(i));
 		}
 		for(i = R_AL; i <= R_BH; i ++) {
 			printf("%s = 0x%02x\n", regsb[i], reg_b(i));
-		}
+		}*/
+		printf("PF = %d\n", cpu.PF);
+		printf("OF = %d\n", cpu.OF);
+		printf("CF = %d\n", cpu.CF);
+		printf("SF = %d\n", cpu.SF);
+		printf("ZF = %d\n", cpu.ZF);
 	}
 	else if(args[0] == 'w') {
 		print_wp_info();
@@ -103,6 +109,9 @@ static int cmd_w(char *args) {
 }
 
 static int cmd_d(char *args) {
+	if(args == 0) {
+		delete_all_wp();
+	}
 	int no = atoi(args);
 	delete_wp(no);
 	return 0;
