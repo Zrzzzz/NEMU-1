@@ -3,7 +3,7 @@
 #define instr movzx
 
 static void do_execute() {
-	OPERAND_W(op_dest, swaddr_read(op_src->addr, DATA_BYTE));
+	OPERAND_W(op_dest, op_src->val);
 	print_asm_template2();
 }
 
