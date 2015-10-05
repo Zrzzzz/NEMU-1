@@ -3,10 +3,10 @@
 #define instr movsx
 
 static void do_execute() {
-	op_dest->val = op_dest->val << (32 - DATA_BYTE) >> (32 - DATA_BYTE);
-	reg_l(op_src->val) = hwaddr_read(reg_l(R_ESP), DATA_BYTE);
+	op_src->val = op_src->val << (32 - DATA_BYTE) >> (32 - DATA_BYTE);
+	OPERAND_W(op_dest, hwaddr_read(op_src->val, DATA_BYTE));
 	print_asm_template2();
 }
 
-make_instr_helper(r2rm)
+make_instr_helper(rm2r)
 #include "cpu/exec/template-end.h"
