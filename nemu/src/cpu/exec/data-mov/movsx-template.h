@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	op_src->val = op_src->val << (32 - DATA_BYTE) >> (32 - DATA_BYTE);
-	OPERAND_W(op_dest, hwaddr_read(op_src->val, DATA_BYTE));
+	OPERAND_W(op_dest, op_src->val);
 	print_asm_template2();
 }
 
