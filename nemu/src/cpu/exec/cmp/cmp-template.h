@@ -5,9 +5,9 @@
 static void do_execute() {
 	uint32_t res = op_dest->val - op_src->val;
 	uint32_t pf = (res & 255);
-	pf = (pf >> 4) & pf;
-	pf = (pf >> 2) & pf;
-	pf = (pf >> 1) & pf;
+	pf = (pf >> 4) ^ pf;
+	pf = (pf >> 2) ^ pf;
+	pf = (pf >> 1) ^ pf;
 	cpu.CF = op_dest->val < op_src->val;
 	cpu.PF = (pf & 1);
 	cpu.ZF = (res == 0);
