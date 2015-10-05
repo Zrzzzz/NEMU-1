@@ -48,6 +48,8 @@
 
 #include "string/rep.h"
 
+#include "cld/cld.h"
+
 #include "misc/misc.h"
 
 #include "special/special.h"
