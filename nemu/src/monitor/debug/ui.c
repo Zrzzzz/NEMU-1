@@ -111,6 +111,7 @@ static int cmd_w(char *args) {
 static int cmd_d(char *args) {
 	if(args == 0) {
 		delete_all_wp();
+		return 0;
 	}
 	int no = atoi(args);
 	delete_wp(no);
