@@ -27,6 +27,7 @@
 
 #include "jcc/jcc.h"
 #include "jmp/jmp.h"
+#include "ret/ret.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
