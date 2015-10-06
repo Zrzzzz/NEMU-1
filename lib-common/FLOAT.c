@@ -35,6 +35,11 @@ int howManyBits(int x) {
 	return n;
 }
 FLOAT F_div_F(FLOAT a, FLOAT b) {
+	int sign = 0;
+	if(a & 0x80000000) {
+		sign = 1;
+		a = a ^ 0x80000000;
+	}
 	long long c = a;
 	c = c << 16;
 	int d = howManyBits(b);
@@ -46,6 +51,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 			c -= (e << i);
 		}
 	}
+	if(sign)ans = -ans;
 	return ans;
 }
 
