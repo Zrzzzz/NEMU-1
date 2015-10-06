@@ -18,10 +18,11 @@ static void do_execute() {
 		cpu.CF = ((op_src->val >> ((DATA_BYTE << 3) - 1)) | (op_dest->val >> ((DATA_BYTE << 3) - 1))) & 1;
 	}
 	cpu.PF = 0;
-	int i;
-	for(i = 0; i < (DATA_BYTE << 3); i ++) {
-		cpu.PF = cpu.PF ^ ((res >> i) & 1);
-	}
+	uint32_t pf = (res & 255);
+	pf = (pf >> 4) ^ pf;
+	pf = (pf >> 2) ^ pf;
+	pf = (pf >> 1) ^ pf;
+	cpu.PF = pf & 1;
 	cpu.ZF = (res == 0);
 	cpu.SF = ((res >> ((DATA_BYTE << 3) - 1)) & 1);
 	cpu.OF = ((res ^ op_src->val) & (res ^ op_dest->val) & 1);
