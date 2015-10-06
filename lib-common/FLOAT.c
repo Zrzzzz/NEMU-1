@@ -41,7 +41,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	long long e = b, ans = 0;
 	int i;
 	for(i = 64 - d; i >= 0; i --) {
-		if(c > (e << i)) {
+		if(c >= (e << i)) {
 			ans += (1 << i);
 			c -= (e << i);
 		}
