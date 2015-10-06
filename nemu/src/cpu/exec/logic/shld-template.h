@@ -10,9 +10,9 @@ static void do_execute () {
 	uint8_t count = op_src->val;
 	count &= 0x1f;
 	while(count != 0) {
-		in <<= 1;
-		in |= (out >> ((DATA_BYTE << 3) - 1)) & 1; 
 		out <<= 1;
+		out |= (in >> ((DATA_BYTE << 3) - 1)) & 1; 
+		in <<= 1;
 		count --;
 	}
 
