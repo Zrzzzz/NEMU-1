@@ -49,6 +49,7 @@
 #include "logic/shl.h"
 #include "logic/shr.h"
 #include "logic/shrd.h"
+#include "logic/shld.h"
 
 #include "string/rep.h"
 
