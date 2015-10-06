@@ -17,6 +17,7 @@ static void do_execute () {
 	}
 
 	OPERAND_W(op_src2, out);
+	OPERAND_W(op_dest, in);
 
 	print_asm("shld" str(SUFFIX) " %s,%s,%s", op_src->str, op_dest->str, op_src2->str);
 }
