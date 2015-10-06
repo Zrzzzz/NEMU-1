@@ -34,6 +34,7 @@ make_helper(concat(shld_, SUFFIX)) {
 	op_src2->val = op_src->val;
 	op_src2->imm = op_src->imm;
 	op_src2->type = op_src->type;
+	op_src2->size = op_src->size;
 	op_src->val = reg_b(R_CL);
 	do_execute();
 	return len + 1;
