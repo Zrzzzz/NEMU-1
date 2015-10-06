@@ -27,6 +27,14 @@ make_helper(concat(shldi_, SUFFIX)) {
 	do_execute();
 	return len + 1;
 }
+
+make_helper(concat(shld_, SUFFIX)) {
+	int len = concat(decode_rm2r_, SUFFIX) (eip + 1);  /* use decode_si_rm2r to read 1 byte immediate */
+	op_dest->val = REG(op_dest->reg);
+	op_src->val = reg_b(R_CL);
+	do_execute();
+	return len + 1;
+}
 #endif
 
 #include "cpu/exec/template-end.h"
