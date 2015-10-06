@@ -8,7 +8,7 @@ static void do_execute() {
 	if(instr_fetch(cpu.eip, 1) == 0xeb || instr_fetch(cpu.eip, 1) == 0xe9)
 		cpu.eip = cpu.eip + res;
 	else
-		cpu.eip = res;
+		cpu.eip = res - 2;
 #if DATA_BYTE == 2
 	cpu.eip = cpu.eip & 0xffff;
 #endif
