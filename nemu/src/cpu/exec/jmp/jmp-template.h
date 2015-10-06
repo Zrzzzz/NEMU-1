@@ -5,7 +5,10 @@
 static void do_execute() {
 	int res = op_src->val;
 	res = res << (32 - (DATA_BYTE << 3)) >> (32 - (DATA_BYTE << 3)); 
-	cpu.eip = cpu.eip + res;
+	if(instr_fetch(cpu.eip, 1) == 0xeb || instr_fetch(cpu.eip, 1) == 0xe9)
+		cpu.eip = cpu.eip + res;
+	else
+		cpu.eip = res;
 #if DATA_BYTE == 2
 	cpu.eip = cpu.eip & 0xffff;
 #endif
