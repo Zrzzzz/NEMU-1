@@ -95,7 +95,7 @@ static int cmd_x(char *args) {
 static int cmd_p(char *args) {
 	bool flag = true;
 	int n = expr(args, &flag);
-	if(flag) printf("%d\n", n);
+	if(flag) printf("0x%x\n", n);
 	else {
 		printf("not a correct expression.\n");
 		return 0;
