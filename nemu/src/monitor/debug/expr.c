@@ -52,7 +52,7 @@ static struct rule {
 	{"!", '!'},						// not
 	{"\\$\\w+", '$'},				// register
 	{"==", EQ},						// equal
-	{"\\w[\\w0-9_]+", VAR}			// var
+	{"\\w[a-z0-9_]+", VAR}			// var
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
