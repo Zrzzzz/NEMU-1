@@ -11,6 +11,7 @@ void print_wp_info();
 void add_wp(char *args);
 void delete_wp(int no);
 void delete_all_wp();
+void get_func_name(char *, swaddr_t, int *);
 
 void cpu_exec(uint32_t);
 
@@ -118,6 +119,26 @@ static int cmd_d(char *args) {
 	return 0;
 }
 
+static int cmd_bt(char *args) {
+	swaddr_t addr = cpu.eip;
+	uint32_t ebp = cpu.ebp;
+	char fun_name[32];
+	int i,flag,cnt = 0;
+	while(ebp) {
+		flag = 0;
+		get_func_name(fun_name, addr, &flag);
+		if(!flag) assert(0);
+		printf("#%d\t0x%x\tin %s()\n", cnt++, addr, fun_name);
+		if(strcmp(fun_name, "main") != 0) addr = swaddr_read(ebp + 4, 4);
+		for(i = 0; i < 4; i ++) {
+			printf("\t0x%08x", swaddr_read(ebp + ((i + 2) << 2), 4));
+		}
+		printf("\n");
+		ebp = swaddr_read(ebp, 4);
+	}
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -134,6 +155,7 @@ static struct {
 	{ "p", "Expression evaluation", cmd_p },
 	{ "w", "Watch points", cmd_w },
 	{ "d", "Delete watch points", cmd_d },
+	{ "bt", "Print stack link", cmd_bt },
 
 	/* TODO: Add more commands */
 

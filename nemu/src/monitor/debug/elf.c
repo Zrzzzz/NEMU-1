@@ -90,3 +90,15 @@ uint32_t read_sym(char * str) {
 	}
 	return 0;
 }
+
+void get_func_name(char * fun_name, swaddr_t addr, int * flag) {
+	int i;
+	for(i = 0; i < nr_symtab_entry; i ++) {
+		if((symtab[i].st_info & 0xf) != STT_FUNC) continue;
+		if((symtab[i].st_value <= addr) && 
+				(symtab[i].st_value + symtab[i].st_size >= addr)) {
+			strcpy(fun_name, strtab + symtab[i].st_name);
+			*flag = 1;
+		}
+	}
+}
