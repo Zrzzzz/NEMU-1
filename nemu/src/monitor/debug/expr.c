@@ -7,8 +7,10 @@
 #include <regex.h>
 #include <stdlib.h>
 
+uint32_t read_sym(char *);
+
 enum {
-	NOTYPE = 256, EQ, NUM, HNUM, ONUM, NOT_EQ, NOT_LA, NOT_LE, AND, OR, NOT, LS, RS
+	NOTYPE = 256, EQ, NUM, HNUM, ONUM, NOT_EQ, NOT_LA, NOT_LE, AND, OR, NOT, LS, RS, VAR
 
 	/* TODO: Add more token types */
 
@@ -49,7 +51,8 @@ static struct rule {
 	{"[0-9]+", NUM},				// number
 	{"!", '!'},						// not
 	{"\\$\\w+", '$'},				// register
-	{"==", EQ}						// equal
+	{"==", EQ},						// equal
+	{"\\w[\\w0-9_]+", VAR}			// var
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -82,7 +85,7 @@ Token tokens[32];
 int nr_token;
 
 bool not_a_num(uint32_t p) {
-		if(tokens[p].type != NUM && tokens[p].type != ONUM && tokens[p].type != HNUM && tokens[p].type != '$') {
+		if(tokens[p].type != NUM && tokens[p].type != ONUM && tokens[p].type != HNUM && tokens[p].type != '$' && tokens[p].type != VAR) {
 			return true;
 		}
 		else return false;
@@ -254,7 +257,7 @@ uint32_t find_the_last_operator(uint32_t p,uint32_t q) {
 
 uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 	int i;
-	uint32_t op, val1, val2;
+	uint32_t op, val1, val2, ret;
 	if(p > q) {
 		/* Bad expression */
 		printf("p is less then q\n");
@@ -289,6 +292,12 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 						  }
 						  if(strcmp("eip", tokens[p].str+1) == 0) return cpu.eip;
 						  printf("register name wrong.\n");
+						  *success = false;
+						  return 0;
+			case VAR:
+						  ret = read_sym(tokens[p].str);
+						  if(ret) return ret;
+						  printf("dont have this variable\n");
 						  *success = false;
 						  return 0;
 			default:
