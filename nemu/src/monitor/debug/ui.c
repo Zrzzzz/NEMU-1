@@ -123,14 +123,13 @@ static int cmd_bt(char *args) {
 	swaddr_t addr = cpu.eip;
 	uint32_t ebp = cpu.ebp;
 	char fun_name[32];
-	int i,flag,cnt = 0;
+	int i, flag, cnt = 0;
 	while(ebp) {
 		flag = 0;
 		get_func_name(fun_name, addr, &flag);
 		if(!flag) {
 			printf("the program haven't start yet.\n");
 			return 0;
-			//assert(0);
 		}
 		printf("#%d\t0x%x\tin %s()\n", cnt++, addr, fun_name);
 		if(strcmp(fun_name, "main") != 0) addr = swaddr_read(ebp + 4, 4);
