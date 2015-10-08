@@ -38,14 +38,14 @@ uint32_t loader() {
 	/* Load each program segment */
 	int i;
 	for(i = 0; i < elf->e_phnum; i ++) {
-		ph = (void *)(buf + elf->e_ehsize + i * elf->e_phentsize);
+		ph = (void *)(buf + elf->e_phoff + i * elf->e_phentsize);
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
 
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			ramdisk_read((void *)ph->p_vaddr, (uint32_t)(ph->p_offset), ph->p_filesz);
+			ramdisk_read((void *)ph->p_vaddr, (uint32_t)(buf + ph->p_offset), ph->p_filesz);
 			 
 			 
 			/* TODO: zero the memory region 
