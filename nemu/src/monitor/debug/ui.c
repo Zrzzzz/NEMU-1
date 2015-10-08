@@ -50,6 +50,10 @@ static int cmd_si(char *args) {
 
 static int cmd_info(char *args) {
 	int i;
+	if(args == NULL) {
+		printf("no input!");
+		return 0;
+	}
 	if(args[0] == 'r') {
 		for(i = R_EAX; i <= R_EDI; i ++) {
 			printf("%s = 0x%08x\n", regsl[i], reg_l(i));
