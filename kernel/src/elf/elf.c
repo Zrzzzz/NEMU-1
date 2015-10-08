@@ -36,7 +36,9 @@ uint32_t loader() {
 	nemu_assert(*p_magic == elf_magic);
 
 	/* Load each program segment */
-	for(; true; ) {
+	int i;
+	for(i = 0; i < elf->e_phnum; i ++) {
+		ph = (void *)(buf + 0x100000 + i * elf->e_phentsize);
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
 
