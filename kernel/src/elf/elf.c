@@ -21,7 +21,7 @@ uint32_t loader() {
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
 
-	uint8_t buf[4096];
+	uint8_t buf[0x100000/*4096*/];
 
 #ifdef HAS_DEVICE
 	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
@@ -39,7 +39,7 @@ uint32_t loader() {
 	/* Load each program segment */
 	int i;
 	for(i = 0; i < elf->e_phnum; i ++) {
-		ph = (void *)(buf + elf->e_ehsize + i * elf->e_phentsize);
+		ph = (void *)(buf + elf->e_phoff + i * elf->e_phentsize);
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
 
