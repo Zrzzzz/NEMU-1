@@ -10,7 +10,7 @@ char *s[] = {
 	"#####"
 };
 
-char str1[] = "Hello";
+char str1[] = "Helloo";
 char str[20];
 
 int main() {
