@@ -9,7 +9,6 @@
 void ide_read(uint8_t *, uint32_t, uint32_t);
 #else
 void ramdisk_read(uint8_t *, uint32_t, uint32_t);
-//void ramdisk_write(uint8_t *, uint32_t, uint32_t);
 #endif
 
 #define STACK_SIZE (1 << 20)
@@ -47,7 +46,6 @@ uint32_t loader() {
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 			ramdisk_read((void *)ph->p_vaddr, (uint32_t)(ph->p_offset), ph->p_filesz);
-//			ramdisk_write(buf + ph->p_offset, ph->p_vaddr, ph->p_filesz);
 			 
 			 
 			/* TODO: zero the memory region 
