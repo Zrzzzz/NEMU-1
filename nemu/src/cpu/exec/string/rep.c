@@ -13,9 +13,9 @@ make_helper(rep) {
 	else {
 		while(cpu.ecx) {
 			exec(eip + 1);
-			if(ops_decoded.opcode == 0) {
-				return 2;
-			}
+		//	if(ops_decoded.opcode == 0) {
+		//		return 2;
+		//	}
 		//	printf("eip = %u, opcode = %u\n", eip, ops_decoded.opcode);
 			count ++;
 			cpu.ecx --;
