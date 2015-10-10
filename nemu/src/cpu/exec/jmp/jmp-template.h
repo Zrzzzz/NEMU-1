@@ -15,8 +15,16 @@ static void do_execute() {
 	print_asm_template1();
 }
 
+#if DATA_BYTE == 2 || DATA_BYTE == 4
+make_helper(concat(jmp_rm_, SUFFIX)) {
+	concat(decode_rm_, SUFFIX)(eip);
+	cpu.eip = op_src->val;
+	print_asm_template1();
+	return 0;
+}
+#endif
+
 make_instr_helper(i)
-make_instr_helper(rm)
 #include "cpu/exec/template-end.h"
 
 
