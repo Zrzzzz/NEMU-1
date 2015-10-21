@@ -58,8 +58,8 @@ uint8_t check_cache(hwaddr_t addr) {
 		}
 
 	if(!success) {
-		//for(way = 0; way < CACHE_WAY_SIZE; way ++)
-		//	if(!l1cache[set][way].valid) return way;
+		for(way = 0; way < CACHE_WAY_SIZE; way ++)
+			if(!l1cache[set][way].valid) return way;
 		uint8_t temp1[CACHE_BLOCK_SIZE];
 		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
 		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
