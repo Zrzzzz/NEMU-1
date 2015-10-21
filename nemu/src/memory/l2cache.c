@@ -62,14 +62,21 @@ static uint8_t check_cache(hwaddr_t addr) {
 	if(!success) {
 		uint8_t temp1[CACHE_BLOCK_SIZE];
 		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
-		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
+		for(i = 0; i < CACHE_BLOCK_SIZE; i ++) {
 			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
 		}
 		for(way = 0; way < CACHE_WAY_SIZE; way ++)
 			if(!l2cache[set][way].valid) break;
 		if(way == CACHE_WAY_SIZE) way = rand() & (CACHE_WAY_SIZE - 1);
+		if(l2cache[set][way].valid && l2cache[set][way].dirty) {
+			for(i = 0; i < CACHE_BLOCK_SIZE; i ++) {
+				dram_write(addr_temp + i, 1, l2cache[set][way].buf[i]);
+			}
+			l2cache[set][way].dirty = false;
+		}
 		memcpy(l2cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 		l2cache[set][way].valid = true;
+		l2cache[set][way].dirty = false;
 		l2cache[set][way].tag = tag;
 		//Log("Miss");
 	}	
@@ -119,6 +126,7 @@ void l2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 			if(block + i < CACHE_BLOCK_SIZE)l2cache[set][way].buf[block + i] = (uint8_t)((data >> (i << 3)) & 0xff);
 			else break;
 		}
+		l2cache[set][way].dirty = true;
 		if(i != len) {
 			temp.addr += CACHE_BLOCK_SIZE;
 			way = check_cache(temp.addr);
@@ -128,6 +136,7 @@ void l2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 			for(j = 0; j < len - i; j ++) {
 				l2cache[set][way].buf[j] = (uint8_t)((data >> (i << 3)) & 0xff);
 			}
+			l2cache[set][way].dirty = true;
 		}
 	}
 	else {
