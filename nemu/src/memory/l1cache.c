@@ -58,14 +58,14 @@ uint8_t check_cache(hwaddr_t addr) {
 		}
 
 	if(!success) {
-		for(way = 0; way < CACHE_WAY_SIZE; way ++)
-			if(!l1cache[set][way].valid) return way;
 		uint8_t temp1[CACHE_BLOCK_SIZE];
 		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
 		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
 			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
 		}
-		way = rand() & (CACHE_WAY_SIZE - 1);
+		for(way = 0; way < CACHE_WAY_SIZE; way ++)
+			if(!l1cache[set][way].valid) return way;
+		if(way == CACHE_WAY_SIZE) way = rand() & (CACHE_WAY_SIZE - 1);
 		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 		l1cache[set][way].valid = true;
 		l1cache[set][way].tag = tag;
