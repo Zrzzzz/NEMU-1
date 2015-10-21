@@ -118,5 +118,16 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 		}
 		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 	}
+	uint32_t block = temp.block;
+	if(block + len >= CACHE_BLOCK_SIZE) {
+		temp.addr += CACHE_BLOCK_SIZE;
+		uint8_t temp1[CACHE_BLOCK_SIZE];
+		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
+		int i;
+		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
+			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
+		}
+		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
+	}
 	return;
 }
