@@ -69,6 +69,9 @@ uint8_t check_cache(hwaddr_t addr) {
 		l1cache[set][way].tag = tag;
 		Log("Miss");
 	}	
+	else {
+		Log("Hit");
+	}
 	return way;
 }
 
@@ -93,6 +96,7 @@ uint32_t l1cache_read(hwaddr_t addr, size_t len) {
 }
 
 void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
+	assert(len == 1 || len == 2 || len == 4);
 	l1cache_addr temp;
 	temp.addr = addr;
 	uint32_t tag = temp.tag;
