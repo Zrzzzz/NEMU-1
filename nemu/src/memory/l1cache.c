@@ -62,6 +62,7 @@ uint8_t check_cache(hwaddr_t addr) {
 		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
 		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
 			printf("asd\n");
+			printf("%d\n",addr);
 			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
 		}
 		way = (rand() * CACHE_WAY_SIZE) >> CACHE_WAY_WIDTH;
