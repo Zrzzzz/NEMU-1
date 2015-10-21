@@ -31,8 +31,8 @@ typedef struct {
 
 l1CB l1cache[CACHE_SET_SIZE][CACHE_WAY_SIZE];
 
-uint32_t dram_read(hwaddr_t addr, size_t len);
-void dram_write(hwaddr_t addr, size_t len, uint32_t data);
+uint32_t l2cache_read(hwaddr_t addr, size_t len);
+void l2cache_write(hwaddr_t addr, size_t len, uint32_t data);
 
 void init_l1cache() {
 	int i, j;
@@ -61,7 +61,7 @@ static uint8_t check_cache(hwaddr_t addr) {
 		uint8_t temp1[CACHE_BLOCK_SIZE];
 		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
 		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
-			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
+			temp1[i] = (uint8_t)(l2cache_read(addr_temp + i , 1) & 0xff);
 		}
 		for(way = 0; way < CACHE_WAY_SIZE; way ++)
 			if(!l1cache[set][way].valid) break;
@@ -111,7 +111,7 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 		success = true;
 		break;
 	}
-	dram_write(addr, len, data);
+	l2cache_write(addr, len, data);
 	if(success){
 		int i;
 		for(i = 0; i < len; i ++) {
