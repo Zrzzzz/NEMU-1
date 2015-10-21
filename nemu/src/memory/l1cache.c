@@ -61,8 +61,6 @@ uint8_t check_cache(hwaddr_t addr) {
 		uint8_t temp1[CACHE_BLOCK_SIZE];
 		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
 		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
-			printf("asd\n");
-			printf("%x\n",addr);
 			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
 		}
 		way = (rand() * CACHE_WAY_SIZE) >> CACHE_WAY_WIDTH;
@@ -103,7 +101,6 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	temp.addr = addr;
 	uint32_t tag = temp.tag;
 	uint32_t set = temp.set;
-	uint32_t block = temp.block;
 	uint8_t way = 0;
 	bool success = false;
 	for(way = 0; way < CACHE_WAY_SIZE; way ++)
@@ -111,10 +108,15 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 		success = true;
 		break;
 	}
-	printf("qwe\n");
 	dram_write(addr, len, data);
 	if(success){
-		memcpy(l1cache[set][way].buf + block, &data, len);
+		uint8_t temp1[CACHE_BLOCK_SIZE];
+		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
+		int i;
+		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
+			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
+		}
+		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 	}
 	return;
 }
