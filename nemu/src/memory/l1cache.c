@@ -103,6 +103,7 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	temp.addr = addr;
 	uint32_t tag = temp.tag;
 	uint32_t set = temp.set;
+	uint32_t block = temp.block;
 	uint8_t way = 0;
 	bool success = false;
 	for(way = 0; way < CACHE_WAY_SIZE; way ++)
@@ -112,35 +113,26 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	dram_write(addr, len, data);
 	if(success){
-		l1cache[set][way].valid = false;
-		/*uint8_t temp1[CACHE_BLOCK_SIZE];
-		hwaddr_t addr_temp = addr & ~CACHE_BLOCK_MASK;
 		int i;
-		for(i = 0;i < CACHE_BLOCK_SIZE; i ++) {
-			temp1[i] = (uint8_t)(dram_read(addr_temp + i, 1) & 0xff);
+		for(i = 0; i < len; i ++) {
+			if(block + i < CACHE_BLOCK_SIZE)l1cache[set][way].buf[block + i] = (uint8_t)((data >> (i << 3)) & 0xff);
+			else break;
 		}
-		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);*/
-	}
-	uint32_t block = temp.block;
-	if(block + len > CACHE_BLOCK_SIZE) {
-		success = false;
-		temp.addr += CACHE_BLOCK_SIZE;
-		set = temp.set;
-		tag = temp.tag;
-		for(way = 0; way < CACHE_WAY_SIZE; way ++)
-		if(l1cache[set][way].valid && (l1cache[set][way].tag == tag)) {
-			success = true;
-			break;
-		}
-		if(success) {
-			l1cache[set][way].valid = false;
-			/*int i;
-			uint8_t temp1[CACHE_BLOCK_SIZE];
-			hwaddr_t addr_temp = temp.addr & ~CACHE_BLOCK_MASK;
-			for(i = 0;i < CACHE_BLOCK_SIZE; i ++) {
-				temp1[i] = (uint8_t)(dram_read(addr_temp + i, 1) & 0xff);
+		if(i != len) {
+			for(way = 0; way < CACHE_WAY_SIZE; way ++) {
+				if(l1cache[set][way].valid && l1cache[set][way].tag == tag) {
+					break;
+				}
 			}
-			memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);*/
+			if(way != CACHE_WAY_SIZE) {
+				temp.addr += CACHE_BLOCK_SIZE;
+				set = temp.set;
+				tag = temp.tag;
+				int j;
+				for(j = 0; j < len - i; j ++) {
+					l1cache[set][way].buf[j] = (uint8_t)((data >> (i << 3)) & 0xff);
+				}
+			}
 		}
 	}
 	return;
