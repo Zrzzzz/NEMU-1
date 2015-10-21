@@ -86,7 +86,7 @@ uint32_t l1cache_read(hwaddr_t addr, size_t len) {
 
 	uint8_t buf[CACHE_BLOCK_SIZE << 1];
 	memcpy(buf, l1cache[set][way].buf, CACHE_BLOCK_SIZE);
-	if(block + len >= CACHE_BLOCK_SIZE) {
+	if(block + len > CACHE_BLOCK_SIZE) {
 		temp.addr += CACHE_BLOCK_SIZE;
 		set = temp.set;
 		way = check_cache(temp.addr);
@@ -120,7 +120,7 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);*/
 	}
 	uint32_t block = temp.block;
-	if(block + len >= CACHE_BLOCK_SIZE) {
+	if(block + len > CACHE_BLOCK_SIZE) {
 		success = false;
 		temp.addr += CACHE_BLOCK_SIZE;
 		set = temp.set;
