@@ -64,7 +64,7 @@ uint8_t check_cache(hwaddr_t addr) {
 			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
 		}
 		for(way = 0; way < CACHE_WAY_SIZE; way ++)
-			if(!l1cache[set][way].valid) return way;
+			if(!l1cache[set][way].valid) break;
 		if(way == CACHE_WAY_SIZE) way = rand() & (CACHE_WAY_SIZE - 1);
 		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 		l1cache[set][way].valid = true;
