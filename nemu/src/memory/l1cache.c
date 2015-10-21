@@ -69,10 +69,10 @@ uint8_t check_cache(hwaddr_t addr) {
 		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 		l1cache[set][way].valid = true;
 		l1cache[set][way].tag = tag;
-		Log("Miss");
+		//Log("Miss");
 	}	
 	else {
-		Log("Hit");
+		//Log("Hit");
 	}
 	return way;
 }
