@@ -92,7 +92,7 @@ uint32_t l1cache_read(hwaddr_t addr, size_t len) {
 		way = check_cache(temp.addr);
 		memcpy(buf + CACHE_BLOCK_SIZE, l1cache[set][way].buf, CACHE_BLOCK_SIZE);
 	}
-	return *(uint32_t *)(buf + block) & (~0u >> ((4 - len) << 3));
+	return (*(uint32_t *)(buf + block)) & (~0u >> ((4 - len) << 3));
 }
 
 void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
