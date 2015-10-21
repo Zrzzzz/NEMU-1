@@ -52,7 +52,7 @@ uint8_t check_cache(hwaddr_t addr) {
 	int i;
 	bool success = false;
 	for(way = 0; way < CACHE_WAY_SIZE; way ++)
-	if(l1cache[set][way].valid && (l1cache[set][way].tag == tag)) {
+	if(l1cache[set][way].valid && (l1cache[set][way].tag == tag) && (l1cache[set][way].tag == tag)) {
 		success = true;
 		break;
 	}
@@ -104,7 +104,7 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	uint8_t way = 0;
 	bool success = false;
 	for(way = 0; way < CACHE_WAY_SIZE; way ++)
-	if(l1cache[set][way].valid && (l1cache[set][way].tag == tag)) {
+	if(l1cache[set][way].valid && (l1cache[set][way].tag == tag) && (l1cache[set][way].tag == tag)) {
 		success = true;
 		break;
 	}
