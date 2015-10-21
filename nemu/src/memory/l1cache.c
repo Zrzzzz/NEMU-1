@@ -63,7 +63,7 @@ uint8_t check_cache(hwaddr_t addr) {
 		for(i = 0;i < CACHE_BLOCK_SIZE;i++) {
 			temp1[i] = (uint8_t)(dram_read(addr_temp + i , 1) & 0xff);
 		}
-		way = (rand() * CACHE_WAY_SIZE) >> CACHE_WAY_WIDTH;
+		way = rand() & (CACHE_WAY_SIZE - 1);
 		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 		l1cache[set][way].valid = true;
 		l1cache[set][way].tag = tag;
