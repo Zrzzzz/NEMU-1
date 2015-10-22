@@ -2,6 +2,7 @@
 #include "burst.h"
 #include "misc.h"
 #include <stdlib.h>
+#include <time.h>
 
 #define CACHE_BLOCK_WIDTH 6
 #define CACHE_WAY_WIDTH 3
@@ -36,6 +37,7 @@ void l2cache_write(hwaddr_t addr, size_t len, uint32_t data);
 
 void init_l1cache() {
 	int i, j;
+	srand((unsigned)(time(0)));
 	for(i = 0; i < CACHE_SET_SIZE; i ++) {
 		for(j = 0; j < CACHE_WAY_SIZE; j ++) {
 			l1cache[i][j].valid = false;
@@ -66,7 +68,6 @@ static uint8_t check_cache(hwaddr_t addr) {
 		for(way = 0; way < CACHE_WAY_SIZE; way ++)
 			if(!l1cache[set][way].valid) break;
 		if(way == CACHE_WAY_SIZE) way = rand() & (CACHE_WAY_SIZE - 1);
-		printf("%d\n",way);
 		memcpy(l1cache[set][way].buf, temp1, CACHE_BLOCK_SIZE);
 		l1cache[set][way].valid = true;
 		l1cache[set][way].tag = tag;
