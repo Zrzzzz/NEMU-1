@@ -20,3 +20,9 @@ make_helper_v(mov_r2rm)
 make_helper_v(mov_rm2r)
 make_helper_v(mov_a2moffs)
 make_helper_v(mov_moffs2a)
+
+make_helper(mov_cr02r) {
+	decode_r_l(eip + 1);
+	reg_l(op_src->reg) = cpu.cr0.val;
+	return 2;
+}
