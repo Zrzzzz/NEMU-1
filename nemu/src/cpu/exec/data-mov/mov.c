@@ -26,3 +26,9 @@ make_helper(mov_cr02r) {
 	reg_l(op_src->reg) = cpu.cr0.val;
 	return 2;
 }
+
+make_helper(mov_r2cr0) {
+	decode_r_l(eip + 1);
+	cpu.cr0.val = reg_l(op_src->reg);
+	return 2;
+}
