@@ -85,6 +85,14 @@ typedef struct {
 
 extern CPU_state cpu;
 
+static inline void init_cr0() {
+	cpu.cr0.protect_enable = 0;
+}
+
+static inline void init_cpu_state() {
+	init_cr0();
+}
+
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);
 	return index;
