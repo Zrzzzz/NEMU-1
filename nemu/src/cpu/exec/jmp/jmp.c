@@ -28,12 +28,8 @@ make_helper(ljmp) {
 	uint32_t addr = cpu.gdtr.base + (cpu.cs.index << 3);
 	uint32_t base = ((uint32_t)lnaddr_read(addr + 7, 1)) << 24;
 	base += ((uint32_t)lnaddr_read(addr + 4, 1)) << 16;
-	base += ((uint32_t)lnaddr_read(addr + 3, 1)) << 8;
-	base += ((uint32_t)lnaddr_read(addr + 2, 1));
+	base += ((uint32_t)lnaddr_read(addr + 2, 2));
 	cpu.cs.base = base;
-	uint32_t limit = ((uint32_t)lnaddr_read(addr + 6, 1) & 15) << 16;
-	limit += ((uint32_t)lnaddr_read(addr + 1, 1)) << 8;
-	limit += ((uint32_t)lnaddr_read(addr, 1));
-	cpu.cs.limit = limit;
+	cpu.cs.limit = lnaddr_read(addr, 2);
 	return 0;
 }

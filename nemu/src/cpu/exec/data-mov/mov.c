@@ -32,3 +32,17 @@ make_helper(mov_r2cr0) {
 	cpu.cr0.val = reg_l(op_src->reg);
 	return 2;
 }
+
+make_helper(mov_rm2sreg) {
+	decode_rm_w(eip + 1);
+	cpu.sreg[op_src->sreg << 2] = reg_w(op_src->reg);
+	uint8_t sreg = op_src->sreg << 2;
+	uint32_t addr = cpu.gdtr.base + ((cpu.sreg[sreg] >> 3) << 3);
+	uint32_t base = ((uint32_t)lnaddr_read(addr + 7, 1)) << 24;
+	base += ((uint32_t)lnaddr_read(addr + 4, 1)) << 16;
+	base += ((uint32_t)lnaddr_read(addr + 2, 2));
+	cpu.sreg[sreg + 2] = base;
+	cpu.sreg[sreg + 3] = base >> 8;
+	cpu.sreg[sreg + 1] = lnaddr_read(addr, 2);
+	return 2;
+}
