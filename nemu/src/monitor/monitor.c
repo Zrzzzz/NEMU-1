@@ -95,4 +95,6 @@ void restart() {
 	init_l1cache();
 	init_l2cache();
 	init_cpu_state();
+	cpu.cs.base = 0;
+	cpu.cs.limit = -1;
 }
