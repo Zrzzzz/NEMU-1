@@ -94,5 +94,6 @@ void restart() {
 	init_ddr3();
 	init_l1cache();
 	init_l2cache();
-//	init_cpu_state();
+	printf("asd\n");
+	init_cpu_state();
 }
