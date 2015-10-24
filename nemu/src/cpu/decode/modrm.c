@@ -87,9 +87,10 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 	ModR_M m;
 	m.val = instr_fetch(eip, 1);
 	reg->type = OP_TYPE_REG;
-	reg->reg = m.reg;
-	/*if(m.reg == R_EBP) rm->sreg = SR_SS;
-	else*/ rm->sreg = SR_DS;
+	rm->sreg = reg->reg = m.reg;
+	uint8_t sreg;
+	if(m.reg == R_EBP) sreg = SR_SS;
+	else sreg = SR_DS;
 
 	if(m.mod == 3) {
 		rm->type = OP_TYPE_REG;
@@ -111,7 +112,7 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 	}
 	else {
 		int instr_len = load_addr(eip, &m, rm);
-		rm->val = swaddr_read(rm->addr, rm->size, rm->sreg);
+		rm->val = swaddr_read(rm->addr, rm->size, sreg);
 		return instr_len;
 	}
 }
