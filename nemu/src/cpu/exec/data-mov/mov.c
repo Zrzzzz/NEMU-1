@@ -41,7 +41,7 @@ make_helper(mov_rm2sreg) {
 	uint32_t base = ((uint32_t)lnaddr_read(addr + 7, 1)) << 24;
 	base += ((uint32_t)lnaddr_read(addr + 4, 1)) << 16;
 	base += ((uint32_t)lnaddr_read(addr + 2, 2));
-	printf("%x %x %x\n",addr, sreg, base);
+	printf("%x %x %x\n",addr, sreg, cpu.gdtr.base);
 	cpu.sreg[sreg + 2] = base;
 	cpu.sreg[sreg + 3] = base >> 8;
 	cpu.sreg[sreg + 1] = lnaddr_read(addr, 2);
