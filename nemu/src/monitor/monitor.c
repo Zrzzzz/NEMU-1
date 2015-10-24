@@ -97,5 +97,4 @@ void restart() {
 	init_cpu_state();
 	cpu.cs.base = 0;
 	cpu.cs.limit = -1;
-	printf("asd%d\n",cpu.cs.base);
 }

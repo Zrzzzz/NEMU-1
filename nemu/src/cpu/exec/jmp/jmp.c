@@ -31,6 +31,5 @@ make_helper(ljmp) {
 	base += ((uint32_t)lnaddr_read(addr + 2, 2));
 	cpu.cs.base = base;
 	cpu.cs.limit = lnaddr_read(addr, 2);
-	printf("%d %d\n",cpu.cs.base,cpu.cs.limit);
 	return 0;
 }
