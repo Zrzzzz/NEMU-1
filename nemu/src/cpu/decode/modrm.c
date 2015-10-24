@@ -89,8 +89,8 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 	reg->type = OP_TYPE_REG;
 	rm->sreg = reg->reg = m.reg;
 	uint8_t sreg;
-	if(m.reg == R_EBP) sreg = SR_SS;
-	else sreg = SR_DS;
+	/*if(m.reg == R_EBP) sreg = SR_SS;
+	else*/ sreg = SR_DS;
 
 	if(m.mod == 3) {
 		rm->type = OP_TYPE_REG;
