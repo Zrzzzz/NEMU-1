@@ -95,5 +95,4 @@ void restart() {
 	init_l1cache();
 	init_l2cache();
 	init_cpu_state();
-	printf("asd\n");
 }
