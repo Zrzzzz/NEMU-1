@@ -63,7 +63,7 @@ typedef struct {
 	} gdtr;
 
 	union {
-		struct SR {
+		/*struct SR {
 			uint16_t limit0;
 			uint16_t base0;
 			uint8_t base1;
@@ -82,8 +82,22 @@ typedef struct {
 				uint8_t g		: 1;
 			};
 			uint8_t base2;
-		} es, cs, ss, ds;
-		uint8_t sreg[32];
+		} */
+		struct {
+			struct {
+				union {
+					struct {
+						uint16_t rpl	: 2;
+						uint16_t ti		: 1;
+						uint16_t index	: 13;
+					};
+					uint16_t val;
+				};
+				uint16_t limit;
+				uint32_t base;
+			}es, cs, ss, ds;
+		};
+		uint16_t sreg[16];
 	};
 } CPU_state;
 
