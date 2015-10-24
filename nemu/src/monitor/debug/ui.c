@@ -91,7 +91,7 @@ static int cmd_x(char *args) {
 	}
 	for(i = 0; i < 4 * n; i += 4) {
 		if((i & 15) == 0) printf("\n0x%08x:", m + i);
-		printf(" 0x%08x", hwaddr_read(m + i, 4));
+		printf(" 0x%08x", swaddr_read(m + i, 4, SR_DS));
 	}
 	printf("\n");
 	return 0;
@@ -136,12 +136,12 @@ static int cmd_bt(char *args) {
 			return 0;
 		}
 		printf("#%d\t0x%x\tin %s()\n", cnt++, addr, fun_name);
-		if(strcmp(fun_name, "main") != 0) addr = swaddr_read(ebp + 4, 4);
+		if(strcmp(fun_name, "main") != 0) addr = swaddr_read(ebp + 4, 4, SR_SS);
 		for(i = 0; i < 4; i ++) {
-			printf("\t0x%08x", swaddr_read(ebp + ((i + 2) << 2), 4));
+			printf("\t0x%08x", swaddr_read(ebp + ((i + 2) << 2), 4, SR_SS));
 		}
 		printf("\n");
-		ebp = swaddr_read(ebp, 4);
+		ebp = swaddr_read(ebp, 4, SR_SS);
 	}
 	return 0;
 }

@@ -348,7 +348,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 			if(!(*success)) return 0;
 			switch(tokens[op].type) {
 				case '-': return -val2;
-				case '*': return hwaddr_read(val2, 4);
+				case '*': return swaddr_read(val2, 4, SR_DS);
 				case '!': return !val2;
 				case '~': return ~val2;
 				default:

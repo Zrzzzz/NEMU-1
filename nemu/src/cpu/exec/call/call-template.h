@@ -5,14 +5,14 @@
 static void do_execute() {
 #if DATA_BYTE == 4
 	reg_l(R_ESP) = reg_l(R_ESP) - DATA_BYTE;
-	swaddr_write(reg_l(R_ESP), DATA_BYTE, cpu.eip + 5);
+	swaddr_write(reg_l(R_ESP), DATA_BYTE, cpu.eip + 5, SR_SS);
 	if(instr_fetch(cpu.eip, 1) == 0xff)
 		cpu.eip = op_src->val - 2;
 	else
 		cpu.eip = cpu.eip + op_src->val;
 #elif DATA_BYTE == 2
 	reg_w(R_SP)= reg_w(R_SP)- DATA_BYTE;
-	swaddr_write(reg_w(R_SP), DATA_BYTE, cpu.ip + 3);
+	swaddr_write(reg_w(R_SP), DATA_BYTE, cpu.ip + 3, SR_SS);
 	if(instr_fetch(cpu.eip, 1) == 0xff)
 		cpu.eip = op_src->val - 2;
 	else
