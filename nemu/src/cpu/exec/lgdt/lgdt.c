@@ -4,8 +4,8 @@
 
 make_helper(lgdt) {
 	decode_rm_l(eip + 1);
-	cpu.gdtr.limit = swaddr_read(op_src->val, 2);
-	cpu.gdtr.base = swaddr_read(op_src->val + 2, 4);
+	cpu.gdtr.limit = hwaddr_read(op_src->val, 2);
+	cpu.gdtr.base = hwaddr_read(op_src->val + 2, 4);
 	print_asm_template1();
 	return 6;
 }
