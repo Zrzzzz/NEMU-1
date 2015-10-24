@@ -23,7 +23,7 @@ make_helper(ljmp) {
 	decode_i_w(eip + 5);
 	cpu.cs.val = op_src->val;
 #ifdef DEBUG
-	assert(cpu.cs.index < cpu.gdtr.limit);
+//	assert(cpu.cs.index < cpu.gdtr.limit);
 #endif
 	uint32_t addr = cpu.gdtr.base + (cpu.cs.index << 3);
 	uint32_t base = ((uint32_t)lnaddr_read(addr + 7, 1)) << 24;
