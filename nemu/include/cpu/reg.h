@@ -61,29 +61,41 @@ typedef struct {
 		uint32_t base;
 	} gdtr;
 
-	struct SR {
-		uint16_t limit0;
-		uint16_t base0;
-		uint8_t base1;
-		struct {
-			uint8_t a		: 1;
-			uint8_t type	: 3;
-			uint8_t s		: 1;
-			uint8_t dpl		: 2;
-			uint8_t p		: 1;
-		};
-		struct {
-			uint8_t limit1	: 4;
-			uint8_t avl		: 1;
-			uint8_t o		: 1;
-			uint8_t d		: 1;
-			uint8_t g		: 1;
-		};
-		uint8_t base2;
-	} cs, ss, ds, es;
+	union {
+		struct SR {
+			uint16_t limit0;
+			uint16_t base0;
+			uint8_t base1;
+			struct {
+				uint8_t a		: 1;
+				uint8_t type	: 3;
+				uint8_t s		: 1;
+				uint8_t dpl		: 2;
+				uint8_t p		: 1;
+			};
+			struct {
+				uint8_t limit1	: 4;
+				uint8_t avl		: 1;
+				uint8_t o		: 1;
+				uint8_t d		: 1;
+				uint8_t g		: 1;
+			};
+			uint8_t base2;
+		} es, cs, ss, ds;
+		uint8_t sreg[32];
+	};
 } CPU_state;
 
 extern CPU_state cpu;
+
+static inline lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg) {
+	lnaddr_t lnaddr = ((lnaddr_t)(cpu.sreg[(sreg << 3) + 7])) << 24;
+	lnaddr += ((lnaddr_t)cpu.sreg[(sreg << 3) + 4]) << 16;
+	lnaddr += ((lnaddr_t)cpu.sreg[(sreg << 3) + 3]) << 8;
+	lnaddr += ((lnaddr_t)cpu.sreg[(sreg << 3) + 2]);
+	lnaddr += addr;
+	return lnaddr;
+}
 
 static inline void init_cr0() {
 	cpu.cr0.protect_enable = 0;
