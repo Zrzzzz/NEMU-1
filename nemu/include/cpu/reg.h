@@ -57,6 +57,7 @@ typedef struct {
 	};
 	
 	CR0 cr0;
+	CR3 cr3;
 	struct GDTR {
 		uint16_t limit;
 		uint32_t base;
@@ -106,20 +107,21 @@ extern CPU_state cpu;
 static inline lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg) {
 	if(cpu.cr0.protect_enable == 0) return addr;
 	return (cpu.sreg[(sreg << 2) + 3] << 8) + (cpu.sreg[(sreg << 2) + 2]) + addr;
-/*	lnaddr_t lnaddr = ((lnaddr_t)(cpu.sreg[(sreg << 3) + 7])) << 24;
-	lnaddr += ((lnaddr_t)cpu.sreg[(sreg << 3) + 4]) << 16;
-	lnaddr += ((lnaddr_t)cpu.sreg[(sreg << 3) + 3]) << 8;
-	lnaddr += ((lnaddr_t)cpu.sreg[(sreg << 3) + 2]);
-	lnaddr += addr;
-	return lnaddr;*/
+}
+
+static inline hwaddr_t page_translate(lnaddr_t addr) {
+	return addr;
 }
 
 static inline void init_cr0() {
 	cpu.cr0.protect_enable = 0;
+	cpu.cr0.paging = 0;
 }
 
 static inline void init_cpu_state() {
 	init_cr0();
+	cpu.cs.base = 0;
+	cpu.cs.limit = -1;
 }
 
 static inline int check_reg_index(int index) {
