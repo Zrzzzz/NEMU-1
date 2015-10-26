@@ -61,4 +61,6 @@
 
 #include "misc/misc.h"
 
+#include "flag/flag.h"
+
 #include "special/special.h"
