@@ -271,8 +271,8 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 			return 0;
 		}
 		switch(tokens[p].type) {
-			case NUM: return strtol(tokens[p].str, NULL, 10); 
-			case ONUM: return strtol(tokens[p].str, NULL, 8); 
+			case NUM: sscanf(tokens[p].str, "%o", &ret);return ret;
+			case ONUM: sscanf(tokens[p].str, "0%d", &ret);return ret;
 			case HNUM: sscanf(tokens[p].str, "0x%x", &ret);return ret;
 			case '$':
 						  for(i = R_EAX; i <= R_EDI; i ++) {
