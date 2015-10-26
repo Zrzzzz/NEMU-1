@@ -28,6 +28,7 @@ make_helper(mov_cr02r) {
 }
 
 make_helper(mov_r2cr0) {
+	printf("%d %d\n",op_src->reg,op_src2->reg);
 	decode_rm_l(eip + 1);
 	if(op_src2->reg)cpu.cr3.val = reg_l(op_src->reg);
 	else cpu.cr0.val = reg_l(op_src->reg);
