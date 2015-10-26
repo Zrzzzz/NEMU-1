@@ -78,7 +78,7 @@ static int cmd_info(char *args) {
 
 static int cmd_x(char *args) {
 	int i;
-	int j = 0, n = 0, m = 0;
+	uint32_t j = 0, n = 0, m = 0;
 	bool flag = true;
 	while(args[j]!=' ') {
 		j++;
