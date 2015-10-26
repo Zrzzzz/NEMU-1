@@ -273,7 +273,7 @@ uint32_t eval(uint32_t p, uint32_t q, bool *success) {
 		switch(tokens[p].type) {
 			case NUM: return strtol(tokens[p].str, NULL, 10); 
 			case ONUM: return strtol(tokens[p].str, NULL, 8); 
-			case HNUM: return strtol(tokens[p].str, NULL, 16); 
+			case HNUM: printf("%ld\n",strtol(tokens[p].str, NULL, 16));return strtol(tokens[p].str, NULL, 16); 
 			case '$':
 						  for(i = R_EAX; i <= R_EDI; i ++) {
 							  if(strcmp(regsl[i], tokens[p].str+1) == 0) {

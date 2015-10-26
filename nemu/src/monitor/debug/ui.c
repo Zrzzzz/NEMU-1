@@ -91,7 +91,6 @@ static int cmd_x(char *args) {
 	}
 	for(i = 0; i < 4 * n; i += 4) {
 		if((i & 15) == 0) printf("\n0x%08x:", m + i);
-		printf("%d %d\n",m,i);
 		printf(" 0x%08x", swaddr_read(m + i, 4, SR_DS));
 	}
 	printf("\n");
