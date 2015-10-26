@@ -111,6 +111,7 @@ static inline lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg) {
 
 static inline hwaddr_t page_translate(lnaddr_t addr) {
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
+	printf("%d\n",cpu.cr0.val);
 	hwaddr_t l1page = cpu.cr3.page_directory_base + (addr >> 22);
 	hwaddr_t l2page = l1page + ((addr >> 12) & 0x3ff);
 	return l2page + (addr & 0xfff);
