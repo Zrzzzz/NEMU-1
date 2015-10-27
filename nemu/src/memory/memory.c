@@ -1,8 +1,9 @@
 #include "common.h"
-#include "cpu/reg.h"
 
 uint32_t l1cache_read(hwaddr_t, size_t);
 void l1cache_write(hwaddr_t, size_t, uint32_t);
+hwaddr_t page_translate(lnaddr_t);
+lnaddr_t seg_translate(swaddr_t, size_t, uint8_t);
 
 /* Memory accessing interfaces */
 
