@@ -109,11 +109,13 @@ static inline lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg) {
 	return (cpu.sreg[(sreg << 2) + 3] << 8) + (cpu.sreg[(sreg << 2) + 2]) + addr;
 }
 
+uint32_t hwaddr_read(hwaddr_t, size_t);
+
 static inline hwaddr_t page_translate(lnaddr_t addr) {
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
 	hwaddr_t l1page = cpu.cr3.page_directory_base + (addr >> 22 << 2);
-	hwaddr_t l2page = (l1page & 0xfffff000) + ((addr >> 12 << 2) & 0xfff);
-	return (l2page & 0xfffff000) + (addr & 0xfff);
+	hwaddr_t l2page = (hwaddr_read(l1page, 4) & 0xfffff000) + ((addr >> 12 << 2) & 0xfff);
+	return (hwaddr_read(l2page, 4) & 0xfffff000) + (addr & 0xfff);
 }
 
 static inline void init_cr0() {
