@@ -113,7 +113,7 @@ uint32_t hwaddr_read(hwaddr_t, size_t);
 
 static inline hwaddr_t page_translate(lnaddr_t addr) {
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
-	hwaddr_t l1page = cpu.cr3.page_directory_base + (addr >> 22 << 2);
+	hwaddr_t l1page = (cpu.cr3.page_directory_base << 12) + (addr >> 22 << 2);
 	printf("%x\n",l1page);
 	hwaddr_t l2page = (hwaddr_read(l1page, 4) & 0xfffff000) + ((addr >> 12 << 2) & 0xfff);
 	printf("%x\n",l2page);
