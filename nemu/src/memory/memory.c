@@ -22,6 +22,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
+	printf("sw%x\n",addr);
 	hwaddr_t hwaddr = page_translate(addr);
 	return hwaddr_read(hwaddr, len);
 }
@@ -36,6 +37,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
+	printf("sw%x\n",addr);
 	lnaddr_t lnaddr = seg_translate(addr, len, sreg);
 	return lnaddr_read(lnaddr, len);
 }
