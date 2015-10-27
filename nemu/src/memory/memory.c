@@ -9,6 +9,7 @@ void l1cache_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+	printf("hw%x\n",addr);
 	return l1cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 	//return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
@@ -22,7 +23,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	printf("sw%x\n",addr);
+	printf("ln%x\n",addr);
 	hwaddr_t hwaddr = page_translate(addr);
 	return hwaddr_read(hwaddr, len);
 }
