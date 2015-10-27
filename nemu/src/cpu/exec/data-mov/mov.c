@@ -28,9 +28,14 @@ make_helper(mov_cr02r) {
 	return 2;
 }
 
+void init_tlb();
+
 make_helper(mov_r2cr0) {
 	decode_rm_l(eip + 1);
-	if(op_src2->reg)cpu.cr3.val = reg_l(op_src->reg);
+	if(op_src2->reg) {
+		cpu.cr3.val = reg_l(op_src->reg);
+		init_tlb();
+	}
 	else cpu.cr0.val = reg_l(op_src->reg);
 	return 2;
 }
