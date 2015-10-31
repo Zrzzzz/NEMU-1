@@ -58,6 +58,7 @@
 #include "cld/cld.h"
 
 #include "lgdt/lgdt.h"
+#include "lidt/lidt.h"
 
 #include "misc/misc.h"
 

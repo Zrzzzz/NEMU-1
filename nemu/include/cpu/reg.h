@@ -63,6 +63,11 @@ typedef struct {
 		uint32_t base;
 	} gdtr;
 
+	struct IDTR {
+		uint16_t limit;
+		uint32_t base;
+	} idtr;
+
 	union {
 		/*struct SR {
 			uint16_t limit0;
