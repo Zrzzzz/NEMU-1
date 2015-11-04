@@ -71,26 +71,6 @@ typedef struct {
 	} idtr;
 
 	union {
-		/*struct SR {
-			uint16_t limit0;
-			uint16_t base0;
-			uint8_t base1;
-			struct {
-				uint8_t a		: 1;
-				uint8_t type	: 3;
-				uint8_t s		: 1;
-				uint8_t dpl		: 2;
-				uint8_t p		: 1;
-			};
-			struct {
-				uint8_t limit1	: 4;
-				uint8_t avl		: 1;
-				uint8_t o		: 1;
-				uint8_t d		: 1;
-				uint8_t g		: 1;
-			};
-			uint8_t base2;
-		} */
 		struct {
 			struct {
 				union {
