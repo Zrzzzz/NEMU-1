@@ -3,6 +3,7 @@
 
 make_helper(intt);
 make_helper(iret);
+make_helper(cli);
 
 #endif
 
