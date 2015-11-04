@@ -19,11 +19,10 @@ make_instr_helper(m)
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 make_helper(concat(popa_, SUFFIX)) {
-	DATA_TYPE temp = concat(reg_, SUFFIX)(R_ESP);
 	int i;
-	for(i = R_EAX; i <= R_EDI; i ++) {
-		if(i == R_ESP) concat(pop_val_, SUFFIX)(temp);
-		else concat(pop_val_, SUFFIX)(concat(reg_, SUFFIX)(i));
+	for(i = R_EDI; i <= R_EAX; i --) {
+		if(i == R_ESP) concat(pop_val_, SUFFIX)();
+		else concat(reg_, SUFFIX)(i) = concat(pop_val_, SUFFIX)();
 	}
 	print_asm("pusha"str(SUFFIX));
 	return 1;
