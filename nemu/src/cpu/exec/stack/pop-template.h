@@ -1,16 +1,15 @@
 #include "cpu/exec/template-start.h"
 
-#if DATA_BYTE == 1
-#define RET_DATA_TYPE int8_t
-#elif DATA_BYTE == 2
-#define RET_DATA_TYPE int16_t
-#elif DATA_BYTE == 4
-#define RET_DATA_TYPE int32_t
-#endif
 #define instr pop
 
+DATA_TYPE concat(pop_val_, SUFFIX)() {	
+	DATA_TYPE ret = (DATA_TYPE_S) swaddr_read(reg_l(R_ESP), DATA_BYTE, SR_SS); 
+	reg_l(R_ESP) = reg_l(R_ESP) + DATA_BYTE;
+	return ret;
+}
+
 static void do_execute() {
-	OPERAND_W(op_src, (RET_DATA_TYPE) swaddr_read(reg_l(R_ESP), DATA_BYTE, SR_SS)); 
+	OPERAND_W(op_src, (DATA_TYPE_S) swaddr_read(reg_l(R_ESP), DATA_BYTE, SR_SS)); 
 	reg_l(R_ESP) = reg_l(R_ESP) + DATA_BYTE;
 	print_asm_template1();
 }

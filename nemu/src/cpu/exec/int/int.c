@@ -26,3 +26,13 @@ make_helper(intt) {
 	return 0;
 }
 
+uint32_t pop_val_l();
+
+make_helper(iret) {
+	cpu.eip = pop_val_l();
+	cpu.cs.val = pop_val_l();
+	cpu.eflags = pop_val_l();
+	print_asm("iret");
+
+	return 0;
+}

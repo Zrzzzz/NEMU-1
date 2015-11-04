@@ -2,6 +2,7 @@
 #define __INT_H__
 
 make_helper(intt);
+make_helper(iret);
 
 #endif
 
