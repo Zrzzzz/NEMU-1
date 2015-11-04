@@ -36,3 +36,10 @@ make_helper(iret) {
 
 	return 0;
 }
+
+make_helper(cli) {
+	cpu.IF = 0;
+	return 1;
+}
+
+
