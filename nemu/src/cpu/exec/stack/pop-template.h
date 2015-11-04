@@ -16,5 +16,17 @@ static void do_execute() {
 
 make_instr_helper(r)
 make_instr_helper(m)
-#undef RET_DATA_TYPE
+
+#if DATA_BYTE == 2 || DATA_BYTE == 4
+make_helper(concat(popa_, SUFFIX)) {
+	DATA_TYPE temp = concat(reg_, SUFFIX)(R_ESP);
+	int i;
+	for(i = R_EAX; i <= R_EDI; i ++) {
+		if(i == R_ESP) concat(pop_val_, SUFFIX)(temp);
+		else concat(pop_val_, SUFFIX)(concat(reg_, SUFFIX)(i));
+	}
+	print_asm("pusha"str(SUFFIX));
+	return 1;
+}
+#endif
 #include "cpu/exec/template-end.h"
