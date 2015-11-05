@@ -22,7 +22,7 @@ void raise_intr(uint8_t NO) {
 make_helper(intt) {
 	decode_i_b(eip + 1);
 	printf("%x\n",cpu.eip);
-	print_asm("int");
+	print_asm("intt");
 	raise_intr(op_src->val);
 
 	return 0;
