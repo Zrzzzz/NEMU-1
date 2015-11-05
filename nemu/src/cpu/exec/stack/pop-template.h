@@ -24,7 +24,7 @@ make_helper(concat(popa_, SUFFIX)) {
 		if(i == R_ESP) concat(pop_val_, SUFFIX)();
 		else concat(reg_, SUFFIX)(i) = concat(pop_val_, SUFFIX)();
 	}
-	print_asm("pusha"str(SUFFIX));
+	print_asm("popa"str(SUFFIX));
 	return 1;
 }
 #endif
