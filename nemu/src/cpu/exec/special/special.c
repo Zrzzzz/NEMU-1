@@ -31,7 +31,7 @@ make_helper(nemu_trap) {
 	switch(cpu.eax) {
 		case 2:
 			for(i = 0; i < cpu.edx; i ++) {
-				printf("%c", lnaddr_read(cpu.ecx, 1));
+				printf("%c", lnaddr_read(cpu.ecx + i, 1));
 			}
 		   	break;
 
