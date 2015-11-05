@@ -34,6 +34,7 @@ make_helper(iret) {
 	cpu.eflags = pop_val_l();
 	print_asm("iret");
 
+	printf("%u\n",cpu.eip);
 	return 0;
 }
 
