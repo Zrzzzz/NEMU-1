@@ -26,7 +26,7 @@ void do_syscall(TrapFrame *tf) {
 			break;
 
 		case SYS_brk: sys_brk(tf); break;
-		case SYS_write: asm volatile (".byte 0xd6" : : "a"(2), "c"(buf), "d"(len)); break;
+		case SYS_write: asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx)); break;
 
 		/* TODO: Add more system calls. */
 
