@@ -21,8 +21,9 @@ void raise_intr(uint8_t NO) {
 
 make_helper(intt) {
 	decode_i_b(eip + 1);
-	raise_intr(op_src->val);
+	printf("%x\n",cpu.eip);
 	print_asm("int");
+	raise_intr(op_src->val);
 
 	return 0;
 }
