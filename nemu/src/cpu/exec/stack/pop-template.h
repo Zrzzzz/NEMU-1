@@ -20,7 +20,7 @@ make_instr_helper(m)
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 make_helper(concat(popa_, SUFFIX)) {
 	int i;
-	for(i = R_EDI; i <= R_EAX; i --) {
+	for(i = R_EDI; i >= R_EAX; i --) {
 		if(i == R_ESP) concat(pop_val_, SUFFIX)();
 		else concat(reg_, SUFFIX)(i) = concat(pop_val_, SUFFIX)();
 	}
