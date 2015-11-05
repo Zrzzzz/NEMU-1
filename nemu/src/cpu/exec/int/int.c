@@ -21,7 +21,6 @@ void raise_intr(uint8_t NO) {
 make_helper(intt) {
 	decode_i_b(eip + 1);
 	print_asm("intt");
-	printf("%x\n",cpu.eip);
 	raise_intr(op_src->val);
 
 	return 0;
@@ -35,7 +34,6 @@ make_helper(iret) {
 	cpu.eflags = pop_val_l();
 	print_asm("iret");
 
-	printf("%x\n",cpu.eip);
 	return 0;
 }
 
