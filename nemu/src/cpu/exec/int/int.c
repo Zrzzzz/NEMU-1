@@ -10,6 +10,7 @@ void raise_intr(uint8_t NO) {
 	 */
 	push_val_l(cpu.eflags);
 	push_val_l(cpu.cs.val);
+	printf("%x\n",cpu.eip);
 	push_val_l(cpu.eip + 2);
 	cpu.cs.val = lnaddr_read(cpu.idtr.base + (NO << 3) + 2, 2);
 	cpu.eip = (lnaddr_read(cpu.idtr.base + (NO << 3) + 6, 2) << 16) + lnaddr_read(cpu.idtr.base + (NO << 3), 2);	
