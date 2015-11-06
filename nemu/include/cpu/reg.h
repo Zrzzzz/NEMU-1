@@ -87,7 +87,7 @@ typedef struct {
 		};
 		uint16_t sreg[16];
 	};
-	bool INTR;
+	volatile bool INTR;
 } CPU_state;
 
 extern CPU_state cpu;
