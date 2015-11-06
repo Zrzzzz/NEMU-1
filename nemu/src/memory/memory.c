@@ -1,4 +1,5 @@
 #include "common.h"
+#include "device/mmio.h"
 
 uint32_t l1cache_read(hwaddr_t, size_t);
 void l1cache_write(hwaddr_t, size_t, uint32_t);
@@ -8,11 +9,15 @@ lnaddr_t seg_translate(swaddr_t, size_t, uint8_t);
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-	return l1cache_read(addr, len) & (~0u >> ((4 - len) << 3));
+	int is_io = is_mmio(addr);
+	if(is_io != -1) return mmio_read(addr, len, is_io);
+	else return l1cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	l1cache_write(addr, len, data);
+	int is_io = is_mmio(addr);
+	if(is_io != -1) mmio_write(addr, len, data, is_io);
+	else l1cache_write(addr, len, data);
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
