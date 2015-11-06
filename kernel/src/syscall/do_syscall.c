@@ -4,12 +4,20 @@
 
 void add_irq_handle(int, void (*)(void));
 void mm_brk(uint32_t);
+void serial_printc(char);
 
 static void sys_brk(TrapFrame *tf) {
 #ifdef IA32_PAGE
 	mm_brk(tf->ebx);
 #endif
 	tf->eax = 0;
+}
+
+static void sys_write(TrapFrame *tf) {
+	int i;
+	for(i = 0; i < tf->edx; i ++) {
+		serial_printc(*(char *)(tf->ecx + i));
+	}
 }
 
 void do_syscall(TrapFrame *tf) {
@@ -26,7 +34,7 @@ void do_syscall(TrapFrame *tf) {
 			break;
 
 		case SYS_brk: sys_brk(tf); break;
-		case SYS_write: asm volatile (".byte 0xd6" : : "a"(2), "c"(tf->ecx), "d"(tf->edx)); tf->eax = tf->edx; break;
+		case SYS_write: sys_write(tf); break;
 
 		/* TODO: Add more system calls. */
 
