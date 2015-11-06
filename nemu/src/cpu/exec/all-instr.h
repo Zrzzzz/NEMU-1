@@ -69,3 +69,5 @@
 #include "int/int.h"
 
 #include "disc/disc.h"
+
+#include "hlt/hlt.h"
