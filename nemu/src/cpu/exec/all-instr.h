@@ -67,3 +67,5 @@
 #include "special/special.h"
 
 #include "int/int.h"
+
+#include "disc/disc.h"
