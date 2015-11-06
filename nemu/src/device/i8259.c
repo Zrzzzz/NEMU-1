@@ -56,7 +56,6 @@ static void do_i8259() {
 	 * is added to the CPU_state structure.
 	 */
 	cpu.INTR = true;
-	panic("uncomment the line above");
 }
 
 /* device interface */
