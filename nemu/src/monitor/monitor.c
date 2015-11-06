@@ -13,6 +13,10 @@ void init_ddr3();
 void init_l1cache();
 void init_l2cache();
 void init_cpu_state();
+#ifdef HAS_DEVICE
+void init_device();
+void init_sdl();
+#endif
 
 FILE *log_fp = NULL;
 
@@ -43,6 +47,11 @@ void init_monitor(int argc, char *argv[]) {
 
 	/* Display welcome message. */
 	welcome();
+
+#ifdef HAS_DEVICE
+	init_device();
+	init_sdl();
+#endif
 }
 
 #ifdef USE_RAMDISK
