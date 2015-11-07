@@ -47,7 +47,7 @@ uint32_t loader() {
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 #ifdef HAS_DEVICE
-			ide_read(p, (uint32_t)(ph->p_offset), ph->p_filesz);
+			ide_read(p, (uint32_t)(ELF_OFFSET_IN_DISK + ph->p_offset), ph->p_filesz);
 #else
 			ramdisk_read(p, (uint32_t)(ph->p_offset), ph->p_filesz);
 #endif		 
