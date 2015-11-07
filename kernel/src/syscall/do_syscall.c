@@ -15,12 +15,8 @@ static void sys_brk(TrapFrame *tf) {
 
 static void sys_write(TrapFrame *tf) {
 	int i;
-	if(tf->ebx == 1 || tf->ebx == 2) {
-		for(i = 0; i < tf->edx; i ++) {
-			serial_printc(*(char *)(tf->ecx + i));
-		}
-		tf->eax = 0;
-		return;
+	for(i = 0; i < tf->edx; i ++) {
+		serial_printc(*(char *)(tf->ecx + i));
 	}
 	tf->eax = tf->edx;
 }
