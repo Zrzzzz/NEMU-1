@@ -2,6 +2,7 @@
 #define __CLD_H__
 
 make_helper(cld);
+make_helper(sti);
 
 #endif
 
