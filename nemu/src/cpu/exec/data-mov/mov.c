@@ -37,6 +37,7 @@ make_helper(mov_r2cr0) {
 		init_tlb();
 	}
 	else cpu.cr0.val = reg_l(op_src->reg);
+	print_asm("movcr %%%s", op_src->str);
 	return 2;
 }
 
