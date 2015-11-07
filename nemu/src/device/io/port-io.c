@@ -50,7 +50,6 @@ uint32_t pio_read(ioaddr_t addr, size_t len) {
 void pio_write(ioaddr_t addr, size_t len, uint32_t data) {
 	assert(len == 1 || len == 2 || len == 4);
 	assert(addr + len - 1 < PORT_IO_SPACE_MAX);
-	printf("%x\n",addr);
 	memcpy(pio_space + addr, &data, len);
 	pio_callback(addr, len, true);
 }
