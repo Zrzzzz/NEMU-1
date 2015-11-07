@@ -19,7 +19,7 @@ void do_syscall(TrapFrame *);
 void
 add_irq_handle(int irq, void (*func)(void) ) {
 	assert(irq < NR_HARD_INTR);
-	assert(handle_count < NR_IRQ_HANDLE);
+	assert(handle_count <= NR_IRQ_HANDLE);
 
 	struct IRQ_t *ptr;
 	ptr = &handle_pool[handle_count ++]; /* get a free handler */
