@@ -3,6 +3,8 @@
 
 uint32_t l1cache_read(hwaddr_t, size_t);
 void l1cache_write(hwaddr_t, size_t, uint32_t);
+uint32_t dram_read(hwaddr_t, size_t);
+void dram_write(hwaddr_t, size_t, uint32_t);
 hwaddr_t page_translate(lnaddr_t);
 lnaddr_t seg_translate(swaddr_t, size_t, uint8_t);
 
@@ -11,7 +13,11 @@ lnaddr_t seg_translate(swaddr_t, size_t, uint8_t);
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	int is_io = is_mmio(addr);
 	if(is_io != -1) return mmio_read(addr, len, is_io);
+#ifdef CACHE
 	else return l1cache_read(addr, len) & (~0u >> ((4 - len) << 3));
+#else
+	else return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+#endif
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
@@ -20,7 +26,11 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 		mmio_write(addr, len, data, is_io);
 		//printf("ASd\n");
 	}
+#ifdef CACHE
 	else l1cache_write(addr, len, data);
+#else
+	else dram_write(addr, len, data);
+#endif
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
