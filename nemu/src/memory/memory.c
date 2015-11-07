@@ -18,7 +18,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int is_io = is_mmio(addr);
 	if(is_io != -1) {
 		mmio_write(addr, len, data, is_io);
-		printf("ASd\n");
+		//printf("ASd\n");
 	}
 	else l1cache_write(addr, len, data);
 }

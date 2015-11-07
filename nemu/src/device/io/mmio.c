@@ -36,7 +36,7 @@ void* add_mmio_map(hwaddr_t addr, size_t len, mmio_callback_t callback) {
 /* bus interface */
 int is_mmio(hwaddr_t addr) {
 	int i;
-	printf("%d %x %x %x\n", nr_map, maps[0].low, maps[0].high, addr);
+	//printf("%d %x %x %x\n", nr_map, maps[0].low, maps[0].high, addr);
 	for(i = 0; i < nr_map; i ++) {
 		if(addr >= maps[i].low && addr <= maps[i].high) {
 			return i;
