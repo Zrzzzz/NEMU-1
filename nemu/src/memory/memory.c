@@ -1,7 +1,7 @@
 #include "common.h"
 #include "device/mmio.h"
 
-#define CACHE
+//#define CACHE
 uint32_t l1cache_read(hwaddr_t, size_t);
 void l1cache_write(hwaddr_t, size_t, uint32_t);
 uint32_t dram_read(hwaddr_t, size_t);
