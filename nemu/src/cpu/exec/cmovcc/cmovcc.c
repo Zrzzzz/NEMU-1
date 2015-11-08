@@ -51,7 +51,7 @@
 #undef instr
 
 #define instr cmovle
-#define expr ((cpu.SF != cpu.OF) && cpu.ZF)
+#define expr ((cpu.SF != cpu.OF) || cpu.ZF)
 #include "cmovcc-template.h"
 #undef expr
 #undef instr
@@ -151,7 +151,7 @@
 #undef instr
 
 #define instr cmovle
-#define expr ((cpu.SF != cpu.OF) && cpu.ZF)
+#define expr ((cpu.SF != cpu.OF) || cpu.ZF)
 #include "cmovcc-template.h"
 #undef expr
 #undef instr
