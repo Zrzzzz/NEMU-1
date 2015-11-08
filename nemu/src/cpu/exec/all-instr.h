@@ -71,3 +71,5 @@
 #include "disc/disc.h"
 
 #include "hlt/hlt.h"
+
+#include "bt/bt.h"
