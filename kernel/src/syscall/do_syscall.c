@@ -21,6 +21,8 @@ static void sys_write(TrapFrame *tf) {
 	tf->eax = tf->edx;
 }
 
+//void keyboard_event();
+
 void do_syscall(TrapFrame *tf) {
 	switch(tf->eax) {
 		/* The ``add_irq_handle'' system call is artificial. We use it to 
@@ -36,10 +38,7 @@ void do_syscall(TrapFrame *tf) {
 
 		case SYS_brk: sys_brk(tf); break;
 		case SYS_write: sys_write(tf); break;
-		case SYS_read: panic("read"); break;
-		case SYS_lseek: panic("lseek"); break;
-		case SYS_open: panic("open"); break;
-		case SYS_close: panic("close"); break;
+//		case 255: keyboard_event(); break;
 
 		/* TODO: Add more system calls. */
 
