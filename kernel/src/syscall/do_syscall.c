@@ -36,6 +36,7 @@ void do_syscall(TrapFrame *tf) {
 
 		case SYS_brk: sys_brk(tf); break;
 		case SYS_write: sys_write(tf); break;
+		case SYS_read: panic("read"); break;
 
 		/* TODO: Add more system calls. */
 
