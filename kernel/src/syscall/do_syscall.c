@@ -3,6 +3,7 @@
 #include <sys/syscall.h>
 
 void add_irq_handle(int, void (*)(void));
+void irq_handle(TrapFrame *tf);
 void mm_brk(uint32_t);
 void serial_printc(char);
 
@@ -21,8 +22,6 @@ static void sys_write(TrapFrame *tf) {
 	tf->eax = tf->edx;
 }
 
-//void keyboard_event();
-
 void do_syscall(TrapFrame *tf) {
 	switch(tf->eax) {
 		/* The ``add_irq_handle'' system call is artificial. We use it to 
@@ -38,7 +37,7 @@ void do_syscall(TrapFrame *tf) {
 
 		case SYS_brk: sys_brk(tf); break;
 		case SYS_write: sys_write(tf); break;
-//		case 255: keyboard_event(); break;
+		case 255: /*tf->irq = 1001;*/ irq_handle(tf); break;
 
 		/* TODO: Add more system calls. */
 
