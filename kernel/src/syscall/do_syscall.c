@@ -37,7 +37,6 @@ void do_syscall(TrapFrame *tf) {
 
 		case SYS_brk: sys_brk(tf); break;
 		case SYS_write: sys_write(tf); break;
-		case 255: /*tf->irq = 1001;*/ irq_handle(tf); break;
 
 		/* TODO: Add more system calls. */
 
