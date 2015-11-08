@@ -21,7 +21,7 @@ static void sys_write(TrapFrame *tf) {
 	tf->eax = tf->edx;
 }
 
-void keyboard_event();
+//void keyboard_event();
 
 void do_syscall(TrapFrame *tf) {
 	switch(tf->eax) {
@@ -38,7 +38,7 @@ void do_syscall(TrapFrame *tf) {
 
 		case SYS_brk: sys_brk(tf); break;
 		case SYS_write: sys_write(tf); break;
-		case 255: keyboard_event(); break;
+//		case 255: keyboard_event(); break;
 
 		/* TODO: Add more system calls. */
 
