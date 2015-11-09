@@ -32,3 +32,68 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 
 /* TODO: implement a simplified file system here. */
 
+typedef struct {
+	bool opened;
+	uint32_t offset;
+} Fstate;
+
+static Fstate file_state[NR_FILES+3];
+
+int fs_open(const char* pathname, int flags) {
+	int i;
+	for (i = 0; i < NR_FILES; i++) {
+		if (strcmp(file_table[i].name, pathname) == 0) {
+			file_state[i+3].opened = true;
+			file_state[i+3].offset = 0;
+			return i+3;
+		}
+	}
+	assert(0);
+	return 0;
+}
+
+int fs_close(int fd) {
+	file_state[fd].opened = false;
+	return 0;
+}
+
+int fs_read(int fd, void *buf, int len) {
+	if (fd < 3) return 0;
+	assert(file_state[fd].opened);
+	if (file_state[fd].offset+len >= file_table[fd-3].size)
+		len = file_table[fd-3].size-file_state[fd].offset-1;
+	ide_read(buf, file_table[fd-3].disk_offset+file_state[fd].offset, len);
+	file_state[fd].offset += len;
+	return len;
+}
+
+void serial_printc(char);
+int fs_write(int fd, void *buf, int len) {
+	if ((fd == 1)||(fd == 2)) {
+		int i;
+		for (i = 0; i < len; i++)
+			serial_printc(((char*)buf)[i]);
+	}
+	if (fd < 3) return 0;
+	assert(file_state[fd].opened);
+	if (file_state[fd].offset+len >= file_table[fd-3].size)
+		len = file_table[fd-3].size-file_state[fd].offset-1;
+	if (len <= 0) return 0;
+	ide_write(buf, file_table[fd-3].disk_offset+file_state[fd].offset, len);
+	file_state[fd].offset += len;
+	return len;
+}
+
+int fs_lseek(int fd, int offset, int whence) {
+	if (fd < 3) return 0;
+	assert(file_state[fd].opened);
+	switch (whence) {
+		case SEEK_SET: file_state[fd].offset = offset; break;
+		case SEEK_CUR: file_state[fd].offset += offset; break;
+		case SEEK_END:
+					   file_state[fd].offset = offset+file_table[fd-3].size;
+					   break;
+	}
+	return file_state[fd].offset;
+}
+
