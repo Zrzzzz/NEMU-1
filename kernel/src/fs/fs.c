@@ -1,4 +1,5 @@
 #include "common.h"
+#include <string.h>
 
 typedef struct {
 	char *name;
