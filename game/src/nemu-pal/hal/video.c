@@ -22,7 +22,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect,
 
 	int i, w, h;
 	uint8_t *src_ptr, *dst_ptr;
-	if(scrrect == NULL && dstrect == NULL) {
+	if(scrrect == NULL || dstrect == NULL) {
 		memcpy(dst->pixels, src->pixels, src->w * src->h);
 		return;
 	}
