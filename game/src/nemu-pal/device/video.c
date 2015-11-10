@@ -435,6 +435,7 @@ VIDEO_UpdateScreen(
       dstrect.w = (WORD)((DWORD)(lpRect->w) * gpScreenReal->w / gpScreen->w);
       dstrect.h = (WORD)((DWORD)(lpRect->h) * screenRealHeight / gpScreen->h);
 
+	  printf("1\n");
       SDL_SoftStretch(gpScreen, (SDL_Rect *)lpRect, gpScreenReal, &dstrect);
 
       if (SDL_MUSTLOCK(gpScreenReal))
@@ -492,6 +493,7 @@ VIDEO_UpdateScreen(
 			   dstrect.y = (screenRealY + g_wShakeLevel) * screenRealHeight / gpScreen->h;
 		   }
 
+	  printf("2\n");
 		   SDL_SoftStretch(gpScreen, &srcrect, gpScreenReal, &dstrect);
 
 		   if (g_wShakeTime & 1)
@@ -542,6 +544,7 @@ VIDEO_UpdateScreen(
 		   dstrect.w = gpScreenReal->w;
 		   dstrect.h = screenRealHeight;
 
+	  printf("3\n");
 		   SDL_SoftStretch(gpScreen, NULL, gpScreenReal, &dstrect);
 
 		   if (SDL_MUSTLOCK(gpScreenReal))
@@ -1014,6 +1017,7 @@ VIDEO_SwitchScreen(
       dstrect.w = gpScreenReal->w;
       dstrect.h = screenRealHeight;
 
+	  printf("4\n");
       SDL_SoftStretch(gpScreenBak, NULL, gpScreenReal, &dstrect);
 #if SDL_VERSION_ATLEAST(2, 0, 0)
       SDL_UpdateTexture(gpTexture, NULL, gpScreenReal->pixels, gpScreenReal->pitch);
@@ -1154,6 +1158,7 @@ VIDEO_FadeScreen(
                dstrect.y = (screenRealY + g_wShakeLevel) * screenRealHeight / gpScreen->h;
             }
 
+	  printf("5\n");
             SDL_SoftStretch(gpScreenBak, &srcrect, gpScreenReal, &dstrect);
 
             if (g_wShakeTime & 1)
@@ -1198,6 +1203,7 @@ VIDEO_FadeScreen(
             dstrect.w = gpScreenReal->w;
             dstrect.h = screenRealHeight;
 
+	  printf("6\n");
             SDL_SoftStretch(gpScreenBak, NULL, gpScreenReal, &dstrect);
 #if SDL_VERSION_ATLEAST(2, 0, 0)
             SDL_UpdateTexture(gpTexture, NULL, gpScreenReal->pixels, gpScreenReal->pitch);
