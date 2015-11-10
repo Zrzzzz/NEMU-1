@@ -66,7 +66,7 @@ hwaddr_t page_translate(lnaddr_t addr) {
 #else
 		hwaddr_t l1page = (cpu.cr3.page_directory_base << 12) + (addr >> 22 << 2);
 		hwaddr_t l2page = (hwaddr_read(l1page, 4) & 0xfffff000) + ((addr >> 12 << 2) & 0xfff);
-		return (hwaddr_read(l2page, 4) & 0xfffff000);
+		return (hwaddr_read(l2page, 4) & 0xfffff000) + (addr & 0xfff);
 #endif
 }
 
