@@ -4,7 +4,6 @@
 
 static void do_execute() {
 	uint32_t res = op_src->val & op_dest->val;
-	OPERAND_W(op_dest, res);
 	cpu.CF = cpu.OF = 0;
 	cpu.SF = (res >> 31) & 1;
 	cpu.ZF = (res == 0);
