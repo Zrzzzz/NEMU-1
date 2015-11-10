@@ -10,6 +10,7 @@ int get_fps();
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect, 
 		SDL_Surface *dst, SDL_Rect *dstrect) {
 	assert(dst && src);
+	printf("1\n");
 
 	/* TODO: Performs a fast blit from the source surface to the 
 	 * destination surface. Only the position is used in the
@@ -22,7 +23,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect,
 
 	int i, w, h;
 	uint8_t *src_ptr, *dst_ptr;
-	if(scrrect == NULL || dstrect == NULL) {
+	if(scrrect == NULL && dstrect == NULL) {
 		memcpy(dst->pixels, src->pixels, src->w * src->h);
 		return;
 	}
@@ -55,6 +56,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect,
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	assert(dst);
 	assert(color <= 0xff);
+	printf("2\n");
 
 	/* TODO: Fill the rectangle area described by ``dstrect''
 	 * in surface ``dst'' with color ``color''. If dstrect is
@@ -91,6 +93,7 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 		return;
 	}
 
+	printf("3\n");
 	/* TODO: Copy the pixels in the rectangle area to the screen. */
 
 	int i;
@@ -128,6 +131,7 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors,
 	memcpy(s->format->palette->colors, colors, sizeof(SDL_Color) * ncolors);
 
 	if(s->flags & SDL_HWSURFACE) {
+	printf("4\n");
 		/* TODO: Set the VGA palette by calling write_palette(). */
 		write_palette(s->format->palette->colors, ncolors);
 	}
