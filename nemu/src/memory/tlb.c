@@ -40,6 +40,7 @@ uint32_t hwaddr_read(hwaddr_t, size_t);
 
 hwaddr_t page_translate(lnaddr_t addr) {
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
+#ifdef TLB
 	tlb_addr temp;
 	temp.addr = addr;
 	uint32_t tag = temp.tag;
@@ -62,6 +63,11 @@ hwaddr_t page_translate(lnaddr_t addr) {
 		tlb[way].tag = tag;
 	}	
 	return tlb[way].base + (addr & 0xfff);
+#else
+		hwaddr_t l1page = (cpu.cr3.page_directory_base << 12) + (addr >> 22 << 2);
+		hwaddr_t l2page = (hwaddr_read(l1page, 4) & 0xfffff000) + ((addr >> 12 << 2) & 0xfff);
+		return (hwaddr_read(l2page, 4) & 0xfffff000);
+#endif
 }
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg) {
