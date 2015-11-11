@@ -1,6 +1,6 @@
 #include "cpu/exec/template-start.h"
 
-void concat(push_val_, SUFFIX)(DATA_TYPE val) {
+void concat(push_val_, SUFFIX)(DATA_TYPE_S val) {
 	reg_l(R_ESP) = reg_l(R_ESP) - (DATA_BYTE == 2 ? 2 : 4);
 	swaddr_write(reg_l(R_ESP), (DATA_BYTE == 2 ? 2 : 4), val, SR_SS);
 }
