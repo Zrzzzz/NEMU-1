@@ -2,10 +2,11 @@
 
 #define instr leave
 
+DATA_TYPE concat(pop_val_, SUFFIX)();
+
 static void do_execute() {
 	reg_l(R_ESP) = reg_l(R_EBP);
-	concat(reg_, SUFFIX)(R_EBP) = swaddr_read(reg_l(R_ESP), DATA_BYTE, SR_SS);
-	reg_l(R_ESP) += DATA_BYTE;
+	reg_l(R_EBP) = concat(pop_val_, SUFFIX)();
 	print_asm_template1();
 }
 
