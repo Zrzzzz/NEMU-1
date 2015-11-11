@@ -19,63 +19,20 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * is saved in ``dstrect'' after all clipping is performed
 	 * (``srcrect'' is not modified).
 	 */
-	int src_x = (srcrect == NULL || dstrect == NULL)? 0 : srcrect->x;
-	int src_y = (srcrect == NULL || dstrect == NULL)? 0 : srcrect->y;
-
-	int src_w = (srcrect == NULL || dstrect == NULL)? src->w : srcrect->w;
-	int src_h = (srcrect == NULL || dstrect == NULL)? src->h : srcrect->h;
-
-	int dst_x = (srcrect && dstrect) ? dstrect->x : 0;
-	int dst_y = (srcrect && dstrect) ? dstrect->y : 0;
-
-	int pitch  = src->pitch;
-
-	int src_line = src_y, src_row = src_x;
-	int dst_line = dst_y, dst_row = dst_x;
-
-	int src_line_bound = src_y + src_h -1;
-	int src_row_bound = src_x + src_w -1;
-
-	int dst_line_bound = dst_y + src_h -1;
-	int dst_row_bound = dst_x + src_w -1;
-
-	if(dstrect != NULL){
-		dstrect->x = dst_row;
-		dstrect->y = dst_line;
-		dstrect->w = dst_row_bound - dst_row + 1;
-		dstrect->h = dst_line_bound - dst_line + 1;
-
-	}
-
-	int temp_src_row = src_row;
-	int temp_dst_row = dst_row;
-
-	for(;src_line <= src_line_bound;src_line++,dst_line++){
-		uint8_t* src_pixel = (uint8_t*) & (src->pixels[src_line * pitch + temp_src_row]);
-		uint8_t* dst_pixel = (uint8_t*) & (dst->pixels[dst_line * pitch + temp_dst_row]);
-		for(src_row = temp_src_row;src_row <= src_row_bound; src_row++,dst_pixel++,src_pixel++){
-			*dst_pixel = *src_pixel;
-		}
-	}/*
 
 	int i, w, h;
 	uint8_t *src_ptr, *dst_ptr;
 
-	if(srcrect) {
+	if(srcrect && dstrect) {
 		w = srcrect->w;
 		h = srcrect->h;
 		src_ptr = src->pixels + srcrect->x + srcrect->y * src->w;
+		dst_ptr = dst->pixels + dstrect->x + dstrect->y * dst->w;;
 	}
 	else {
 		w = src->w;
 		h = src->h;
 		src_ptr = src->pixels;
-	}
-
-	if(dstrect) {
-		dst_ptr = dst->pixels + dstrect->x + dstrect->y * dst->w;;
-	}
-	else {
 		dst_ptr = dst->pixels;
 	}
 
@@ -84,7 +41,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		dst_ptr += dst->w;
 		src_ptr += src->w;
 	}
-*/}
+}
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	assert(dst);
