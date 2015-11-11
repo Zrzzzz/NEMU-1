@@ -11,11 +11,11 @@ static void do_execute () {
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
 	pf = (pf >> 1) ^ pf;
-	cpu.CF = op_dest->val < op_src->val;
+	cpu.CF = 1 > op_src->val;
 	cpu.PF = (pf & 1);
 	cpu.ZF = (result == 0);
 	cpu.SF = (result >> 31) & 1;
-	cpu.OF = ((op_dest->val >> 31) ^ (op_src->val >> 31)) & ((op_dest->val >> 31) ^ (result >> 31)) & 1;
+	cpu.OF = ((result >> 31) ^ (op_src->val >> 31)) & (op_src->val >> 31) & 1;
 
 	print_asm_template1();
 }
