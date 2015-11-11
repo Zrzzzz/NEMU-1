@@ -1,22 +1,10 @@
 #include "cpu/exec/template-start.h"
 
-#if DATA_BYTE == 1
-#define RET_DATA_TYPE int8_t
-#elif DATA_BYTE == 2
-#define RET_DATA_TYPE int16_t
-#elif DATA_BYTE == 4
-#define RET_DATA_TYPE int32_t
-#endif
 #define instr add
 
 static void do_execute() {
-	RET_DATA_TYPE res = op_src->val + op_dest->val;
-	if(res >> ((DATA_BYTE << 3) - 1)) {
-		cpu.CF = (op_src->val >> ((DATA_BYTE << 3) - 1)) & (op_dest->val >> ((DATA_BYTE << 3) - 1)) & 1;
-	}
-	else {
-		cpu.CF = ((op_src->val >> ((DATA_BYTE << 3) - 1)) | (op_dest->val >> ((DATA_BYTE << 3) - 1))) & 1;
-	}
+	DATA_TYPE_S res = op_src->val + op_dest->val;
+	cpu.CF = res < op_src->val || res < op_dest->val;
 	cpu.PF = 0;
 	uint32_t pf = (res & 255);
 	pf = (pf >> 4) ^ pf;

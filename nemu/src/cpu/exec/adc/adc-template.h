@@ -5,12 +5,7 @@
 static void do_execute() {
 	op_src->val += cpu.CF;
 	DATA_TYPE_S res = op_src->val + op_dest->val;
-	if(res >> ((DATA_BYTE << 3) - 1)) {
-		cpu.CF = (op_src->val >> ((DATA_BYTE << 3) - 1)) & (op_dest->val >> ((DATA_BYTE << 3) - 1)) & 1;
-	}
-	else {
-		cpu.CF = ((op_src->val >> ((DATA_BYTE << 3) - 1)) | (op_dest->val >> ((DATA_BYTE << 3) - 1))) & 1;
-	}
+	cpu.CF = res < op_src->val || res < op_dest->val;
 	cpu.PF = 0;
 	uint32_t pf = (res & 255);
 	pf = (pf >> 4) ^ pf;
