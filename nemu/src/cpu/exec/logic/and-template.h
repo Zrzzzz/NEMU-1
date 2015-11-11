@@ -8,7 +8,7 @@ static void do_execute () {
 
 	/* TODO: Update EFLAGS. */
 	cpu.CF = cpu.OF = 0;
-	cpu.SF = (result >> 31) & 1;
+	cpu.SF = (result >> ((DATA_BYTE << 3) - 1)) & 1;
 	cpu.ZF = !result;
 	uint32_t pf = (result & 255);
 	pf = (pf >> 4) ^ pf;

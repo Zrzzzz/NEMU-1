@@ -5,7 +5,7 @@
 static void do_execute() {
 	DATA_TYPE res = op_src->val & op_dest->val;
 	cpu.CF = cpu.OF = 0;
-	cpu.SF = (res >> 31) & 1;
+	cpu.SF = (res >> ((DATA_BYTE << 3) - 1)) & 1;
 	cpu.ZF = (res == 0);
 	uint32_t pf = (res & 255);
 	pf = (pf >> 4) ^ pf;

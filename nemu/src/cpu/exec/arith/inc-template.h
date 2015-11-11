@@ -13,8 +13,8 @@ static void do_execute () {
 	pf = (pf >> 1) ^ pf;
 	cpu.PF = !(pf & 1);
 	cpu.CF = cpu.ZF = (result == 0);
-	cpu.SF = (result >> 31) & 1;
-	cpu.OF = ((result >> 31) ^ (op_src->val >> 31)) & (result >> 31) & 1;
+	cpu.SF = (result >> ((DATA_BYTE << 3) - 1)) & 1;
+	cpu.OF = ((result >> ((DATA_BYTE << 3) - 1)) ^ (op_src->val >> ((DATA_BYTE << 3) - 1))) & (result >> ((DATA_BYTE << 3) - 1)) & 1;
 
 	print_asm_template1();
 }

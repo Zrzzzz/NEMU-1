@@ -14,8 +14,8 @@ static void do_execute() {
 	cpu.CF = dest < src;
 	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
-	cpu.SF = (res >> 31) & 1;
-	cpu.OF = ((dest >> 31) ^ (src >> 31)) & ((dest >> 31) ^ (res >> 31)) & 1;
+	cpu.SF = (res >> ((DATA_BYTE << 3) - 1)) & 1;
+	cpu.OF = ((dest >> ((DATA_BYTE << 3) - 1)) ^ (src >> ((DATA_BYTE << 3) - 1))) & ((dest >> ((DATA_BYTE << 3) - 1)) ^ (res >> ((DATA_BYTE << 3) - 1))) & 1;
 	OPERAND_W(op_dest, dest - src);
 	print_asm_template2();
 }
