@@ -11,7 +11,7 @@ static void do_execute() {
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
 	pf = (pf >> 1) ^ pf;
-	cpu.PF = pf & 1;
+	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
 	cpu.SF = ((res >> ((DATA_BYTE << 3) - 1)) & 1);
 	cpu.OF = ((res ^ op_src->val) & (res ^ op_dest->val) & 1);

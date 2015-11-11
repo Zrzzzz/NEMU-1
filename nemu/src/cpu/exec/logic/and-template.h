@@ -14,7 +14,7 @@ static void do_execute () {
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
 	pf = (pf >> 1) ^ pf;
-	cpu.PF = pf & 1;
+	cpu.PF = !(pf & 1);
 
 	print_asm_template2();
 }

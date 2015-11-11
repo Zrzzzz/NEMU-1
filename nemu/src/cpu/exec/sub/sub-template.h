@@ -9,7 +9,7 @@ static void do_execute() {
 	pf = (pf >> 2) ^ pf;
 	pf = (pf >> 1) ^ pf;
 	cpu.CF = op_dest->val < op_src->val;
-	cpu.PF = (pf & 1);
+	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
 	cpu.SF = (res >> 31) & 1;
 	cpu.OF = ((op_dest->val >> 31) ^ (op_src->val >> 31)) & ((op_dest->val >> 31) ^ (res >> 31)) & 1;

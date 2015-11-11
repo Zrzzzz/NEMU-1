@@ -8,8 +8,8 @@ make_helper(concat(cmps_, SUFFIX)) {
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
 	pf = (pf >> 1) ^ pf;
-	cpu.CF = REG(R_ESI) - REG(R_EDI);
-	cpu.PF = (pf & 1);
+	cpu.CF = REG(R_ESI) > REG(R_EDI);
+	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
 	cpu.SF = (res >> 31) & 1;
 	cpu.OF = ((REG((R_ESI)) >> 31) ^ (REG((R_EDI)) >> 31)) & ((REG((R_ESI)) >> 31) ^ (res >> 31)) & 1;
