@@ -16,7 +16,6 @@ static int key_state[NR_KEYS];
 
 void
 keyboard_event(void) {
-	printf("5\n");
 	/* TODO: Fetch the scancode and update the key states. */
 	int i, k_code = in_byte(0x60);
 	for(i = 0; i < NR_KEYS; i ++) {
@@ -56,7 +55,6 @@ clear_key(int index) {
 bool 
 process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int)) {
 	cli();
-	printf("6\n");
 	/* TODO: Traverse the key states. Find a key just pressed or released.
 	 * If a pressed key is found, call ``key_press_callback'' with the keycode.
 	 * If a released key is found, call ``key_release_callback'' with the keycode.

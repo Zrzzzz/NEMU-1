@@ -13,7 +13,7 @@ static void do_execute() {
 	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
 	cpu.SF = ((res >> ((DATA_BYTE << 3) - 1)) & 1);
-	cpu.OF = ((res ^ op_src->val) & (res ^ op_dest->val) & 1);
+	cpu.OF = ((((res ^ op_src->val) & (res ^ op_dest->val)) >> 31) & 1);
 	OPERAND_W(op_dest, res);
 	print_asm_template2();
 }

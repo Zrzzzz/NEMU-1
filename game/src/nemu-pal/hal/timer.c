@@ -24,13 +24,11 @@ timer_event(void) {
 }
 
 uint32_t SDL_GetTicks() {
-	printf("7\n");
 	/* TODO: Return the time in millisecond. */
 	return jiffy * 1000 / HZ;
 }
 
 void SDL_Delay(uint32_t ms) {
-	printf("8\n");
 	/* TODO: Return from this function after waiting for `ms' milliseconds. */
 	volatile int start = SDL_GetTicks();
 	while(SDL_GetTicks() < ms + start);
