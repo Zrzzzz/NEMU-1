@@ -85,12 +85,14 @@ PAL_GameMain(
    //
    PAL_InitGameData(gpGlobals->bCurrentSaveSlot);
 
+   printf("ASD\n");
    //
    // Run the main game loop.
    //
    dwTime = SDL_GetTicks();
    while (TRUE)
    {
+	   printf("ZXC\n");
       //
       // Do some initialization at game start.
       //
@@ -99,17 +101,20 @@ PAL_GameMain(
          PAL_GameStart();
          gpGlobals->fGameStart = FALSE;
       }
+   printf("qwe\n");
 
 
       //
       // Load the game resources if needed.
       //
       PAL_LoadResources();
+   printf("zxc\n");
 
       //
       // Clear the input state of previous frame.
       //
       PAL_ClearKeyState();
+   printf("Aas\n");
 
       //
       // Wait for the time of one frame. Accept input here.
