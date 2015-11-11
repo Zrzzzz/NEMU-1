@@ -1,16 +1,10 @@
 #include "cpu/exec/template-start.h"
 
-#if DATA_BYTE == 1
-#define RET_DATA_TYPE int8_t
-#elif DATA_BYTE == 2
-#define RET_DATA_TYPE int16_t
-#elif DATA_BYTE == 4
-#define RET_DATA_TYPE int32_t
-#endif
 #define instr adc
 
 static void do_execute() {
-	RET_DATA_TYPE res = op_src->val + op_dest->val + cpu.CF;
+	op_src->val += cpu.CF;
+	DATA_TYPE_S res = op_src->val + op_dest->val;
 	if(res >> ((DATA_BYTE << 3) - 1)) {
 		cpu.CF = (op_src->val >> ((DATA_BYTE << 3) - 1)) & (op_dest->val >> ((DATA_BYTE << 3) - 1)) & 1;
 	}
@@ -18,10 +12,11 @@ static void do_execute() {
 		cpu.CF = ((op_src->val >> ((DATA_BYTE << 3) - 1)) | (op_dest->val >> ((DATA_BYTE << 3) - 1))) & 1;
 	}
 	cpu.PF = 0;
-	int i;
-	for(i = 0; i < (DATA_BYTE << 3); i ++) {
-		cpu.PF = cpu.PF ^ ((res >> i) & 1);
-	}
+	uint32_t pf = (res & 255);
+	pf = (pf >> 4) ^ pf;
+	pf = (pf >> 2) ^ pf;
+	pf = (pf >> 1) ^ pf;
+	cpu.PF = pf & 1;
 	cpu.ZF = (res == 0);
 	cpu.SF = ((res >> ((DATA_BYTE << 3) - 1)) & 1);
 	cpu.OF = ((res ^ op_src->val) & (res ^ op_dest->val) & 1);
