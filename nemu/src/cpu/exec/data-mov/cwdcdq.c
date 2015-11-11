@@ -14,4 +14,19 @@ int cwdcdq_w(uint32_t eip) {
 	return 1;
 }
 
+int cwtl_w(uint32_t eip) {
+	int16_t res = reg_b(R_AL);
+	res = res << 8 >> 8;
+	reg_w(R_EAX) = res;
+	return 1;
+}
+
+int cwtl_l(uint32_t eip) {
+	int32_t res = reg_w(R_AX);
+	res = res << 16 >> 16;
+	reg_l(R_EAX) = res;
+	return 1;
+}
+
 make_helper_v(cwdcdq)
+make_helper_v(cwtl)
