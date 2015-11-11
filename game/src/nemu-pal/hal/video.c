@@ -7,7 +7,7 @@
 
 int get_fps();
 
-void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect, 
+void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, 
 		SDL_Surface *dst, SDL_Rect *dstrect) {
 	assert(dst && src);
 
@@ -22,34 +22,29 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *scrrect,
 
 	int i, w, h;
 	uint8_t *src_ptr, *dst_ptr;
-	int pit = src->pitch;
-	if(scrrect == NULL && dstrect == NULL) {
-		memcpy(dst->pixels, src->pixels, pit * src->h);
-		return;
-	}
 
-	if(scrrect == NULL) {
+	if(srcrect) {
+		w = srcrect->w;
+		h = srcrect->h;
+		src_ptr = src->pixels + srcrect->x + srcrect->y * src->w;
+	}
+	else {
 		w = src->w;
 		h = src->h;
 		src_ptr = src->pixels;
 	}
-	else {
-		w = scrrect->w;
-		h = scrrect->h;
-		src_ptr = src->pixels + scrrect->x + scrrect->y * pit;
-	}
 
-	if(dstrect == NULL) {
-		dst_ptr = dst->pixels;
+	if(dstrect) {
+		dst_ptr = dst->pixels + dstrect->x + dstrect->y * dst->w;;
 	}
 	else {
-		dst_ptr = dst->pixels + dstrect->x + dstrect->y * pit;
+		dst_ptr = dst->pixels;
 	}
 
 	for(i = 0; i < h; i ++) {
 		memcpy(dst_ptr, src_ptr, w);
-		dst_ptr += pit;
-		src_ptr += pit;
+		dst_ptr += dst->w;
+		src_ptr += src->w;
 	}
 }
 
