@@ -3,16 +3,18 @@
 #define instr cmp
 
 static void do_execute() {
-	DATA_TYPE res = op_dest->val - op_src->val;
+	DATA_TYPE src = op_src->val;
+	DATA_TYPE dest = op_dest->val;
+	DATA_TYPE res = dest - src;
 	uint32_t pf = (res & 255);
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
 	pf = (pf >> 1) ^ pf;
-	cpu.CF = (DATA_TYPE)op_dest->val < (DATA_TYPE)op_src->val;
+	cpu.CF = dest < src;
 	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
 	cpu.SF = (res >> 31) & 1;
-	cpu.OF = ((op_dest->val >> 31) ^ (op_src->val >> 31)) & ((op_dest->val >> 31) ^ (res >> 31)) & 1;
+	cpu.OF = ((dest >> 31) ^ (src >> 31)) & ((dest >> 31) ^ (res >> 31)) & 1;
 	print_asm_template2();
 }
 

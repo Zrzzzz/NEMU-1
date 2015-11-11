@@ -3,8 +3,10 @@
 #define instr add
 
 static void do_execute() {
-	DATA_TYPE res = op_src->val + op_dest->val;
-	cpu.CF = res < op_src->val;
+	DATA_TYPE src = op_src->val;
+	DATA_TYPE dest = op_dest->val;
+	DATA_TYPE res = src + dest;
+	cpu.CF = res < src;
 	uint32_t pf = (res & 255);
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
@@ -12,7 +14,7 @@ static void do_execute() {
 	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
 	cpu.SF = ((res >> 31) & 1);
-	cpu.OF = ((((res ^ op_src->val) & (res ^ op_dest->val)) >> 31) & 1);
+	cpu.OF = ((((res ^ src) & (res ^ dest)) >> 31) & 1);
 	OPERAND_W(op_dest, res);
 	print_asm_template2();
 }
