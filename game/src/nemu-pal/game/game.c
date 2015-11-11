@@ -108,13 +108,11 @@ PAL_GameMain(
       // Load the game resources if needed.
       //
       PAL_LoadResources();
-   printf("zxc\n");
 
       //
       // Clear the input state of previous frame.
       //
       PAL_ClearKeyState();
-   printf("Aas\n");
 
       //
       // Wait for the time of one frame. Accept input here.
@@ -134,6 +132,8 @@ PAL_GameMain(
       //
       // Run the main frame routine.
       //
+   printf("Aas\n");
       PAL_StartFrame();
+   printf("zxc\n");
    }
 }
