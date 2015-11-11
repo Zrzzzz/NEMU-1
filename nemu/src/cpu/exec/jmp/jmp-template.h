@@ -14,6 +14,7 @@ static void do_execute() {
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 make_helper(concat(jmp_rm_, SUFFIX)) {
+	printf("ASD\n");
 	concat(decode_rm_, SUFFIX)(eip + 1);
 	cpu.eip = op_src->val;
 	print_asm_template1();
