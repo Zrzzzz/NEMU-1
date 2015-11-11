@@ -6,9 +6,10 @@
 
 /* for instruction encoding overloading */
 
+uint32_t pop_val_l();
+
 make_helper(ret) {
-	cpu.eip = swaddr_read(reg_l(R_ESP), (4 >> ops_decoded.is_data_size_16), SR_SS); 
-	reg_l(R_ESP) = reg_l(R_ESP) + (4 >> ops_decoded.is_data_size_16);
+	cpu.eip = pop_val_l();
 	print_asm("ret");
 	return 0;
 }
