@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	int32_t res = op_src->val;
-	res = ((res << ((DATA_BYTE << 3) - 8)) >> ((DATA_BYTE << 3) - 8));
+	res = ((res << (32 - (DATA_BYTE << 3))) >> (32 - (DATA_BYTE << 3)));
 	write_operand_l(op_dest, res);
 	print_asm_template2();
 }
