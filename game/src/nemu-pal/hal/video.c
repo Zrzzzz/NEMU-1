@@ -116,7 +116,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	pixel[line * pitch + row] = i;
 	}
 
-	if(dstrect == NULL) {
+/*	if(dstrect == NULL) {
 		memset(dst->pixels, (uint8_t)color, dst->refcount);
 	}
 	else {
@@ -130,7 +130,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 			dst_ptr += next;
 		}
 	}
-}
+*/}
 
 void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	assert(screen);
