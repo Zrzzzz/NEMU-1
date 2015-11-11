@@ -2,7 +2,7 @@
 #include "cpu/reg.h"
 #include <stdlib.h>
 #include <time.h>
-
+#define TLB TLB
 #define TLB_BLOCK_WIDTH 12
 #define TLB_WAY_WIDTH 6
 #define TLB_TAG_WIDTH (32 - TLB_BLOCK_WIDTH)
