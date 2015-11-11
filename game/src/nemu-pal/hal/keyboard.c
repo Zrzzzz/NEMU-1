@@ -23,7 +23,7 @@ keyboard_event(void) {
 			if(key_state[i] == KEY_STATE_EMPTY) key_state[i] = KEY_STATE_PRESS;
 		}
 		if(keycode_array[i] + 0x80 == k_code) {
-			if(key_state[i] == KEY_STATE_WAIT_RELEASE) key_state[i] = KEY_STATE_WAIT_RELEASE;
+			if(key_state[i] == KEY_STATE_WAIT_RELEASE) key_state[i] = KEY_STATE_RELEASE;
 		}
 	}
 }
