@@ -88,8 +88,24 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 	}
 
 	/* TODO: Copy the pixels in the rectangle area to the screen. */
+	if(w == 0 && h == 0){
+		w = screen->w;
+		h = screen->h;
+	}
 
-	int i;
+	int pitch = screen->pitch;
+
+	int line,row;
+	int line_bound = y + h -1, row_bound = x + w -1;
+	SDL_Color* colors = screen->format->palette->colors;
+	uint8_t * pixel = screen->pixels;
+
+	for(line = y; line<= line_bound; ++line)
+		for(row = x;row <= row_bound;++row){
+			draw_pixel(row, line, *(int*)&colors[(int)pixel[line * pitch + row]]);
+		}
+
+/*	int i;
 	uint8_t *dst = (void*)0xa0000 + x + y * 320;
 	uint8_t *src = screen->pixels + x + y * screen->w;
 	for(i = 0; i < h; i ++) {
@@ -97,7 +113,7 @@ void SDL_UpdateRect(SDL_Surface *screen, int x, int y, int w, int h) {
 		dst += 320;
 		src += screen->w;
 	}
-}
+*/}
 
 void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors, 
 		int firstcolor, int ncolors) {
