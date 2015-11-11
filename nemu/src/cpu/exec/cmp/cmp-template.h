@@ -8,7 +8,7 @@ static void do_execute() {
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
 	pf = (pf >> 1) ^ pf;
-	cpu.CF = op_dest->val < op_src->val;
+	cpu.CF = (DATA_TYPE)op_dest->val < (DATA_TYPE)op_src->val;
 	cpu.PF = !(pf & 1);
 	cpu.ZF = (res == 0);
 	cpu.SF = (res >> 31) & 1;

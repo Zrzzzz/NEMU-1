@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	op_src->val = op_src->val + cpu.CF;
-	uint32_t res = op_dest->val - op_src->val;
+	DATA_TYPE res = op_dest->val - op_src->val;
 	uint32_t pf = (res & 255);
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
