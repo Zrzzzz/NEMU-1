@@ -15,7 +15,6 @@ static void do_execute() {
 }
 
 make_instr_helper(r)
-make_instr_helper(m)
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 make_helper(concat(popa_, SUFFIX)) {
