@@ -3,7 +3,7 @@
 #define instr test
 
 static void do_execute() {
-	uint32_t res = op_src->val & op_dest->val;
+	DATA_TYPE res = op_src->val & op_dest->val;
 	cpu.CF = cpu.OF = 0;
 	cpu.SF = (res >> 31) & 1;
 	cpu.ZF = (res == 0);
