@@ -52,6 +52,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	}
 }
 
+#define MAKE_CLIP(line, row, line_bound,row_bound,r,l,t,d)\
+	line_bound = (line_bound > d) ? d : line_bound;\
+	line = (line < t) ? t:line;\
+	row_bound = (row_bound > r)?r : row_bound;\
+	row = (row < l) ? l : row;
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	assert(dst);
 	assert(color <= 0xff);
@@ -60,6 +65,56 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	 * in surface ``dst'' with color ``color''. If dstrect is
 	 * NULL, fill the whole surface.
 	 */
+	int x = (dstrect == NULL)? 0 : dstrect->x;
+	int y = (dstrect == NULL)? 0 : dstrect->y;
+	int w = (dstrect == NULL)? dst->w: dstrect->w;
+	int h = (dstrect == NULL)? dst->h: dstrect->h;
+
+	SDL_Color * colors = dst->format->palette->colors;
+	int bound = dst->format->palette->ncolors;
+	int i = 0;
+	for(;i< bound; ++i){
+		if(color == *(uint32_t*)&colors[i])
+			break;
+	}
+	assert (i!= bound);
+	assert(dst->format->BitsPerPixel == 8);
+
+	uint8_t *pixel = dst->pixels;
+
+	int line = y;
+	int row = x;
+	int row_bound  = x + w -1;
+	int line_bound = y + h -1;
+
+	int pitch = dst->pitch;
+
+	SDL_Rect* clip = &(dst->clip_rect);
+	int l = clip->x;
+	int t = clip->y;
+	int r = clip->x + clip->w -1;
+	int d = clip->y + clip->h -1;
+
+	if(line >d || row > r){
+		dstrect->w = 0;
+		dstrect->h = 0;
+		assert(0);
+		return ;
+	}
+
+	MAKE_CLIP(line, row, line_bound, row_bound, l, r,t,d);
+	if(dstrect != NULL){
+	dstrect->x = row;
+	dstrect->y = line;
+	dstrect->h = line_bound - line + 1;
+	dstrect->w = row_bound - row + 1;
+	}
+	l = row;
+	
+	for(; line <= line_bound; line++){
+	for(row = l;row <= row_bound; row++)
+	pixel[line * pitch + row] = i;
+	}
 
 	if(dstrect == NULL) {
 		memset(dst->pixels, (uint8_t)color, dst->refcount);
