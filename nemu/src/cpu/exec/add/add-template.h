@@ -5,7 +5,6 @@
 static void do_execute() {
 	DATA_TYPE_S res = op_src->val + op_dest->val;
 	cpu.CF = res < op_src->val || res < op_dest->val;
-	cpu.PF = 0;
 	uint32_t pf = (res & 255);
 	pf = (pf >> 4) ^ pf;
 	pf = (pf >> 2) ^ pf;
