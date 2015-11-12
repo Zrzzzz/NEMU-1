@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+#ifdef CACHE
 #define CACHE_BLOCK_WIDTH 6
 #define CACHE_WAY_WIDTH 3
 #define CACHE_SET_WIDTH 7
@@ -133,3 +134,4 @@ void l1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	return;
 }
+#endif

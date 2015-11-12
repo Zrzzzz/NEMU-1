@@ -3,6 +3,7 @@
 #include "misc.h"
 #include <stdlib.h>
 
+#ifdef CACHE
 #define CACHE_BLOCK_WIDTH 6
 #define CACHE_WAY_WIDTH 4
 #define CACHE_SET_WIDTH 16
@@ -144,3 +145,4 @@ void l2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	return;
 }
+#endif

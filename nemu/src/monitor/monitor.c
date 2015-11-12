@@ -10,8 +10,10 @@ void load_elf_tables(int, char *[]);
 void init_regex();
 void init_wp_list();
 void init_ddr3();
+#ifdef CACHE
 void init_l1cache();
 void init_l2cache();
+#endif
 void init_cpu_state();
 #ifdef HAS_DEVICE
 void init_device();
@@ -101,7 +103,9 @@ void restart() {
 
 	/* Initialize DRAM. */
 	init_ddr3();
+#ifdef CACHE
 	init_l1cache();
 	init_l2cache();
+#endif
 	init_cpu_state();
 }
