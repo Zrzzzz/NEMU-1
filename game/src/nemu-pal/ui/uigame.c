@@ -168,6 +168,7 @@ PAL_SaveSlotMenu(
 
    const SDL_Rect  rect = {195, 7, 120, 190};
 
+   set_bp();
    //
    // Create the boxes and create the menu items
    //
