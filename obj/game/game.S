@@ -27854,118 +27854,119 @@ Disassembly of section .text:
  805f470:	bf 78 00 00 00       	mov    $0x78,%edi
  805f475:	83 ec 7c             	sub    $0x7c,%esp
  805f478:	8b 45 08             	mov    0x8(%ebp),%eax
- 805f47b:	66 89 75 92          	mov    %si,-0x6e(%ebp)
- 805f47f:	8d 75 ac             	lea    -0x54(%ebp),%esi
- 805f482:	66 89 5d 90          	mov    %bx,-0x70(%ebp)
- 805f486:	66 89 7d 94          	mov    %di,-0x6c(%ebp)
- 805f48a:	bb 01 00 00 00       	mov    $0x1,%ebx
- 805f48f:	bf 07 00 00 00       	mov    $0x7,%edi
- 805f494:	89 45 84             	mov    %eax,-0x7c(%ebp)
- 805f497:	b8 be 00 00 00       	mov    $0xbe,%eax
- 805f49c:	66 89 45 96          	mov    %ax,-0x6a(%ebp)
- 805f4a0:	89 f8                	mov    %edi,%eax
- 805f4a2:	83 ec 04             	sub    $0x4,%esp
- 805f4a5:	83 c6 0c             	add    $0xc,%esi
- 805f4a8:	c1 e0 10             	shl    $0x10,%eax
- 805f4ab:	6a 01                	push   $0x1
- 805f4ad:	6a 06                	push   $0x6
- 805f4af:	0c c3                	or     $0xc3,%al
- 805f4b1:	50                   	push   %eax
- 805f4b2:	e8 79 f2 ff ff       	call   805e730 <PAL_CreateSingleLineBox>
- 805f4b7:	89 44 9d 94          	mov    %eax,-0x6c(%ebp,%ebx,4)
- 805f4bb:	8d 43 2a             	lea    0x2a(%ebx),%eax
- 805f4be:	66 89 5e f4          	mov    %bx,-0xc(%esi)
- 805f4c2:	83 c3 01             	add    $0x1,%ebx
- 805f4c5:	c7 46 f8 01 00 00 00 	movl   $0x1,-0x8(%esi)
- 805f4cc:	83 c4 10             	add    $0x10,%esp
- 805f4cf:	66 89 46 f6          	mov    %ax,-0xa(%esi)
- 805f4d3:	8d 47 0a             	lea    0xa(%edi),%eax
- 805f4d6:	83 c7 26             	add    $0x26,%edi
- 805f4d9:	c1 e0 10             	shl    $0x10,%eax
- 805f4dc:	0c d2                	or     $0xd2,%al
- 805f4de:	89 46 fc             	mov    %eax,-0x4(%esi)
- 805f4e1:	83 fb 06             	cmp    $0x6,%ebx
- 805f4e4:	75 ba                	jne    805f4a0 <PAL_SaveSlotMenu+0x40>
- 805f4e6:	be 15 00 00 00       	mov    $0x15,%esi
- 805f4eb:	b3 01                	mov    $0x1,%bl
- 805f4ed:	68 58 95 07 08       	push   $0x8079558
- 805f4f2:	53                   	push   %ebx
- 805f4f3:	68 c4 91 07 08       	push   $0x80791c4
- 805f4f8:	68 5d 95 07 08       	push   $0x807955d
- 805f4fd:	e8 5e a3 ff ff       	call   8059860 <va>
- 805f502:	5a                   	pop    %edx
- 805f503:	59                   	pop    %ecx
- 805f504:	68 ad 91 07 08       	push   $0x80791ad
- 805f509:	50                   	push   %eax
- 805f50a:	e8 81 83 00 00       	call   8067890 <fopen>
- 805f50f:	83 c4 10             	add    $0x10,%esp
- 805f512:	85 c0                	test   %eax,%eax
- 805f514:	89 c7                	mov    %eax,%edi
- 805f516:	0f 84 a4 00 00 00    	je     805f5c0 <PAL_SaveSlotMenu+0x160>
- 805f51c:	50                   	push   %eax
- 805f51d:	8d 45 8e             	lea    -0x72(%ebp),%eax
- 805f520:	6a 01                	push   $0x1
- 805f522:	6a 02                	push   $0x2
- 805f524:	50                   	push   %eax
- 805f525:	e8 f6 85 00 00       	call   8067b20 <fread>
- 805f52a:	89 3c 24             	mov    %edi,(%esp)
- 805f52d:	e8 7e 7a 00 00       	call   8066fb0 <fclose>
- 805f532:	0f b7 55 8e          	movzwl -0x72(%ebp),%edx
- 805f536:	83 c4 10             	add    $0x10,%esp
- 805f539:	89 f0                	mov    %esi,%eax
- 805f53b:	83 ec 0c             	sub    $0xc,%esp
- 805f53e:	83 c3 01             	add    $0x1,%ebx
- 805f541:	c1 e0 10             	shl    $0x10,%eax
- 805f544:	6a 02                	push   $0x2
- 805f546:	6a 00                	push   $0x0
- 805f548:	0d 0e 01 00 00       	or     $0x10e,%eax
- 805f54d:	83 c6 26             	add    $0x26,%esi
- 805f550:	50                   	push   %eax
- 805f551:	6a 04                	push   $0x4
- 805f553:	52                   	push   %edx
- 805f554:	e8 57 f8 ff ff       	call   805edb0 <PAL_DrawNumber>
- 805f559:	83 c4 20             	add    $0x20,%esp
- 805f55c:	83 fb 06             	cmp    $0x6,%ebx
- 805f55f:	75 8c                	jne    805f4ed <PAL_SaveSlotMenu+0x8d>
- 805f561:	8d 5d 90             	lea    -0x70(%ebp),%ebx
- 805f564:	83 ec 0c             	sub    $0xc,%esp
- 805f567:	31 f6                	xor    %esi,%esi
- 805f569:	53                   	push   %ebx
- 805f56a:	e8 01 6a 00 00       	call   8065f70 <VIDEO_UpdateScreen>
- 805f56f:	0f b7 45 84          	movzwl -0x7c(%ebp),%eax
- 805f573:	c7 04 24 4f 00 00 00 	movl   $0x4f,(%esp)
- 805f57a:	83 e8 01             	sub    $0x1,%eax
- 805f57d:	0f b7 c0             	movzwl %ax,%eax
- 805f580:	50                   	push   %eax
- 805f581:	8d 45 ac             	lea    -0x54(%ebp),%eax
- 805f584:	6a 05                	push   $0x5
- 805f586:	50                   	push   %eax
- 805f587:	6a 00                	push   $0x0
- 805f589:	e8 02 f4 ff ff       	call   805e990 <PAL_ReadMenu>
- 805f58e:	83 c4 20             	add    $0x20,%esp
- 805f591:	89 c7                	mov    %eax,%edi
- 805f593:	83 ec 0c             	sub    $0xc,%esp
- 805f596:	ff 74 b5 98          	pushl  -0x68(%ebp,%esi,4)
- 805f59a:	83 c6 01             	add    $0x1,%esi
- 805f59d:	e8 8e f3 ff ff       	call   805e930 <PAL_DeleteBox>
- 805f5a2:	83 c4 10             	add    $0x10,%esp
- 805f5a5:	83 fe 05             	cmp    $0x5,%esi
- 805f5a8:	75 e9                	jne    805f593 <PAL_SaveSlotMenu+0x133>
- 805f5aa:	83 ec 0c             	sub    $0xc,%esp
- 805f5ad:	53                   	push   %ebx
- 805f5ae:	e8 bd 69 00 00       	call   8065f70 <VIDEO_UpdateScreen>
- 805f5b3:	8d 65 f4             	lea    -0xc(%ebp),%esp
- 805f5b6:	0f b7 c7             	movzwl %di,%eax
- 805f5b9:	5b                   	pop    %ebx
- 805f5ba:	5e                   	pop    %esi
- 805f5bb:	5f                   	pop    %edi
- 805f5bc:	5d                   	pop    %ebp
- 805f5bd:	c3                   	ret    
- 805f5be:	66 90                	xchg   %ax,%ax
+ 805f47b:	66 89 5d 90          	mov    %bx,-0x70(%ebp)
+ 805f47f:	66 89 75 92          	mov    %si,-0x6e(%ebp)
+ 805f483:	66 89 7d 94          	mov    %di,-0x6c(%ebp)
+ 805f487:	89 45 84             	mov    %eax,-0x7c(%ebp)
+ 805f48a:	b8 be 00 00 00       	mov    $0xbe,%eax
+ 805f48f:	66 89 45 96          	mov    %ax,-0x6a(%ebp)
+ 805f493:	cc                   	int3   
+ 805f494:	8d 75 ac             	lea    -0x54(%ebp),%esi
+ 805f497:	bf 07 00 00 00       	mov    $0x7,%edi
+ 805f49c:	bb 01 00 00 00       	mov    $0x1,%ebx
+ 805f4a1:	89 f8                	mov    %edi,%eax
+ 805f4a3:	83 ec 04             	sub    $0x4,%esp
+ 805f4a6:	83 c6 0c             	add    $0xc,%esi
+ 805f4a9:	c1 e0 10             	shl    $0x10,%eax
+ 805f4ac:	6a 01                	push   $0x1
+ 805f4ae:	6a 06                	push   $0x6
+ 805f4b0:	0c c3                	or     $0xc3,%al
+ 805f4b2:	50                   	push   %eax
+ 805f4b3:	e8 78 f2 ff ff       	call   805e730 <PAL_CreateSingleLineBox>
+ 805f4b8:	89 44 9d 94          	mov    %eax,-0x6c(%ebp,%ebx,4)
+ 805f4bc:	8d 43 2a             	lea    0x2a(%ebx),%eax
+ 805f4bf:	66 89 5e f4          	mov    %bx,-0xc(%esi)
+ 805f4c3:	83 c3 01             	add    $0x1,%ebx
+ 805f4c6:	c7 46 f8 01 00 00 00 	movl   $0x1,-0x8(%esi)
+ 805f4cd:	83 c4 10             	add    $0x10,%esp
+ 805f4d0:	66 89 46 f6          	mov    %ax,-0xa(%esi)
+ 805f4d4:	8d 47 0a             	lea    0xa(%edi),%eax
+ 805f4d7:	83 c7 26             	add    $0x26,%edi
+ 805f4da:	c1 e0 10             	shl    $0x10,%eax
+ 805f4dd:	0c d2                	or     $0xd2,%al
+ 805f4df:	89 46 fc             	mov    %eax,-0x4(%esi)
+ 805f4e2:	83 fb 06             	cmp    $0x6,%ebx
+ 805f4e5:	75 ba                	jne    805f4a1 <PAL_SaveSlotMenu+0x41>
+ 805f4e7:	be 15 00 00 00       	mov    $0x15,%esi
+ 805f4ec:	b3 01                	mov    $0x1,%bl
+ 805f4ee:	68 58 95 07 08       	push   $0x8079558
+ 805f4f3:	53                   	push   %ebx
+ 805f4f4:	68 c4 91 07 08       	push   $0x80791c4
+ 805f4f9:	68 5d 95 07 08       	push   $0x807955d
+ 805f4fe:	e8 5d a3 ff ff       	call   8059860 <va>
+ 805f503:	5a                   	pop    %edx
+ 805f504:	59                   	pop    %ecx
+ 805f505:	68 ad 91 07 08       	push   $0x80791ad
+ 805f50a:	50                   	push   %eax
+ 805f50b:	e8 80 83 00 00       	call   8067890 <fopen>
+ 805f510:	83 c4 10             	add    $0x10,%esp
+ 805f513:	85 c0                	test   %eax,%eax
+ 805f515:	89 c7                	mov    %eax,%edi
+ 805f517:	0f 84 a3 00 00 00    	je     805f5c0 <PAL_SaveSlotMenu+0x160>
+ 805f51d:	50                   	push   %eax
+ 805f51e:	8d 45 8e             	lea    -0x72(%ebp),%eax
+ 805f521:	6a 01                	push   $0x1
+ 805f523:	6a 02                	push   $0x2
+ 805f525:	50                   	push   %eax
+ 805f526:	e8 f5 85 00 00       	call   8067b20 <fread>
+ 805f52b:	89 3c 24             	mov    %edi,(%esp)
+ 805f52e:	e8 7d 7a 00 00       	call   8066fb0 <fclose>
+ 805f533:	0f b7 55 8e          	movzwl -0x72(%ebp),%edx
+ 805f537:	83 c4 10             	add    $0x10,%esp
+ 805f53a:	89 f0                	mov    %esi,%eax
+ 805f53c:	83 ec 0c             	sub    $0xc,%esp
+ 805f53f:	83 c3 01             	add    $0x1,%ebx
+ 805f542:	c1 e0 10             	shl    $0x10,%eax
+ 805f545:	6a 02                	push   $0x2
+ 805f547:	6a 00                	push   $0x0
+ 805f549:	0d 0e 01 00 00       	or     $0x10e,%eax
+ 805f54e:	83 c6 26             	add    $0x26,%esi
+ 805f551:	50                   	push   %eax
+ 805f552:	6a 04                	push   $0x4
+ 805f554:	52                   	push   %edx
+ 805f555:	e8 56 f8 ff ff       	call   805edb0 <PAL_DrawNumber>
+ 805f55a:	83 c4 20             	add    $0x20,%esp
+ 805f55d:	83 fb 06             	cmp    $0x6,%ebx
+ 805f560:	75 8c                	jne    805f4ee <PAL_SaveSlotMenu+0x8e>
+ 805f562:	8d 5d 90             	lea    -0x70(%ebp),%ebx
+ 805f565:	83 ec 0c             	sub    $0xc,%esp
+ 805f568:	31 f6                	xor    %esi,%esi
+ 805f56a:	53                   	push   %ebx
+ 805f56b:	e8 00 6a 00 00       	call   8065f70 <VIDEO_UpdateScreen>
+ 805f570:	0f b7 45 84          	movzwl -0x7c(%ebp),%eax
+ 805f574:	c7 04 24 4f 00 00 00 	movl   $0x4f,(%esp)
+ 805f57b:	83 e8 01             	sub    $0x1,%eax
+ 805f57e:	0f b7 c0             	movzwl %ax,%eax
+ 805f581:	50                   	push   %eax
+ 805f582:	8d 45 ac             	lea    -0x54(%ebp),%eax
+ 805f585:	6a 05                	push   $0x5
+ 805f587:	50                   	push   %eax
+ 805f588:	6a 00                	push   $0x0
+ 805f58a:	e8 01 f4 ff ff       	call   805e990 <PAL_ReadMenu>
+ 805f58f:	83 c4 20             	add    $0x20,%esp
+ 805f592:	89 c7                	mov    %eax,%edi
+ 805f594:	83 ec 0c             	sub    $0xc,%esp
+ 805f597:	ff 74 b5 98          	pushl  -0x68(%ebp,%esi,4)
+ 805f59b:	83 c6 01             	add    $0x1,%esi
+ 805f59e:	e8 8d f3 ff ff       	call   805e930 <PAL_DeleteBox>
+ 805f5a3:	83 c4 10             	add    $0x10,%esp
+ 805f5a6:	83 fe 05             	cmp    $0x5,%esi
+ 805f5a9:	75 e9                	jne    805f594 <PAL_SaveSlotMenu+0x134>
+ 805f5ab:	83 ec 0c             	sub    $0xc,%esp
+ 805f5ae:	53                   	push   %ebx
+ 805f5af:	e8 bc 69 00 00       	call   8065f70 <VIDEO_UpdateScreen>
+ 805f5b4:	8d 65 f4             	lea    -0xc(%ebp),%esp
+ 805f5b7:	0f b7 c7             	movzwl %di,%eax
+ 805f5ba:	5b                   	pop    %ebx
+ 805f5bb:	5e                   	pop    %esi
+ 805f5bc:	5f                   	pop    %edi
+ 805f5bd:	5d                   	pop    %ebp
+ 805f5be:	c3                   	ret    
+ 805f5bf:	90                   	nop
  805f5c0:	31 c0                	xor    %eax,%eax
  805f5c2:	31 d2                	xor    %edx,%edx
  805f5c4:	66 89 45 8e          	mov    %ax,-0x72(%ebp)
- 805f5c8:	e9 6c ff ff ff       	jmp    805f539 <PAL_SaveSlotMenu+0xd9>
+ 805f5c8:	e9 6d ff ff ff       	jmp    805f53a <PAL_SaveSlotMenu+0xda>
  805f5cd:	8d 76 00             	lea    0x0(%esi),%esi
 
 0805f5d0 <PAL_OpeningMenu>:

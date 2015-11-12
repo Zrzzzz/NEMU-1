@@ -168,12 +168,12 @@ PAL_SaveSlotMenu(
 
    const SDL_Rect  rect = {195, 7, 120, 190};
 
-   set_bp();
    //
    // Create the boxes and create the menu items
    //
    for (i = 0; i < 5; i++)
    {
+   set_bp();
       rgpBox[i] = PAL_CreateSingleLineBox(PAL_XY(195, 7 + 38 * i), 6, TRUE);
 
       rgMenuItem[i].wValue = i + 1;
