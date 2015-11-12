@@ -85,14 +85,12 @@ PAL_GameMain(
    //
    PAL_InitGameData(gpGlobals->bCurrentSaveSlot);
 
-   printf("ASD\n");
    //
    // Run the main game loop.
    //
    dwTime = SDL_GetTicks();
    while (TRUE)
    {
-	   printf("ZXC\n");
       //
       // Do some initialization at game start.
       //
@@ -101,7 +99,6 @@ PAL_GameMain(
          PAL_GameStart();
          gpGlobals->fGameStart = FALSE;
       }
-   printf("qwe\n");
 
 
       //
@@ -132,8 +129,6 @@ PAL_GameMain(
       //
       // Run the main frame routine.
       //
-   printf("Aas\n");
       PAL_StartFrame();
-   printf("zxc\n");
    }
 }
