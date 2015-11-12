@@ -80,6 +80,7 @@ PAL_GameMain(
    //
    gpGlobals->bCurrentSaveSlot = (BYTE)PAL_OpeningMenu();
 
+   set_bp();
    //
    // Initialize game data and set the flags to load the game resources.
    //
@@ -91,6 +92,7 @@ PAL_GameMain(
    dwTime = SDL_GetTicks();
    while (TRUE)
    {
+   set_bp();
       //
       // Do some initialization at game start.
       //
@@ -99,17 +101,20 @@ PAL_GameMain(
          PAL_GameStart();
          gpGlobals->fGameStart = FALSE;
       }
+   set_bp();
 
 
       //
       // Load the game resources if needed.
       //
       PAL_LoadResources();
+   set_bp();
 
       //
       // Clear the input state of previous frame.
       //
       PAL_ClearKeyState();
+   set_bp();
 
       //
       // Wait for the time of one frame. Accept input here.
