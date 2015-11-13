@@ -1,22 +1,22 @@
 #ifndef __SETCC_H__
 #define __SETCC_H__
 
-#include "seta.h"
-#include "setae.h"
-#include "setb.h"
-#include "setbe.h"
-#include "sete.h"
-#include "setg.h"
-#include "setge.h"
-#include "setl.h"
-#include "setle.h"
-#include "setne.h"
-#include "setno.h"
-#include "setnp.h"
-#include "setns.h"
-#include "seto.h"
-#include "setp.h"
-#include "sets.h"
+make_helper(seta_rm_b);
+make_helper(setae_rm_b);
+make_helper(setb_rm_b);
+make_helper(setbe_rm_b);
+make_helper(sete_rm_b);
+make_helper(setg_rm_b);
+make_helper(setge_rm_b);
+make_helper(setl_rm_b);
+make_helper(setle_rm_b);
+make_helper(setne_rm_b);
+make_helper(setno_rm_b);
+make_helper(setnp_rm_b);
+make_helper(setns_rm_b);
+make_helper(seto_rm_b);
+make_helper(setp_rm_b);
+make_helper(sets_rm_b);
 
 
 #endif
