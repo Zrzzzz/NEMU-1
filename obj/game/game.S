@@ -27854,16 +27854,16 @@ Disassembly of section .text:
  805f470:	bf 78 00 00 00       	mov    $0x78,%edi
  805f475:	83 ec 7c             	sub    $0x7c,%esp
  805f478:	8b 45 08             	mov    0x8(%ebp),%eax
- 805f47b:	66 89 5d 90          	mov    %bx,-0x70(%ebp)
- 805f47f:	66 89 75 92          	mov    %si,-0x6e(%ebp)
- 805f483:	66 89 7d 94          	mov    %di,-0x6c(%ebp)
- 805f487:	89 45 84             	mov    %eax,-0x7c(%ebp)
- 805f48a:	b8 be 00 00 00       	mov    $0xbe,%eax
- 805f48f:	66 89 45 96          	mov    %ax,-0x6a(%ebp)
- 805f493:	cc                   	int3   
- 805f494:	8d 75 ac             	lea    -0x54(%ebp),%esi
- 805f497:	bf 07 00 00 00       	mov    $0x7,%edi
- 805f49c:	bb 01 00 00 00       	mov    $0x1,%ebx
+ 805f47b:	66 89 75 92          	mov    %si,-0x6e(%ebp)
+ 805f47f:	8d 75 ac             	lea    -0x54(%ebp),%esi
+ 805f482:	66 89 5d 90          	mov    %bx,-0x70(%ebp)
+ 805f486:	66 89 7d 94          	mov    %di,-0x6c(%ebp)
+ 805f48a:	bb 01 00 00 00       	mov    $0x1,%ebx
+ 805f48f:	bf 07 00 00 00       	mov    $0x7,%edi
+ 805f494:	89 45 84             	mov    %eax,-0x7c(%ebp)
+ 805f497:	b8 be 00 00 00       	mov    $0xbe,%eax
+ 805f49c:	66 89 45 96          	mov    %ax,-0x6a(%ebp)
+ 805f4a0:	cc                   	int3   
  805f4a1:	89 f8                	mov    %edi,%eax
  805f4a3:	83 ec 04             	sub    $0x4,%esp
  805f4a6:	83 c6 0c             	add    $0xc,%esi
@@ -27886,7 +27886,7 @@ Disassembly of section .text:
  805f4dd:	0c d2                	or     $0xd2,%al
  805f4df:	89 46 fc             	mov    %eax,-0x4(%esi)
  805f4e2:	83 fb 06             	cmp    $0x6,%ebx
- 805f4e5:	75 ba                	jne    805f4a1 <PAL_SaveSlotMenu+0x41>
+ 805f4e5:	75 b9                	jne    805f4a0 <PAL_SaveSlotMenu+0x40>
  805f4e7:	be 15 00 00 00       	mov    $0x15,%esi
  805f4ec:	b3 01                	mov    $0x1,%bl
  805f4ee:	68 58 95 07 08       	push   $0x8079558
