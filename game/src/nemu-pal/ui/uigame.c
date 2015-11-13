@@ -173,7 +173,6 @@ PAL_SaveSlotMenu(
    //
    for (i = 0; i < 5; i++)
    {
-	   set_bp();
       rgpBox[i] = PAL_CreateSingleLineBox(PAL_XY(195, 7 + 38 * i), 6, TRUE);
 
       rgMenuItem[i].wValue = i + 1;
