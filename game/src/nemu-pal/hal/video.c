@@ -23,16 +23,21 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	int i, w, h;
 	uint8_t *src_ptr, *dst_ptr;
 
-	if(srcrect && dstrect) {
+	if(srcrect) {
 		w = srcrect->w;
 		h = srcrect->h;
 		src_ptr = src->pixels + srcrect->x + srcrect->y * src->w;
-		dst_ptr = dst->pixels + dstrect->x + dstrect->y * dst->w;;
 	}
 	else {
 		w = src->w;
 		h = src->h;
 		src_ptr = src->pixels;
+	}
+
+	if(dstrect) {
+		dst_ptr = dst->pixels + dstrect->x + dstrect->y * dst->w;;
+	}
+	else {
 		dst_ptr = dst->pixels;
 	}
 
@@ -129,7 +134,7 @@ void SDL_SetPalette(SDL_Surface *s, int flags, SDL_Color *colors,
 
 	if(s->flags & SDL_HWSURFACE) {
 		/* TODO: Set the VGA palette by calling write_palette(). */
-		write_palette(colors, ncolors);
+		write_palette(s->format->palette->colors, ncolors);
 	}
 }
 
