@@ -20,12 +20,16 @@ keyboard_event(void) {
 	int i, k_code = in_byte(0x60);
 	for(i = 0; i < NR_KEYS; i ++) {
 		if(keycode_array[i] == k_code) {
+			sti();
 			while(key_state[i] == KEY_STATE_RELEASE);
+			cli();
 			if(key_state[i] == KEY_STATE_EMPTY) key_state[i] = KEY_STATE_PRESS;
 			break;
 		}
 		if(keycode_array[i] + 0x80 == k_code) {
+			sti();
 			while(key_state[i] == KEY_STATE_PRESS);
+			cli();
 			if(key_state[i] == KEY_STATE_WAIT_RELEASE) key_state[i] = KEY_STATE_RELEASE;
 			break;
 		}
